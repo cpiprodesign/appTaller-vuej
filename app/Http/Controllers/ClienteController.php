@@ -16,7 +16,8 @@ class ClienteController extends Controller
             $clientes = Cliente::orderBy('id','desc')->paginate(6);
           }
         else{
-            $clientes = Cliente::where($criterio, 'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(6);//elocuen
+            $clientes = Cliente::where($criterio, 'like','%'.$buscar.'%')
+            ->orderBy('id','desc')->paginate(6);//elocuen
         }
         //$personas =DB::table('categorias')->paginate(6);//generador de paginacio
         

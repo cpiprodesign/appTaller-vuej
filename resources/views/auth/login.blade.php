@@ -1,73 +1,59 @@
-@extends('layouts.app')
+@extends('auth.contenido')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+@section('login')
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+<div class="row justify-content-center">
+  
+      <div class=" col-md-6 col-12 col-lg-6">
+        <div class="card-group mb-0">
+          <div class="card  p-4">
+          <form class="form-horizontal  was-validated" method="POST" action="{{ route('login')}}">
+          {{ csrf_field() }}
+              <div class="card-body">
+              <h1 class="text-center">Acceder</h1>
+              <p class="text-center">Control de acceso al sistema</p>
+              
+              
+              <div class="form-group mb-3 {{$errors->has('usuario' ? 'is-invalid' : '')}}">
+                <label for="">Usuario <i class="icon-user"></i></label>
+                {{-- <span class="input-group-addon"><i class="icon-user"></i></span> --}}
+                <input type="text" value="{{old('usuario')}}" name="usuario" id="usuario" class="form-control" placeholder="Usuario">
+                {!!$errors->first('usuario','<span class="invalid-feedback">:message</span>')!!}
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+              </div>
+              <div class="form-group mb-4 {{$errors->has('password' ? 'is-invalid' : '')}}">
+                <label for="">Password <i class="icon-lock"></i></label>
+                {{-- <span class="input-group-addon"><i class="icon-lock"></i></span> --}}
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                {!!$errors->first('password','<span class="invalid-feedback">:message</span>')!!}
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary btn-lg btn-block ">Acceder</button>
                 </div>
+              </div>
             </div>
+          </form>
+          </div>
+          
+          <div class="card text-white bg-primary py-6 d-md-down-none" style="width:40%">
+            <div class="card-body text-center">
+              <div class="">
+                <img class="img-fluid rounded-circle" src="img/login.png" alt="cpiprodesign">
+              </div>
+              <div>
+                <h4>AppTaller </h4>
+                <p>Sistema de gestion para administrar tu taller </p>
+                <a href="https://cpiprodesign.com" target="_blank" class="btn btn-danger active mt-3">mas detalles!</a>
+              </div>
+            </div>
+          </div>
         </div>
+        <div>
+          <p class="text-center blanco ">© Copyright 2022. Todos los derechos reservados</p>
+      </div>
+      </div>
     </div>
-</div>
+   
 @endsection

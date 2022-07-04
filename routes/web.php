@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/main', function () {
     return view('contenido/contenido');
-});
+})->name('main');
 //clientes
 Route::get('cliente', [App\Http\Controllers\ClienteController::class, 'index'])->name('cliente');
 Route::post('/cliente/registrar', [App\Http\Controllers\ClienteController::class,'store']);
@@ -35,7 +35,21 @@ Route::put('/tecnico/activar',  [App\Http\Controllers\TecnicoController::class,'
 Route::get('/tecnico/selectTecnico',  [App\Http\Controllers\TecnicoController::class,'selectTecnico']);
 Route::get('/tecnico/listarPdf',  [App\Http\Controllers\TecnicoController::class,'listarPdf'])->name('tecnicos_pdf');
 
+// orden
+Route::get('orden', [App\Http\Controllers\OrdenController::class, 'index'])->name('orden');
+Route::post('/orden/registrar', [App\Http\Controllers\OrdenController::class,'store']);
+Route::put('/orden/actualizar',  [App\Http\Controllers\OrdenController::class,'update']);
+//Route::get('/orden/pdf/{id}', 'VentaController@pdf')->name('venta_pdf');//para reportes de comprobante
+Route::get('/orden/pdf/{id}', [App\Http\Controllers\OrdenController::class,'pdf'])->name('orden_pdf');//para reportes de comprobante
+       
+  
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/','Auth\LoginController@showLoginForm');
+Route::get('/',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
+//Route::post('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
+//Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout'])->name('logout');

@@ -10,6 +10,7 @@ window.Vue = require('vue').default;
 
 Vue.component('cliente', require('./components/Cliente.vue').default);
 Vue.component('tecnico', require('./components/Tecnico.vue').default);
+Vue.component('orden', require('./components/Orden.vue').default);
 Vue.component('ejemplo', require('./components/ejemplo.vue').default);
 
 

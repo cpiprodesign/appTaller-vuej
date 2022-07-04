@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Comprobobante de pago</title>
+    <title>Comprobobante de orden</title>
     <style>
         body {
         font-size: 12px;
@@ -642,7 +642,7 @@
 </head>
 <body>
     <div class="text-center company_logo ">
-        <img class="img" src="img/logo.png" alt="cpiprodesign" >
+        {{-- <img class="img" src="img/logo.png" alt="cpiprodesign" > --}}
         {{-- <img src="data:{{mime_content_type(public_path("storage/uploads/logos/{$company->logo}"))}};base64, {{base64_encode(file_get_contents(public_path("storage/uploads/logos/{$company->logo}")))}}" alt="{{$company->name}}" class="company_logo_ticket contain"> --}}
      </div>
     {{-- <table class="full-width">
@@ -656,22 +656,18 @@
        
     </table> --}}
     <h3 class="text-center">Cpiprodesign</h3>
+    <h5 class="text-center">Direccion: los alisos 4.5 los olivos</h5>
+    <h5 class="text-center">Teléfono 935667172</h5>
     <h5 class="text-center">RUC 10458000888</h5>
     <h5 class="text-center">demo@demo.com</h5>
     <div class="border-bottom"></div>
     <div>
-        @foreach ($venta as $v)
-        <div class="text-center">
-            <p>{{$v->tipo_comprobante}} DE VENTA<br>
-            {{$v->serie_comprobante}}-{{$v->num_comprobante}}</p>
-        </div>
+        @foreach ($ordenes as $o)
         <section>
-            <div>
-                <div class="border-bottom"></div>
-                <table id="facliente">
+          <table id="facliente">
                     <thead>                        
                         <tr>
-                            <th >Datos del Cliente</th>
+                            <th >DATOS DEL ORDEN</th>
 
                         </tr>
                         
@@ -681,17 +677,119 @@
                     <tbody>
                         
                         <tr>
-                            <th><p id="cliente">Sr(a). {{$v->nombre}}<br>
-                            {{$v->tipo_documento}}: {{$v->num_documento}}<br>
-                            Dirección: {{$v->direccion}}<br>
-                            Teléfono: {{$v->telefono}}<br>
-                            Email: {{$v->email}}</</p></th>
+                             <th><p id="cliente">
+                              Orden: {{$o->id}}<br>
+                              Fecha Entrada: {{$o->fechaEntrada}}<br>
+                              Cliente : Sr(a). {{$o->nombreCliente}}<br>
+                              
+                            
+                            
+                           </</p></th> 
+                        </tr>
+                    </tbody>
+                </table>
+        </section>
+        <section>
+            <div>
+                <div class="border-bottom"></div>
+                <table id="facliente">
+                    <thead>                        
+                        <tr>
+                            <th >DATOS DEL EQUIPO</th>
+
+                        </tr>
+                        
+                        
+                    </thead>
+                    <div class="border-bottom"></div>
+                    <tbody>
+                        
+                        <tr>
+                             <th><p id="cliente">
+                             Equipo: {{$o->nombreEquipo}}<br>
+                            Marca: {{$o->marca}}<br>
+                            Accesorios: {{$o->accesorios}}</</p></th> 
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
-        <table id="facvendedor">
+        <section>
+          <div>
+              <div class="border-bottom"></div>
+              <table id="facliente">
+                  <thead>                        
+                      <tr>
+                          <th >OBSERVACIONES</th>
+
+                      </tr>
+                      
+                      
+                  </thead>
+                  <div class="border-bottom"></div>
+                  <tbody>
+                      
+                      <tr>
+                           <th><p id="cliente">
+                           Observación: {{$o->observaciones}}<br>
+                          Reparacion: {{$o->reparacion}}<br>
+                          Fecha de Entrega: {{$o->fechaEntrega}}</</p></th> 
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </section>
+      <section>
+        <div>
+            <div class="border-bottom"></div>
+            <table id="facliente">
+                <thead>                        
+                    <tr>
+                        <th >PAGO POR EL SERVICIO</th>
+
+                    </tr>
+                    
+                    
+                </thead>
+                <div class="border-bottom"></div>
+                <tbody>
+                    
+                    <tr>
+                         <th><p id="cliente">
+                         Total por servicio: s/.{{$o->totalPagar}}<br>
+                        Pago adelantado: s/.{{$o->adelanto}}<br>
+                        Pendiente: s/. {{round($o->totalPagar-$o->adelanto,2)}}</</p></th> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section>
+      <div>
+          <div class="border-bottom"></div>
+          <table id="facliente">
+              <thead>                        
+                  <tr>
+                      <th >NOTA IMPORTANTE</th>
+
+                  </tr>
+                  
+                  
+              </thead>
+              <div class="border-bottom"></div>
+              <tbody>
+                  
+                  <tr>
+                       <th><p id="cliente">
+                        Pasado los 90 días la empresa no se responsabiliza por los equipos y se tomarán como abandono pudiendo disponer como forma de pago por el servicio brindado.
+                      </</p></th> 
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </section>
+    
+        {{-- <table id="facvendedor">
             <thead>
                 <tr id="fv">
                     <th>Vendedor</th>
@@ -704,65 +802,14 @@
                     <td>{{$v->created_at}}</td>
                 </tr>
             </tbody>
-        </table>
+        </table> --}}
         @endforeach
     </div>
     
-    <table class="full-width mt-10 mb-10">
-        <thead class="">
-        <tr>
-            <th class="border-top-bottom desc-9 text-left">CANT.</th>
-            {{-- <th class="border-top-bottom desc-9 text-left">UNIDAD</th> --}}
-            <th class="border-top-bottom desc-9 text-left">DESCRIPCIÓN</th>
-            <th class="border-top-bottom desc-9 text-left">P.UNIT</th>
-            <th class="border-top-bottom desc-9 text-left">TOTAL</th>
-        </tr>
-        </thead>
-        <tbody>
-            @foreach ($detalles as $det)
-                        <tr>
-                            <td>{{$det->cantidad}}</td>
-                            {{-- <td>{{$det->precio}}</td> --}}
-                            <td>{{$det->articulo}}</td>
-                            <td>{{$det->precio}}</td>
-                            <td>{{$det->cantidad*$det->precio-$det->descuento}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="border-bottom"></td>
-                        </tr>
-                        
-            @endforeach
-        
-        </tbody>
-        <tfoot>
-            @foreach ($venta as $v)
-            <tr>
-                <th></th>
-                {{-- <th></th> --}}
-                <th></th> 
-                <th>OP.Gravadas:</th>
-                <td>s/ {{round($v->total-($v->total*$v->impuesto),2)}}</td>
-            </tr>
-            <tr>
-                <th></th>
-                {{-- <th></th> --}}
-                <th></th>
-                <th>IGV</th>
-                <td>s/ {{round($v->total*$v->impuesto,2)}}</td>
-            </tr>
-            <tr>
-                <th></th>
-                {{-- <th></th> --}}
-                <th></th>
-                <th>Tota a pagar</th>
-                <td>s/ {{$v->total}}</td>
-            </tr>
-            @endforeach
-        </tfoot>
-    </table>
+     
     <footer>
         <div id="gracias">
-            <p><b>Gracias por su compra!</b></p>
+            <p><b>Gracias por su Preferencia!</b></p>
         </div>
     </footer>
 </body>

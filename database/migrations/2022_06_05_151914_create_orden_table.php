@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('reparacion', 200);
             $table->dateTime('fechaEntrada');
             $table->dateTime('fechaEntrega');
-            $table->decimal('totalPagar', 11, 2);
             $table->decimal('adelanto', 11, 2);
+            $table->decimal('totalPagar', 11, 2);            
             $table->string('estado', 20);
             $table->timestamps();
         });

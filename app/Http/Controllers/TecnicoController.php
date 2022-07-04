@@ -52,7 +52,7 @@ class TecnicoController extends Controller
     public function store(Request $request)
     {
         if(!$request->ajax())return redirect('/');
-        $tecnico = new tecnico();
+        $tecnico = new Tecnico();
         $tecnico->nombre=$request->nombre;
         $tecnico->tipo_documento=$request->tipo_documento;
         $tecnico->num_documento=$request->num_documento;

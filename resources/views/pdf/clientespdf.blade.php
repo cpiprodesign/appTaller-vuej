@@ -88,7 +88,7 @@
         <table class="table table-bordered table-striped table-sm">
             <thead>
                 <tr>
-                    {{-- <th>Código</th> --}}
+                    <th>Código</th>
                     <th>Nombre</th>
                     <th>Tipo documento</th>
                     <th>Número</th>
@@ -101,7 +101,7 @@
             <tbody>
                 @foreach ($clientes as $a)
                 <tr>
-                    {{-- <td>{{$a->codigo}}</td> --}}
+                    <td>{{$a->id}}</td>
                     <td>{{$a->nombre}}</td>
                     <td>{{$a->tipo_documento}}</td
                     <td>{{$a->num_documento}}</td>
