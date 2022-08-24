@@ -8,14 +8,14 @@
             <!-- Ejemplo de tabla Listado -->
             <div class="card mt-2">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Ordenes 
-                    <el-button
+                    <i class="fa fa-align-justify"></i> Consulta de Ordenes
+                    <!-- <el-button
                         plain
                         type="primary"
                         icon="el-icon-circle-plus"
                         @click="abrirModal('orden', 'registrar')"
                         >Nuevo</el-button
-                    >
+                    > -->
                     <!-- <el-button
                         type="danger"
                         icon="el-icon-document"
@@ -25,43 +25,40 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <div class="mr-1">
-                                    <el-select
-                                        v-model="criterio"
-                                        placeholder="Select"
-                                    >
-                                        <el-option
-                                            v-for="item in valores"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value"
-                                        ></el-option>
-                                    </el-select>
-                                </div>
-                                <div class="mr-1">
-                                    <el-input
-                                        @keyup.native.enter="
-                                            listarOrden(1, buscar, criterio)
-                                        "
-                                        placeholder="Texto a buscar"
-                                        v-model="buscar"
-                                    ></el-input>
-                                </div>
-
-                                <div>
-                                    <el-button
-                                        icon="el-icon-search"
-                                        type="primary"
-                                        @click="
-                                            listarOrden(1, buscar, criterio)
-                                        "
-                                        >Buscar</el-button
-                                    >
+                         <div class="col-md-12">
+                                <div class="input-group">
+                                    <template>
+                                        <div class="block mr-2">
+                                            <el-date-picker
+                                            v-model="fechaInicio"
+                                            type="date"
+                                            placeholder="Escoge un día"
+                                            format="yyyy/MM/dd"
+                                            value-format="yyyy-MM-dd"                          
+                                            
+                                            ></el-date-picker>
+                                        </div>
+                                    </template>
+                                    
+                                    <template>
+                                        <div class="block mr-6">
+                                            <el-date-picker
+                                            v-model="fechaFinal"
+                                            type="date"
+                                            placeholder="Escoge un día"
+                                            format="yyyy/MM/dd"
+                                            value-format="yyyy-MM-dd"                          
+                                            
+                                            ></el-date-picker>
+                                        </div>
+                                    </template>
+                                    <div class=" ">
+                                         <el-button type="primary" @click="listarReporte(1,fechaInicio,fechaFinal)"><i class="fa fa-search"></i> Buscar</el-button>
+                                   
+                                    </div>
+                                   
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <table
                         class="table table-sm table-hover table-responsive "
@@ -163,6 +160,32 @@
                                 </td> -->
                             </tr>
                         </tbody>
+                        <!-- footer de la tabla -->
+                        <tfoot style="background-color:#ffffff">
+                                       
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                         <th></th>
+                                        <th>Total adelanto</th>
+                                        <th> <h3 class="badge bg-success ">s/.{{sumarTotalAdelanto}}</h3></th>
+                                        <th>Cuenta Cobrar</th>
+                                        <th><h3 class="badge bg-danger">s/.{{sumarTotalCuentaCobrar}}</h3></th>
+                                         <th class="">Total pagar</th>
+                                        <th >
+                                            <h3 class="badge bg-primary">S/.{{sumarTotal}}</h3>
+                                        </th>
+                                        <th></th>
+                                        
+                                    </tfoot>
+
                     </table>
                     <nav>
                         <ul class="pagination">
@@ -442,7 +465,7 @@
                   <div>
                     <label class for="text-input">Total Pagar</label>
                     <div class>
-                      <el-input placeholder="Total pagar" size="mini" v-model="totalPagar"></el-input>
+                      <el-input placeholder="Total pagar" size="mini" v-model.number="totalPagar"></el-input>
                     </div>
                   </div>
                 </div>
@@ -566,6 +589,7 @@ export default {
             arrayOrden: [],
             arrayCliente:[],
             arrayTecnico:[],
+            arrayReporte:[],
             modal: 0,
             tituloModal: "",
             tipoAccion: 0,
@@ -573,7 +597,12 @@ export default {
             errorMostrarMsjOrden: [],
             //report
             listado:1,
-
+             arrayReporte:[],
+                fechaInicio:'',
+                fechaFinal:'',
+                sumTotal:'',
+                sumTotalAdelanto :'',
+                sumCuentaCobrar :'',
             pagination: {
                 total: 0,
                 current_page: 0,
@@ -610,7 +639,53 @@ export default {
             }
             return pagesArray;
         },
+       /*calcularTotal: function(){
+                var resultado=0.0;
+                for(var i=0;i<this.arrayOrden.length;i++){
+                    resultado=resultado+(this.arrayOrden[i].precio*this.arrayOrden[i].cantidad-this.arrayDetalle[i].descuento)
+                }
+                return resultado;
+            }, */
+            sumarTotal:function(){
+                // this.listarReporte(page,fechaInicio,fechaFinal);
+                let sumTotal = 0;
+                for(let i=0;i<this.arrayOrden.length;i++){
+                    sumTotal = sumTotal + parseFloat(this.arrayOrden[i].totalPagar);
+                    //console.log(sumTotal);
+                }
+                return (sumTotal).toFixed(2);
+            },
+            //sumar el saldo
+            sumarTotalAdelanto:function(){
+                // this.listarReporte(page,fechaInicio,fechaFinal);
+                let sumTotalAdelanto = 0;
+                for(let i=0;i<this.arrayOrden.length;i++){
+                    sumTotalAdelanto = sumTotalAdelanto + parseFloat(this.arrayOrden[i].adelanto);
+                    //console.log(sumTotalAdelanto);
+                }
+                //console.log(sumTotalAdelanto);
+                return (sumTotalAdelanto).toFixed(2);
+            },
+             //sumar el cuenta cobrar
+            sumarTotalCuentaCobrar:function(){
+                // this.listarReporte(page,fechaInicio,fechaFinal);
+                let sumCuentaCobrar = 0;
+                sumCuentaCobrar=(this.sumarTotal)-(this.sumarTotalAdelanto);
+                console.log(sumCuentaCobrar);
+                return (sumCuentaCobrar).toFixed(2);
+            }
     },
+    created: function(){ 
+             const hoy = new Date();    
+            console.log(hoy)
+            //var fechass=hoy.getDate()+'-'+(hoy.getMonth()+1)+'-'+hoy.getFullYear();
+            var fechasso=hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate();
+            
+            //console.log(fechasso);
+            //console.log(fechass);
+            this.listarReporte(1,fechasso,fechasso); 
+                       
+            },
     methods: {
         guardar() {
             this.$message({
@@ -976,10 +1051,25 @@ export default {
         },
         pdfOrden(id){
                 window.open('/orden/pdf/'+ id ,'_blank');
-            },
+        },
+        //metodo para filtrar
+        listarReporte(page,fechaInicio,fechaFinal){
+                let me=this;
+                var url= '/orden/reportes?page=' + page + '&fechaInicio='+ fechaInicio + '&fechaFinal='+ fechaFinal;
+                axios.get(url).then(function (response) {
+                    var respuesta= response.data;
+                    me.arrayOrden = respuesta.ordenes.data;
+                    me.pagination= respuesta.pagination;
+                    //this.sumarTotal();
+                    //console.log(me.arrayReporte);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
     },
     mounted() {
-        this.listarOrden(1, this.buscar, this.criterio);
+        //this.listarOrden(1,fechaInicio,fechaFinal);
     },
 };
 </script>

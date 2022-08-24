@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware'=>['guest']],function(){
+    Route::get('/',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
+    //Route::post('/login', 'Auth\LoginController@login')->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
+    
+    
+});
 
 Route::get('/main', function () {
     return view('contenido/contenido');
@@ -41,15 +48,13 @@ Route::post('/orden/registrar', [App\Http\Controllers\OrdenController::class,'st
 Route::put('/orden/actualizar',  [App\Http\Controllers\OrdenController::class,'update']);
 //Route::get('/orden/pdf/{id}', 'VentaController@pdf')->name('venta_pdf');//para reportes de comprobante
 Route::get('/orden/pdf/{id}', [App\Http\Controllers\OrdenController::class,'pdf'])->name('orden_pdf');//para reportes de comprobante
-       
+ //repote rango de fechas
+ Route::get('/orden/reportes', [App\Http\Controllers\OrdenController::class,'ReporteOrden']);
   
 
 //Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/','Auth\LoginController@showLoginForm');
-Route::get('/',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
-//Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
 //Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout'])->name('logout');

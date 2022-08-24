@@ -261,42 +261,48 @@ class OrdenController extends Controller
     }
     //consulta de  ventas
 
-    public function ReporteVenta(Request $request)
+    public function ReporteOrden(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
         $fechaInicio = $request->fechaInicio;
         $fechaFinal = $request->fechaFinal;
-        $ventas = DB::table('ventas')
-        ->join('clientes', 'ventas.idcliente', '=', 'clientes.id')
-        ->join('users', 'ventas.idusuario', '=', 'users.id')
+        $ordenes = Orden::join('clientes', 'orden.idcliente', '=', 'clientes.id')
+        ->join('tecnicos', 'orden.idtecnico', '=', 'tecnicos.id')
         ->select(
-            'ventas.id',
-            'ventas.tipo_comprobante',
-            'ventas.serie_comprobante',
-            'ventas.num_comprobante',
-            'ventas.fecha_hora',
-            'ventas.impuesto',
-            'ventas.subTotal',
-            'ventas.Igv',
-            'ventas.total',
-            'ventas.estado',
-            'clientes.nombre',
-            'users.usuario'
+            'orden.id',
+            'clientes.id as idcliente', 
+            'tecnicos.id as idtecnico',
+            'clientes.nombre as Cliente',                    
+            'tecnicos.nombre as Tecnico',
+            'orden.nombreEquipo',
+            'orden.marca',
+            'orden.modelo',
+            'orden.serial',
+            'orden.clave',
+            'orden.accesorios',
+            'orden.observaciones',
+            'orden.fallaEquipo',
+            'orden.reparacion',
+            'orden.fechaEntrada',
+            'orden.fechaEntrega',
+            'orden.adelanto',
+            'orden.totalPagar',
+            'orden.estado'
         )
-        ->whereBetween('fecha_hora', [$fechaInicio, $fechaFinal])
+        ->whereBetween('fechaEntrada', [$fechaInicio, $fechaFinal])
         ->paginate(10);
 
         return [
             'pagination' => [
-                'total'        => $ventas->total(),
-                'current_page' => $ventas->currentPage(),
-                'per_page'     => $ventas->perPage(),
-                'last_page'    => $ventas->lastPage(),
-                'from'         => $ventas->firstItem(),
-                'to'           => $ventas->lastItem(),
+                'total'        => $ordenes->total(),
+                'current_page' => $ordenes->currentPage(),
+                'per_page'     => $ordenes->perPage(),
+                'last_page'    => $ordenes->lastPage(),
+                'from'         => $ordenes->firstItem(),
+                'to'           => $ordenes->lastItem(),
             ],
             
-            'ventas' => $ventas
+            'ordenes' => $ordenes
         ];
     }
 }
