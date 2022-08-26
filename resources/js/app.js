@@ -13,7 +13,7 @@ Vue.component('tecnico', require('./components/Tecnico.vue').default);
 Vue.component('orden', require('./components/Orden.vue').default);
 //Vue.component('ejemplo', require('./components/ejemplo.vue').default);
 Vue.component('reporteorden', require('./components/ReporteOrden.vue').default);
-
+Vue.component('dashboard', require('./components/Dashboard.vue').default);
 
 
 //IMPORTAMOS ELEMENT UI

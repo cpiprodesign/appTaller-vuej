@@ -25,11 +25,11 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-chart-area"></i> Reportes</a>
                 <ul class="nav-dropdown-items">
                     <li @click="menu=4" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-chart"></i> Reporte Ingresos</a>
+                        <a class="nav-link" href="#"><i class="icon-chart"></i> Reporte Ordenes</a>
                     </li>
-                    <li @click="menu=5" class="nav-item">
+                    {{-- <li @click="menu=5" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-chart"></i> Reporte Ventas</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             

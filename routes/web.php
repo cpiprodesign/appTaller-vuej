@@ -51,6 +51,8 @@ Route::get('/orden/pdf/{id}', [App\Http\Controllers\OrdenController::class,'pdf'
  //repote rango de fechas
  Route::get('/orden/reportes', [App\Http\Controllers\OrdenController::class,'ReporteOrden']);
   
+//dashboard
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'__invoke']);
 
 //Auth::routes();
 

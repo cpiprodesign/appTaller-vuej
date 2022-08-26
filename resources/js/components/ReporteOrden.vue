@@ -671,7 +671,7 @@ export default {
                 // this.listarReporte(page,fechaInicio,fechaFinal);
                 let sumCuentaCobrar = 0;
                 sumCuentaCobrar=(this.sumarTotal)-(this.sumarTotalAdelanto);
-                console.log(sumCuentaCobrar);
+                //console.log(sumCuentaCobrar);
                 return (sumCuentaCobrar).toFixed(2);
             }
     },
