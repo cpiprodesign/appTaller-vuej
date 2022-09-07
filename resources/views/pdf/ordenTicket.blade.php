@@ -635,14 +635,14 @@
         border-bottom: 1px solid #FFFFFF;  
         }
         .img{
-          height: 80%;
-          width: 80%;
+          height: 10%;
+          width: 50%;
         }
     </style>
 </head>
 <body>
     <div class="text-center company_logo ">
-        {{-- <img class="img" src="img/logo.png" alt="cpiprodesign" > --}}
+        <img class="img" src="img/logo.png" alt="cpiprodesign" >
         {{-- <img src="data:{{mime_content_type(public_path("storage/uploads/logos/{$company->logo}"))}};base64, {{base64_encode(file_get_contents(public_path("storage/uploads/logos/{$company->logo}")))}}" alt="{{$company->name}}" class="company_logo_ticket contain"> --}}
      </div>
     {{-- <table class="full-width">
