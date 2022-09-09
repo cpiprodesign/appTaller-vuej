@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'usuario' => 'admin',
             //'password' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
+            // 'password' => Hash::make('password'),
+            'password' => ('$2y$10$CD10K3aY2qqzh0vzqmREs.8lrWQgoxN97lQJxWBm6vYtbmK0N47rK'),
             'condicion' => (1),
         ]);
 
