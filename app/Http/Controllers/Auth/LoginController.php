@@ -20,7 +20,7 @@ class LoginController extends Controller
         if (Auth::attempt(['usuario' => $request->usuario,'password' => $request->password,'condicion'=>1])){
             return redirect()->route('main');//redireciona al menu
         }
- 
+        
         return back()
         ->withErrors(['usuario' => trans('auth.failed')])
         ->withInput(request(['usuario']));
