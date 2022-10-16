@@ -263,7 +263,7 @@ class OrdenController extends Controller
 
     public function ReporteOrden(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
         $fechaInicio = $request->fechaInicio;
         $fechaFinal = $request->fechaFinal;
         $ordenes = Orden::join('clientes', 'orden.idcliente', '=', 'clientes.id')
