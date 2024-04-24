@@ -95,7 +95,7 @@
 
         </div>
         <footer class="app-footer">
-            <span><a href="http://www.cpiprodesign.com/">Cpiprodesign</a> &copy; 2022</span>
+            <span><a href="http://www.cpiprodesign.com/">Cpiprodesign</a> &copy; 2023</span>
             <span class="ml-auto">Desarrollado por <a href="http://www.cpiprodesign.com/">cpiprodesign</a></span>
         </footer>
 

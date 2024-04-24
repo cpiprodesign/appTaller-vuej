@@ -549,7 +549,7 @@ export default {
         },
         desactivarCliente(id) {
             Swal.fire({
-                title: "Estas seguro de desactivar este proveedor?",
+                title: "Estas seguro de desactivar este cliente?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -668,7 +668,6 @@ export default {
 <style>
 .modal-content {
     width: 100% !important;
-
     border-radius: 10px;
     margin-top: 20px;
     position: absolute !important;

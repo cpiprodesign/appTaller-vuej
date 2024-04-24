@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('idcliente')->references('id')->on('clientes');
             $table->integer('idtecnico')->unsigned();
             $table->foreign('idtecnico')->references('id')->on('tecnicos');
-            $table->string('nombre', 100);
+            $table->string('nombreEquipo', 100);
             $table->string('marca', 50);
             $table->string('modelo', 50);
             $table->string('serial', 50);
