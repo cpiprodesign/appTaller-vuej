@@ -8,14 +8,9 @@
             <!-- Ejemplo de tabla Listado -->
             <div class="card mt-2">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Ordenes 
-                    <el-button
-                        plain
-                        type="primary"
-                        icon="el-icon-circle-plus"
-                        @click="abrirModal('orden', 'registrar')"
-                        >Nuevo</el-button
-                    >
+                    <i class="fa fa-align-justify"></i> Ordenes
+                    <el-button plain type="primary" icon="el-icon-circle-plus"
+                        @click="abrirModal('orden', 'registrar')">Nuevo</el-button>
                     <!-- <el-button
                         type="danger"
                         icon="el-icon-document"
@@ -28,44 +23,26 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <div class="mr-1">
-                                    <el-select
-                                        v-model="criterio"
-                                        placeholder="Select"
-                                    >
-                                        <el-option
-                                            v-for="item in valores"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value"
-                                        ></el-option>
+                                    <el-select v-model="criterio" placeholder="Select">
+                                        <el-option v-for="item in valores" :key="item.value" :label="item.label"
+                                            :value="item.value"></el-option>
                                     </el-select>
                                 </div>
                                 <div class="mr-1">
-                                    <el-input
-                                        @keyup.native.enter="
-                                            listarOrden(1, buscar, criterio)
-                                        "
-                                        placeholder="Texto a buscar"
-                                        v-model="buscar"
-                                    ></el-input>
+                                    <el-input @keyup.native.enter="
+                            listarOrden(1, buscar, criterio)
+                            " placeholder="Texto a buscar" v-model="buscar"></el-input>
                                 </div>
 
                                 <div>
-                                    <el-button
-                                        icon="el-icon-search"
-                                        type="primary"
-                                        @click="
-                                            listarOrden(1, buscar, criterio)
-                                        "
-                                        >Buscar</el-button
-                                    >
+                                    <el-button icon="el-icon-search" type="primary" @click="
+                            listarOrden(1, buscar, criterio)
+                            ">Buscar</el-button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <table
-                        class="table table-sm table-hover table-responsive "
-                    >
+                    <table class="table table-sm table-hover table-responsive ">
                         <thead>
                             <tr>
                                 <th>Opciones</th>
@@ -77,39 +54,32 @@
                                 <th>Modelo</th>
                                 <th>Serial</th>
                                 <th>Clave</th>
-                                <th>Accesorios</th>                                
+                                <th>Accesorios</th>
                                 <th>Observaciones</th>
                                 <th>FallaEquipo</th>
                                 <th>Reparacion</th>
                                 <th>FechaEntrada</th>
                                 <th>FechaEntrega</th>
                                 <th>Adelanto</th>
-                                <th>TotalPagar</th>                                
+                                <th>TotalPagar</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="orden in arrayOrden"
-                                :key="orden.id"
-                            >
+                            <tr v-for="orden in arrayOrden" :key="orden.id">
                                 <td>
-                                    <button
-                                        type="button"
-                                        @click="
-                                            abrirModal(
-                                                'orden',
-                                                'actualizar',
-                                                orden
-                                            )
-                                        "
-                                        class="btn btn-warning btn-sm"
-                                    >
+                                    <button type="button" @click="
+                            abrirModal(
+                                'orden',
+                                'actualizar',
+                                orden
+                            )
+                            " class="btn btn-warning btn-sm">
                                         <i class="icon-pencil"></i>
                                     </button>
                                     <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-print"></i>
-                                            </button> 
+                                        <i class="fas fa-print"></i>
+                                    </button>
                                     &nbsp;
                                     <!-- <template v-if="orden.condicion">
                                         <button
@@ -122,7 +92,7 @@
                                             <i class="icon-trash"></i>
                                         </button>
                                     </template>
-                                    <template v-else>
+<template v-else>
                                         <button
                                             type="button"
                                             @click="activarOrden(orden.id)"
@@ -166,58 +136,32 @@
                     </table>
                     <nav>
                         <ul class="pagination">
-                            <li
-                                class="page-item"
-                                v-if="pagination.current_page > 1"
-                            >
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    @click.prevent="
-                                        cambiarPagina(
-                                            pagination.current_page - 1,
-                                            buscar,
-                                            criterio
-                                        )
-                                    "
-                                    >Ant</a
-                                >
+                            <li class="page-item" v-if="pagination.current_page > 1">
+                                <a class="page-link" href="#" @click.prevent="
+                            cambiarPagina(
+                                pagination.current_page - 1,
+                                buscar,
+                                criterio
+                            )
+                            ">Ant</a>
                             </li>
-                            <li
-                                class="page-item"
-                                v-for="page in pagesNumber"
-                                :key="page"
-                                :class="[page == isActived ? 'active' : '']"
-                            >
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    @click.prevent="
-                                        cambiarPagina(page, buscar, criterio)
-                                    "
-                                    v-text="page"
-                                ></a>
+                            <li class="page-item" v-for="page in pagesNumber" :key="page"
+                                :class="[page == isActived ? 'active' : '']">
+                                <a class="page-link" href="#" @click.prevent="
+                            cambiarPagina(page, buscar, criterio)
+                            " v-text="page"></a>
                             </li>
 
-                            <li
-                                class="page-item"
-                                v-if="
-                                    pagination.current_page <
-                                    pagination.last_page
-                                "
-                            >
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    @click.prevent="
-                                        cambiarPagina(
-                                            pagination.current_page + 1,
-                                            buscar,
-                                            criterio
-                                        )
-                                    "
-                                    >Sig</a
-                                >
+                            <li class="page-item" v-if="pagination.current_page <
+                            pagination.last_page
+                            ">
+                                <a class="page-link" href="#" @click.prevent="
+                            cambiarPagina(
+                                pagination.current_page + 1,
+                                buscar,
+                                criterio
+                            )
+                            ">Sig</a>
                             </li>
                         </ul>
                     </nav>
@@ -226,132 +170,109 @@
             <!-- Fin ejemplo de tabla Listado -->
         </div>
         <!--Inicio del modal agregar/actualizar-->
-        <div
-            class="modal fade"
-            tabindex="-1"
-            :class="{ mostrar: modal }"
-            role="dialog"
-            aria-labelledby="myLargeModalLabel"
-            style="display: none"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-primary modal-lg" role="document">
+        <div class="modal fade " tabindex="-1" :class="{ mostrar: modal }" role="dialog"
+            aria-labelledby="myLargeModalLabel" style="display: none" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-scrollable  " role="dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h6 class="modal-title" v-text="tituloModal"></h6>
-                        <button
-                            type="button"
-                            class="close"
-                            @click="cerrarModal()"
-                            aria-label="Close"
-                        >
+                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form action method="post" enctype="multipart/form-data" class="form-horizontal">
-              <div v-show="errorOrden" class="form-group row div-error">
-                  <div class="text-center text-error">
-                    <div v-for="error in errorMostrarMsjOrden" :key="error" v-text="error"></div>
-                  </div>
-                </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div>
-                    <label class for="text-input">Numero Orden</label>
-                    <div class>
-                      <el-input placeholder="orden" size="mini" v-model="orden_id" :disabled="true"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class>
-                    <label class for="text-input">Cliente</label>
-                    <div class>
-                      <template>
-                        <el-select
-                          size="mini"
-                          v-model="idcliente"
-                          placeholder="Selecciona el cliente"
-                        >
-                          <el-option
-                            v-for="cliente in arrayCliente"
-                            :key="cliente.id"
-                            :label="cliente.nombre"
-                            :value="cliente.id"
-                          ></el-option>
-                        </el-select>
-                      </template>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div>
-                    <label class for="text-input">Tecnico</label>
-                    <div class>
-                     <template>
-                        <el-select
-                          size="mini"               
-                          v-model="idtecnico"
-                          placeholder="Selecciona el tecnico"
-                        >
-                          <el-option
-                            v-for="tecnico in arrayTecnico"
-                            :key="tecnico.id"
-                            :label="tecnico.nombre"
-                            :value="tecnico.id"
-                          ></el-option>
-                        </el-select>
-                      </template>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Nombre del equipo</label>
-                    <div class>
-                      <el-input placeholder="Nombre equipo" size="mini" v-model="nombreEquipo"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Marca</label>
-                    <div class>
-                      <el-input
-                        placeholder="Marca"
-                        size="mini"
-                        v-model="marca"
-                      ></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Modelo</label>
-                    <div class>
-                      <el-input
-                        placeholder="Modelo"
-                        size="mini"
-                        v-model="modelo"
-                      ></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Serial</label>
-                    <div class>
-                      <el-input placeholder="Serial" size="mini" v-model="serial"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Clave</label>
-                    <div class>
-                      <el-input placeholder="Clave" size="mini" v-model="clave"></el-input>
-                      <!-- <div class="block">
+                            <div v-show="errorOrden" class="form-group row div-error">
+                                <div class="text-center text-error">
+                                    <div v-for="error in errorMostrarMsjOrden" :key="error" v-text="error"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div>
+                                        <label class for="text-input">Numero Orden</label>
+                                        <div class>
+                                            <el-input placeholder="orden" size="mini" v-model="orden_id"
+                                                :disabled="true"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class>
+                                        <label class for="text-input">Cliente</label>
+                                        <!-- <el-button type="text" @click="centerDialogVisible = true"> nuevo</el-button> -->
+                                        <div class>
+                                            <template>
+                                                <el-select size="mini" v-model="idcliente"
+                                                    placeholder="Selecciona el cliente">
+                                                    <el-option v-for="cliente in arrayCliente" :key="cliente.id"
+                                                        :label="cliente.nombre" :value="cliente.id"></el-option>
+                                                </el-select>
+                                                <div>
+                                                    <el-button v-if="tipoAccion == 1" type="text"
+                                                        @click="centerDialogVisible = true">
+                                                        nuevo</el-button>
+                                                </div>
+
+                                            </template>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div>
+                                        <label class for="text-input">Tecnico</label>
+                                        <div class>
+                                            <template>
+                                                <el-select size="mini" v-model="idtecnico"
+                                                    placeholder="Selecciona el tecnico">
+                                                    <el-option v-for="tecnico in arrayTecnico" :key="tecnico.id"
+                                                        :label="tecnico.nombre" :value="tecnico.id"></el-option>
+                                                </el-select>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Nombre del equipo</label>
+                                        <div class>
+                                            <el-input placeholder="Nombre equipo" size="mini"
+                                                v-model="nombreEquipo"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Marca</label>
+                                        <div class>
+                                            <el-input placeholder="Marca" size="mini" v-model="marca"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Modelo</label>
+                                        <div class>
+                                            <el-input placeholder="Modelo" size="mini" v-model="modelo"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Serial</label>
+                                        <div class>
+                                            <el-input placeholder="Serial" size="mini" v-model="serial"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Clave</label>
+                                        <div class>
+                                            <el-input placeholder="Clave" size="mini" v-model="clave"></el-input>
+                                            <!-- <div class="block">
                         <el-date-picker
                           v-model="fechaVencimiento"
                           type="date"
@@ -361,152 +282,150 @@
                           size="mini"
                         ></el-date-picker>
                       </div> -->
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Accesorios</label>
-                    <div class>
-                      <el-input placeholder="Accesorios" size="mini" v-model="accesorios"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Observaciones</label>
-                    <div class>
-                      <el-input placeholder="Observaciones" size="mini" v-model="observaciones"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Falla de Equipo</label>
-                    <div class>
-                      <el-input placeholder="Falla del equipo" size="mini" v-model="fallaEquipo"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Reparacion</label>
-                    <div class>
-                      <el-input placeholder="Reparacion" size="mini" v-model="reparacion"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Fecha Entrada</label>
-                    <div class>
-                      <div class="block">
-                        <el-date-picker
-                          v-model="fechaEntrada"
-                          type="date"
-                          placeholder="Escoge un día"
-                          format="yyyy/MM/dd"
-                          value-format="yyyy-MM-dd"                          
-                          size="mini"
-                        ></el-date-picker>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Fecha de Entrega</label>
-                    <div class>
-                     <div class="block">
-                        <el-date-picker
-                          v-model="fechaEntrega"
-                          type="date"
-                          placeholder="Escoge un día"
-                          format="yyyy/MM/dd"
-                          value-format="yyyy-MM-dd"                          
-                          size="mini"
-                        ></el-date-picker>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Adelanto</label>
-                    <div class>
-                       <el-input placeholder="Adelanto" size="mini" v-model="adelanto"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Total Pagar</label>
-                    <div class>
-                      <el-input placeholder="Total pagar" size="mini" v-model="totalPagar"></el-input>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div>
-                    <label class for="text-input">Estado</label>
-                    <div class="">
-                        <template>
-                        <el-select v-model="estado" clearable placeholder="Seleciona el estado">
-                            <el-option
-                            v-for="estado in estados"
-                            :key="estado.value"
-                            :label="estado.label"
-                            :value="estado.value">
-                            </el-option>
-                        </el-select>
-                        </template>
-                      <!-- <el-input placeholder="lote" size="mini" v-model.number="descuento"></el-input> -->
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              <!-- fin form -->
-            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Accesorios</label>
+                                        <div class>
+                                            <el-input placeholder="Accesorios" size="mini"
+                                                v-model="accesorios"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Observaciones</label>
+                                        <div class>
+                                            <el-input placeholder="Observaciones" size="mini"
+                                                v-model="observaciones"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Falla de Equipo</label>
+                                        <div class>
+                                            <el-input placeholder="Falla del equipo" size="mini"
+                                                v-model="fallaEquipo"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Reparacion</label>
+                                        <div class>
+                                            <el-input placeholder="Reparacion" size="mini"
+                                                v-model="reparacion"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Fecha Entrada</label>
+                                        <div class>
+                                            <div class="block">
+                                                <el-date-picker v-model="fechaEntrada" type="date"
+                                                    placeholder="Escoge un día" format="yyyy/MM/dd"
+                                                    value-format="yyyy-MM-dd" size="mini"></el-date-picker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Fecha de Entrega</label>
+                                        <div class>
+                                            <div class="block">
+                                                <el-date-picker v-model="fechaEntrega" type="date"
+                                                    placeholder="Escoge un día" format="yyyy/MM/dd"
+                                                    value-format="yyyy-MM-dd" size="mini"></el-date-picker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Adelanto</label>
+                                        <div class>
+                                            <el-input placeholder="Adelanto" size="mini" v-model="adelanto"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Total Pagar</label>
+                                        <div class>
+                                            <el-input placeholder="Total pagar" size="mini"
+                                                v-model="totalPagar"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <label class for="text-input">Estado</label>
+                                        <div class="">
+                                            <template>
+                                                <el-select size="mini" v-model="estado" clearable
+                                                    placeholder="Seleciona el estado">
+                                                    <el-option v-for="estado in estados" :key="estado.value"
+                                                        :label="estado.label" :value="estado.value">
+                                                    </el-option>
+                                                </el-select>
+                                            </template>
+                                            <!-- <el-input placeholder="lote" size="mini" v-model.number="descuento"></el-input> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- fin form -->
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            @click="cerrarModal()"
-                        >
+
+                        <!-- <button type="button" class="btn btn-danger" @click="cerrarModal()">
                             Cerrar
-                        </button>
-                        <button
-                            type="button"
-                            v-if="tipoAccion == 1"
-                            class="btn btn-primary"
-                            @click="registrarOrden()"
-                        >
+                        </button> -->
+                        <el-button type="danger" @click="cerrarModal()">Cerrar</el-button>
+                        <!-- <button type="button" v-if="tipoAccion == 1" class="btn btn-primary" @click="registrarOrden()">
                             Guardar
-                        </button>
-                        <button
-                            type="button"
-                            v-if="tipoAccion == 2"
-                            class="btn btn-primary"
-                            @click="actualizarOrden()"
-                        >
+                        </button> -->
+                        <el-button type="primary" v-if="tipoAccion == 1" @click="registrarOrden()">Registrar
+                            orden</el-button>
+                        <el-button type="primary" v-if="tipoAccion == 2" @click="actualizarOrden()">Actualizar
+                            orden</el-button>
+                        <!-- <button type="button" v-if="tipoAccion == 2" class="btn btn-primary" @click="actualizarOrden()">
                             Actualizar
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
+        <el-dialog title="Registro de cliente.." :visible.sync="centerDialogVisible" width="25%" center>
+            <cliente @escuchar=" selectCliente()"></cliente>
+            <span slot="footer" class="dialog-footer">
+                <!-- <el-button @click="centerDialogVisible = false">Cancel</el-button> -->
+                <!-- <el-button type="primary" @click="centerDialogVisible = false">Cancelar</el-button> -->
+
+            </span>
+        </el-dialog>
+
+
     </main>
 </template>
 
 <script>
+import cliente from './RegistroCliente.vue'
 export default {
+    components: { cliente },
     data() {
         return {
+
+            centerDialogVisible: false,
             input: "",
             //para select
             options: [
@@ -514,16 +433,16 @@ export default {
                     value: "id",
                     label: "id",
                 },
-               
-                
+
+
             ],
             valores: [
                 {
                     value: "id",
                     label: "Numero Orden",
                 },
-                
-                
+
+
             ],
             //para estados
             estados: [
@@ -531,21 +450,21 @@ export default {
                     value: "Ingresado",
                     label: "Ingresado",
                 },
-                 {
+                {
                     value: "Reparando",
                     label: "Reparando",
                 },
-                 {
+                {
                     value: "Reparacion finalizado",
                     label: "Reparacion finalizado",
                 },
-               {
+                {
                     value: "Entregado",
                     label: "Entregado",
                 },
-                
+
             ],
-            value:'',
+            value: '',
             orden_id: 0,
             idcliente: "",
             idtecnico: "",
@@ -564,15 +483,15 @@ export default {
             totalPagar: "",
             estado: "",
             arrayOrden: [],
-            arrayCliente:[],
-            arrayTecnico:[],
+            arrayCliente: [],
+            arrayTecnico: [],
             modal: 0,
             tituloModal: "",
             tipoAccion: 0,
             errorOrden: 0,
             errorMostrarMsjOrden: [],
             //report
-            listado:1,
+            listado: 1,
 
             pagination: {
                 total: 0,
@@ -585,6 +504,7 @@ export default {
             offset: 3,
             criterio: "id",
             buscar: "",
+            nuevocliente: false,
         };
     },
     computed: {
@@ -612,6 +532,7 @@ export default {
         },
     },
     methods: {
+
         guardar() {
             this.$message({
                 message: "Orden Guardado con éxito.",
@@ -625,7 +546,7 @@ export default {
             });
         },
         //carga pdf clientes
-        
+
         listarOrden(page, buscar, criterio) {
             let me = this;
             var url =
@@ -640,7 +561,7 @@ export default {
                 .then(function (response) {
                     var respuesta = response.data;
                     me.arrayOrden = respuesta.ordenes.data;
-                   // console.log(arrayOrden);
+                    // console.log(arrayOrden);
                     me.pagination = respuesta.pagination;
                 })
                 .catch(function (error) {
@@ -652,38 +573,38 @@ export default {
             me.pagination.current_page = page;
             me.listarOrden(page, buscar, criterio);
         },
-         selectCliente() {
-        let me = this;
-        var url = "/cliente/selectCliente";
+        selectCliente() {
+            let me = this;
+            var url = "/cliente/selectCliente";
 
             axios
                 .get(url)
-                .then(function(response) {
-                var respuesta = response.data;
-                me.arrayCliente = respuesta.clientes;
-                //me.pagination = respuesta.pagination;
-                // console.log(arrayCategoria);
+                .then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayCliente = respuesta.clientes;
+                    //me.pagination = respuesta.pagination;
+                    // console.log(arrayCategoria);
                 })
-                .catch(function(error) {
-                console.log(error);
+                .catch(function (error) {
+                    console.log(error);
                 });
-            },
-             selectTecnico() {
-        let me = this;
-        var url = "/tecnico/selectTecnico";
+        },
+        selectTecnico() {
+            let me = this;
+            var url = "/tecnico/selectTecnico";
 
             axios
                 .get(url)
-                .then(function(response) {
-                var respuesta = response.data;
-                me.arrayTecnico = respuesta.tecnicos;
-                //me.pagination = respuesta.pagination;
-                // console.log(arrayCategoria);
+                .then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayTecnico = respuesta.tecnicos;
+                    //me.pagination = respuesta.pagination;
+                    // console.log(arrayCategoria);
                 })
-                .catch(function(error) {
-                console.log(error);
+                .catch(function (error) {
+                    console.log(error);
                 });
-            },
+        },
         registrarOrden() {
             //validando campos tecnico
             if (this.validarOrden()) {
@@ -716,7 +637,7 @@ export default {
                     me.listarOrden(1, "", "nombre");
                     me.guardar();
                     //abre la pagina para imprimir
-                     //window.open('/orden/pdf/'+ response.data.id);
+                    window.open('/orden/pdf/' + response.data.id);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -731,7 +652,7 @@ export default {
             let me = this;
             axios
                 .put("/orden/actualizar", {
-                     idcliente: this.idcliente,
+                    idcliente: this.idcliente,
                     idtecnico: this.idtecnico,
                     nombreEquipo: this.nombreEquipo,
                     marca: this.marca,
@@ -756,7 +677,7 @@ export default {
 
                 })
                 .catch(function (error) {
-                   // console.log(error.response.data);
+                    // console.log(error.response.data);
                 });
         },
         desactivarOrden(id) {
@@ -817,80 +738,80 @@ export default {
             this.errorOrden = 0;
             this.errorMostrarMsjOrden = [];
 
-            
-             if(!this.idcliente) 
+
+            if (!this.idcliente)
                 this.errorMostrarMsjOrden.push(
-                 "Seleccionar el cliente "          
+                    "Seleccionar el cliente "
                 );
-                
-                 else if(!this.idtecnico) 
+
+            else if (!this.idtecnico)
                 this.errorMostrarMsjOrden.push(
-                 "Seleccionar el tecnico "          
+                    "Seleccionar el tecnico "
                 );
-                else if (!this.nombreEquipo)
+            else if (!this.nombreEquipo)
                 this.errorMostrarMsjOrden.push(
                     "El nombre del equipo no puede estar vacío."
                 );
-                else if(!this.marca) 
+            else if (!this.marca)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa la marca del equipo "          
+                    "Ingresa la marca del equipo "
                 );
-                 else if(!this.modelo) 
+            else if (!this.modelo)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa el modelo del equipo "          
+                    "Ingresa el modelo del equipo "
                 );
-                 else if(!this.serial) 
+            else if (!this.serial)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa el serial del equipo "          
+                    "Ingresa el serial del equipo "
                 );
-                 else if(!this.clave) 
+            else if (!this.clave)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa la clave del equipo "          
+                    "Ingresa la clave del equipo "
                 );
-                 else if(!this.accesorios) 
+            else if (!this.accesorios)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa los accesorios del equipo "          
+                    "Ingresa los accesorios del equipo "
                 );
-                 else if(!this.observaciones) 
+            else if (!this.observaciones)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa las observaciones del equipo "          
+                    "Ingresa las observaciones del equipo "
                 );
-                 else if(!this.fallaEquipo) 
+            else if (!this.fallaEquipo)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa la falla del equipo "          
+                    "Ingresa la falla del equipo "
                 );
-                 else if(!this.reparacion) 
+            else if (!this.reparacion)
                 this.errorMostrarMsjOrden.push(
-                 "El campo reparacion no puede estar vacia "          
+                    "El campo reparacion no puede estar vacia "
                 );
-                 else if(!this.fechaEntrada) 
+            else if (!this.fechaEntrada)
                 this.errorMostrarMsjOrden.push(
-                 "Selecciona la fecha de entrada "          
+                    "Selecciona la fecha de entrada "
                 );
-                 else if(!this.fechaEntrega) 
+            else if (!this.fechaEntrega)
                 this.errorMostrarMsjOrden.push(
-                 "Selecciona la fecha de entrega"          
+                    "Selecciona la fecha de entrega"
                 );
-               
-                 else if(!this.adelanto) 
+
+            else if (!this.adelanto)
                 this.errorMostrarMsjOrden.push(
-                 "El campo adelanto no puede estar vacion."          
+                    "El campo adelanto no puede estar vacion."
                 );
-                 else if(!this.totalPagar) 
+            else if (!this.totalPagar)
                 this.errorMostrarMsjOrden.push(
-                 "Ingresa el monto total  a pagar"          
+                    "Ingresa el monto total  a pagar"
                 );
-                else if (parseInt(this.adelanto)>parseInt(this.totalPagar))
+            else if (parseInt(this.adelanto) > parseInt(this.totalPagar))
                 this.errorMostrarMsjOrden.push(
                     "El campo adelanto no puede ser mayor que total a pagar"
                 );
-                 else if(!this.estado) 
+            else if (!this.estado)
                 this.errorMostrarMsjOrden.push(
-                 "Selecciona el estado para el orden"          
+                    "Selecciona el estado para el orden"
                 );
-                
-                
-                
+
+
+
 
             if (this.errorMostrarMsjOrden.length) this.errorOrden = 1;
 
@@ -914,7 +835,7 @@ export default {
             this.fechaEntrega = "";
             this.adelanto = "";
             this.totalPagar = "";
-            this.estado="null"
+            this.estado = "null"
             this.errorOrden = 0;
         },
         abrirModal(modelo, accion, data = []) {
@@ -939,68 +860,75 @@ export default {
                             this.fechaEntrega = "";
                             this.adelanto = "";
                             this.totalPagar = "";
-                            this.estado=""
+                            this.estado = ""
                             this.tipoAccion = 1;
                             break;
                         }
                         case "actualizar": {
-                             console.log(data);
+                            console.log(data);
                             this.modal = 1;
                             this.tituloModal = "Actualizar Orden";
                             this.tipoAccion = 2;
                             this.orden_id = data["id"];
                             this.idcliente = data["idcliente"];
-                           // console.log(this.idcliente);
-                            this.idtecnico= data["idtecnico"];
-                             this.nombreEquipo= data["nombreEquipo"];
+                            // console.log(this.idcliente);
+                            this.idtecnico = data["idtecnico"];
+                            this.nombreEquipo = data["nombreEquipo"];
                             this.marca = data["marca"];
                             this.modelo = data["modelo"];
                             this.serial = data["serial"];
                             this.clave = data["clave"];
-                            this.accesorios= data["accesorios"];
-                            this.observaciones= data["observaciones"];
-                            this.fallaEquipo= data["fallaEquipo"];
-                            this.reparacion= data["reparacion"];
-                            this.fechaEntrada= data["fechaEntrada"];
-                            this.fechaEntrega= data["fechaEntrega"];
-                            this.adelanto= data["adelanto"];
-                            this.totalPagar= data["totalPagar"];
-                            this.estado= data["estado"];
+                            this.accesorios = data["accesorios"];
+                            this.observaciones = data["observaciones"];
+                            this.fallaEquipo = data["fallaEquipo"];
+                            this.reparacion = data["reparacion"];
+                            this.fechaEntrada = data["fechaEntrada"];
+                            this.fechaEntrega = data["fechaEntrega"];
+                            this.adelanto = data["adelanto"];
+                            this.totalPagar = data["totalPagar"];
+                            this.estado = data["estado"];
                             break;
                         }
                     }
                 }
             }
-              this.selectCliente();
-              this.selectTecnico();
+            this.selectCliente();
+            this.selectTecnico();
         },
-        pdfOrden(id){
-                window.open('/orden/pdf/'+ id ,'_blank');
-            },
+        pdfOrden(id) {
+            window.open('/orden/pdf/' + id, '_blank');
+        },
     },
     mounted() {
         this.listarOrden(1, this.buscar, this.criterio);
+
     },
+
 };
 </script>
 <style>
 .modal-content {
-    width: 100% !important;
+    width: 100%;
 
     border-radius: 10px;
-    margin-top: 5px;
+
     position: absolute !important;
+
+
 }
+
 .mostrar {
     display: list-item !important;
     opacity: 1 !important;
     position: absolute !important;
     background-color: #3c29297a !important;
 }
+
 .div-error {
     display: flex;
     justify-content: center;
 }
+
 .text-error {
     color: red !important;
     font-weight: bold;

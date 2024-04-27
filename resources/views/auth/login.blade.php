@@ -44,14 +44,14 @@
               </div>
               <div>
                 <h4>AppTaller </h4>
-                <p>Sistema de gestion para administrar tu taller </p>
-                <a href="https://cpiprodesign.com" target="_blank" class="btn btn-danger active mt-3">mas detalles!</a>
+                <p>Sistema de gestión para administrar tu taller </p>
+                <a href="https://cpiprodesign.com" target="_blank" class="btn btn-danger active mt-3">más detalles!</a>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <p class="text-center blanco ">© Copyright 2022. Todos los derechos reservados</p>
+          <p class="text-center blanco ">© Copyright 2024. Todos los derechos reservados</p>
       </div>
       </div>
     </div>

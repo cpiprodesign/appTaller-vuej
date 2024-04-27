@@ -17,7 +17,7 @@
     <link href="css/simple-line-icons.min.css" rel="stylesheet"> --}}
     <!-- Main styles for this application -->
     <script src="https://kit.fontawesome.com/b996cd88e0.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
      <link rel="stylesheet" href="css/app.css">
     <link href="css/plantilla.css" rel="stylesheet">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
@@ -37,29 +37,29 @@
             </button>
             <ul class="nav navbar-nav d-md-down-none">
                 <li class="nav-item px-3">
-                    <a class="nav-link" href="#">Escritorio</a>
+                    {{-- <a class="nav-link" href="#">Escritorio</a> --}}
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" href="#">Configuraciones</a>
+                    {{-- <a class="nav-link" href="#">Configuraciones</a> --}}
                 </li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item d-md-down-none">
                     <a class="nav-link" href="#" data-toggle="dropdown">
                         <i class="icon-bell"></i>
-                        <span class="badge badge-pill badge-danger">5</span>
+                        <span class="badge badge-pill badge-danger">0</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-header text-center">
                             <strong>Notificaciones</strong>
                         </div>
                         <a class="dropdown-item" href="#">
-                            <i class="fa fa-envelope-o"></i> Ingresos
-                            <span class="badge badge-success">3</span>
+                            {{-- <i class="fa fa-envelope-o"></i> Ingresos --}}
+                            {{-- <span class="badge badge-success">3</span> --}}
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="fa fa-tasks"></i> Ventas
-                            <span class="badge badge-danger">2</span>
+                            {{-- <i class="fa fa-tasks"></i> Ventas --}}
+                            {{-- <span class="badge badge-danger">2</span> --}}
                         </a>
                     </div>
                 </li>
@@ -95,7 +95,7 @@
 
         </div>
         <footer class="app-footer">
-            <span><a href="http://www.cpiprodesign.com/">Cpiprodesign</a> &copy; 2023</span>
+            <span><a href="http://www.cpiprodesign.com/">Cpiprodesign</a> &copy; 2024</span>
             <span class="ml-auto">Desarrollado por <a href="http://www.cpiprodesign.com/">cpiprodesign</a></span>
         </footer>
 

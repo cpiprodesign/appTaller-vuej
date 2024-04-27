@@ -160,8 +160,14 @@ class OrdenController extends Controller
        //$pdf ->setPaper('a4','portrait');
        $pdf->setPaper( [0, 0, 220.732,  841.89]); 
       // $pdf->setPaper( array(0,0,612.00,1008.0)); 
+
       return $pdf->download('orden-'.$numOrden[0]->id.'.pdf');
+
+     // $pdf->render();
+//$pdf->stream('orden-'.$numOrden[0]->id.'.pdf');
+
         //return $pdf->download('venta-'.$numventa[0]->num_comprobante.'.pdf');
+
        
     }
 
@@ -193,6 +199,10 @@ class OrdenController extends Controller
             $orden->totalPagar = $request->totalPagar;
             $orden->estado =$request->estado;
             $orden->save();
+            //manda el id del ultimo ventas para imprimir compronate
+            return [
+                'id' => $orden->id
+            ];
 
           
     }

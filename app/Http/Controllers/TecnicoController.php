@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\tecnico;
+use App\Models\Tecnico;
 class TecnicoController extends Controller
 {
     public function index(Request $request)
@@ -12,10 +12,10 @@ class TecnicoController extends Controller
         $buscar = $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
-            $tecnicos = tecnico::orderBy('id','desc')->paginate(6);
+            $tecnicos = Tecnico::orderBy('id','desc')->paginate(6);
           }
         else{
-            $tecnicos = tecnico::where($criterio, 'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(6);//elocuen
+            $tecnicos = Tecnico::where($criterio, 'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(6);//elocuen
         }
         //$personas =DB::table('categorias')->paginate(6);//generador de paginacio
         
@@ -33,9 +33,9 @@ class TecnicoController extends Controller
         //return $personas;
     }
     public function listarPdf(){
-        $tecnicos = tecnico::orderBy('id','desc')->get();
+        $tecnicos = Tecnico::orderBy('id','desc')->get();
 
-        $cont=tecnico::count();
+        $cont=Tecnico::count();
 
         $pdf = \PDF::loadView('pdf.tecnicospdf',['tecnicos'=>$tecnicos,'cont'=>$cont]);
         return $pdf->download('tecnicos.pdf');
@@ -43,7 +43,7 @@ class TecnicoController extends Controller
     public function selectTecnico(Request $request){
         if(!$request->ajax())return redirect('/');
         
-         $tecnicos = tecnico::where('condicion','=','1')
+         $tecnicos = Tecnico::where('condicion','=','1')
             ->select('id','nombre')->orderBy('nombre','asc')->get();
 
         return ['tecnicos'=>$tecnicos];
@@ -68,7 +68,7 @@ class TecnicoController extends Controller
     public function update(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $tecnico = tecnico::findOrFail($request->id);
+        $tecnico = Tecnico::findOrFail($request->id);
         $tecnico->nombre = $request->nombre;
         $tecnico->tipo_documento = $request->tipo_documento;
         $tecnico->num_documento = $request->num_documento;
@@ -83,7 +83,7 @@ class TecnicoController extends Controller
     public function desactivar(Request $request)
     {
         if(!$request->ajax())return redirect('/');
-        $tecnico = tecnico::findOrFail($request->id);        
+        $tecnico = Tecnico::findOrFail($request->id);        
         $tecnico->condicion='0';
         $tecnico->save();
         
@@ -91,7 +91,7 @@ class TecnicoController extends Controller
     public function activar(Request $request)
     {
         if(!$request->ajax())return redirect('/');
-        $tecnico = tecnico::findOrFail($request->id);        
+        $tecnico = Tecnico::findOrFail($request->id);        
         $tecnico->condicion='1';
         $tecnico->save();
     }

@@ -32,7 +32,7 @@ return new class extends Migration
             $table->dateTime('fechaEntrega');
             $table->decimal('adelanto', 11, 2);
             $table->decimal('totalPagar', 11, 2);            
-            $table->string('estado', 20);
+            $table->string('estado', 60);
             $table->timestamps();
         });
     }

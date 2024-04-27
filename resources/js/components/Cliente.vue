@@ -9,63 +9,35 @@
             <div class="card mt-2">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Clientes
-                    <el-button
-                        plain
-                        type="primary"
-                        icon="el-icon-circle-plus"
-                        @click="abrirModal('cliente', 'registrar')"
-                        >Nuevo</el-button
-                    >
-                    <el-button
-                        type="danger"
-                        icon="el-icon-document"
-                        @click="cargarPdf()"
-                        >Reporte</el-button
-                    >
+                    <el-button plain type="primary" icon="el-icon-circle-plus"
+                        @click="abrirModal('cliente', 'registrar')">Nuevo</el-button>
+                    <el-button type="danger" icon="el-icon-document" @click="cargarPdf()">Reporte</el-button>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
                                 <div class="mr-1">
-                                    <el-select
-                                        v-model="criterio"
-                                        placeholder="Select"
-                                    >
-                                        <el-option
-                                            v-for="item in valores"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value"
-                                        ></el-option>
+                                    <el-select v-model="criterio" placeholder="Select">
+                                        <el-option v-for="item in valores" :key="item.value" :label="item.label"
+                                            :value="item.value"></el-option>
                                     </el-select>
                                 </div>
                                 <div class="mr-1">
-                                    <el-input
-                                        @keyup.native.enter="
-                                            listarCliente(1, buscar, criterio)
-                                        "
-                                        placeholder="Texto a buscar"
-                                        v-model="buscar"
-                                    ></el-input>
+                                    <el-input @keyup.native.enter="
+                            listarCliente(1, buscar, criterio)
+                            " placeholder="Texto a buscar" v-model="buscar"></el-input>
                                 </div>
 
                                 <div>
-                                    <el-button
-                                        icon="el-icon-search"
-                                        type="primary"
-                                        @click="
-                                            listarCliente(1, buscar, criterio)
-                                        "
-                                        >Buscar</el-button
-                                    >
+                                    <el-button icon="el-icon-search" type="primary" @click="
+                            listarCliente(1, buscar, criterio)
+                            ">Buscar</el-button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <table
-                        class="table table-sm table-hover table-responsive-sm"
-                    >
+                    <table class="table table-sm table-hover table-responsive-sm">
                         <thead>
                             <tr>
                                 <th>Opciones</th>
@@ -79,42 +51,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                v-for="cliente in arrayCliente"
-                                :key="cliente.id"
-                            >
+                            <tr v-for="cliente in arrayCliente" :key="cliente.id">
                                 <td>
-                                    <button
-                                        type="button"
-                                        @click="
-                                            abrirModal(
-                                                'cliente',
-                                                'actualizar',
-                                                cliente
-                                            )
-                                        "
-                                        class="btn btn-warning btn-sm"
-                                    >
+                                    <button type="button" @click="
+                            abrirModal(
+                                'cliente',
+                                'actualizar',
+                                cliente
+                            )
+                            " class="btn btn-warning btn-sm">
                                         <i class="icon-pencil"></i>
                                     </button>
                                     &nbsp;
                                     <template v-if="cliente.condicion">
-                                        <button
-                                            type="button"
-                                            @click="
-                                                desactivarCliente(cliente.id)
-                                            "
-                                            class="btn btn-danger btn-sm"
-                                        >
+                                        <button type="button" @click="
+                            desactivarCliente(cliente.id)
+                            " class="btn btn-danger btn-sm">
                                             <i class="icon-trash"></i>
                                         </button>
                                     </template>
                                     <template v-else>
-                                        <button
-                                            type="button"
-                                            @click="activarCliente(cliente.id)"
-                                            class="btn btn-info btn-sm"
-                                        >
+                                        <button type="button" @click="activarCliente(cliente.id)"
+                                            class="btn btn-info btn-sm">
                                             <i class="icon-check"></i>
                                         </button>
                                     </template>
@@ -127,14 +85,10 @@
                                 <td v-text="cliente.email"></td>
                                 <td>
                                     <div v-if="cliente.condicion">
-                                        <span class="badge badge-success"
-                                            >Activo</span
-                                        >
+                                        <span class="badge badge-success">Activo</span>
                                     </div>
                                     <div v-else>
-                                        <span class="badge badge-danger"
-                                            >Desactivado</span
-                                        >
+                                        <span class="badge badge-danger">Desactivado</span>
                                     </div>
                                 </td>
                             </tr>
@@ -142,58 +96,32 @@
                     </table>
                     <nav>
                         <ul class="pagination">
-                            <li
-                                class="page-item"
-                                v-if="pagination.current_page > 1"
-                            >
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    @click.prevent="
-                                        cambiarPagina(
-                                            pagination.current_page - 1,
-                                            buscar,
-                                            criterio
-                                        )
-                                    "
-                                    >Ant</a
-                                >
+                            <li class="page-item" v-if="pagination.current_page > 1">
+                                <a class="page-link" href="#" @click.prevent="
+                            cambiarPagina(
+                                pagination.current_page - 1,
+                                buscar,
+                                criterio
+                            )
+                            ">Ant</a>
                             </li>
-                            <li
-                                class="page-item"
-                                v-for="page in pagesNumber"
-                                :key="page"
-                                :class="[page == isActived ? 'active' : '']"
-                            >
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    @click.prevent="
-                                        cambiarPagina(page, buscar, criterio)
-                                    "
-                                    v-text="page"
-                                ></a>
+                            <li class="page-item" v-for="page in pagesNumber" :key="page"
+                                :class="[page == isActived ? 'active' : '']">
+                                <a class="page-link" href="#" @click.prevent="
+                            cambiarPagina(page, buscar, criterio)
+                            " v-text="page"></a>
                             </li>
 
-                            <li
-                                class="page-item"
-                                v-if="
-                                    pagination.current_page <
-                                    pagination.last_page
-                                "
-                            >
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    @click.prevent="
-                                        cambiarPagina(
-                                            pagination.current_page + 1,
-                                            buscar,
-                                            criterio
-                                        )
-                                    "
-                                    >Sig</a
-                                >
+                            <li class="page-item" v-if="pagination.current_page <
+                            pagination.last_page
+                            ">
+                                <a class="page-link" href="#" @click.prevent="
+                            cambiarPagina(
+                                pagination.current_page + 1,
+                                buscar,
+                                criterio
+                            )
+                            ">Sig</a>
                             </li>
                         </ul>
                     </nav>
@@ -202,158 +130,76 @@
             <!-- Fin ejemplo de tabla Listado -->
         </div>
         <!--Inicio del modal agregar/actualizar-->
-        <div
-            class="modal fade"
-            tabindex="-1"
-            :class="{ mostrar: modal }"
-            role="dialog"
-            aria-labelledby="myModalLabel"
-            style="display: none"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-primary modal-md" role="document">
+        <div class="modal fade" tabindex="-1" :class="{ mostrar: modal }" role="dialog" aria-labelledby="myModalLabel"
+            style="display: none" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-scrollable " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h6 class="modal-title" v-text="tituloModal"></h6>
-                        <button
-                            type="button"
-                            class="close"
-                            @click="cerrarModal()"
-                            aria-label="Close"
-                        >
+                        <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form
-                            action
-                            method="post"
-                            enctype="multipart/form-data"
-                            class="form-horizontal"
-                        >
+                        <form action method="post" enctype="multipart/form-data" class="form-horizontal">
                             <div class="form-group row">
-                                <label
-                                    class="col-md-3 form-control-label"
-                                    for="text-input"
-                                    >Nombre</label
-                                >
+                                <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                 <div class="col-md-9">
-                                    <el-input
-                                        placeholder="Nombre del cliente"
-                                        v-model="nombre"
-                                    ></el-input>
+                                    <el-input placeholder="Nombre del cliente" v-model="nombre"></el-input>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label
-                                    class="col-md-3 form-control-label"
-                                    for="text-input"
-                                    >Tipo documento</label
-                                >
+                                <label class="col-md-3 form-control-label" for="text-input">Tipo documento</label>
                                 <div class="col-md-9">
-                                    <el-select
-                                        v-model="tipo_documento"
-                                        placeholder="Select"
-                                    >
-                                        <el-option
-                                            v-for="item in options"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value"
-                                        ></el-option>
+                                    <el-select v-model="tipo_documento" placeholder="Select">
+                                        <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                            :value="item.value"></el-option>
                                     </el-select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label
-                                    class="col-md-3 form-control-label"
-                                    for="text-input"
-                                    >Numero</label
-                                >
+                                <label class="col-md-3 form-control-label" for="text-input">Numero</label>
                                 <div class="col-md-9">
-                                    <el-input
-                                        placeholder="Numero de documento"
-                                        v-model="num_documento"
-                                    ></el-input>
+                                    <el-input placeholder="Numero de documento" v-model="num_documento"></el-input>
                                     <!-- <input class="form-control" type="text" v-model="num_documento" placeholder="Numero de documento" > -->
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label
-                                    class="col-md-3 form-control-label"
-                                    for="text-input"
-                                    >Direccion</label
-                                >
+                                <label class="col-md-3 form-control-label" for="text-input">Direccion</label>
                                 <div class="col-md-9">
-                                    <el-input
-                                        placeholder="Dirección"
-                                        v-model="direccion"
-                                    ></el-input>
+                                    <el-input placeholder="Dirección" v-model="direccion"></el-input>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label
-                                    class="col-md-3 form-control-label"
-                                    for="text-input"
-                                    >Telefono</label
-                                >
+                                <label class="col-md-3 form-control-label" for="text-input">Telefono</label>
                                 <div class="col-md-9">
-                                    <el-input
-                                        placeholder="Telefono"
-                                        v-model="telefono"
-                                    ></el-input>
+                                    <el-input placeholder="Telefono" v-model="telefono"></el-input>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label
-                                    class="col-md-3 form-control-label"
-                                    for="text-input"
-                                    >Email</label
-                                >
+                                <label class="col-md-3 form-control-label" for="text-input">Email</label>
                                 <div class="col-md-9">
-                                    <el-input
-                                        placeholder="Email@gmail.com"
-                                        v-model="email"
-                                    ></el-input>
+                                    <el-input placeholder="Email@gmail.com" v-model="email"></el-input>
                                 </div>
                             </div>
 
-                            <div
-                                v-show="errorCliente"
-                                class="form-group row div-error"
-                            >
+                            <div v-show="errorCliente" class="form-group row div-error">
                                 <div class="text-center text-error">
-                                    <div
-                                        v-for="error in errorMostrarMsjCliente"
-                                        :key="error"
-                                        v-text="error"
-                                    ></div>
+                                    <div v-for="error in errorMostrarMsjCliente" :key="error" v-text="error"></div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            @click="cerrarModal()"
-                        >
+                        <button type="button" class="btn btn-danger" @click="cerrarModal()">
                             Cerrar
                         </button>
-                        <button
-                            type="button"
-                            v-if="tipoAccion == 1"
-                            class="btn btn-primary"
-                            @click="registrarCliente()"
-                        >
+                        <button type="button" v-if="tipoAccion == 1" class="btn btn-primary"
+                            @click="registrarCliente()">
                             Guardar
                         </button>
-                        <button
-                            type="button"
-                            v-if="tipoAccion == 2"
-                            class="btn btn-primary"
-                            @click="actualizarCliente()"
-                        >
+                        <button type="button" v-if="tipoAccion == 2" class="btn btn-primary"
+                            @click="actualizarCliente()">
                             Actualizar
                         </button>
                     </div>
@@ -672,16 +518,19 @@ export default {
     margin-top: 20px;
     position: absolute !important;
 }
+
 .mostrar {
     display: list-item !important;
     opacity: 1 !important;
     position: absolute !important;
     background-color: #3c29297a !important;
 }
+
 .div-error {
     display: flex;
     justify-content: center;
 }
+
 .text-error {
     color: red !important;
     font-weight: bold;
