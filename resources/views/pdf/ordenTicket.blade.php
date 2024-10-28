@@ -642,7 +642,7 @@
 </head>
 <body>
     <div class="text-center company_logo ">
-        <img class="img" src="img/logo.png" alt="cpiprodesign" >
+        <img class="img" src="img/megabyte.jpg" alt="megabyte" >
         {{-- <img src="data:{{mime_content_type(public_path("storage/uploads/logos/{$company->logo}"))}};base64, {{base64_encode(file_get_contents(public_path("storage/uploads/logos/{$company->logo}")))}}" alt="{{$company->name}}" class="company_logo_ticket contain"> --}}
      </div>
     {{-- <table class="full-width">
@@ -655,11 +655,11 @@
         
        
     </table> --}}
-    <h3 class="text-center">Cpiprodesign</h3>
-    <h5 class="text-center">Direccion: los alisos 4.5 los olivos</h5>
-    <h5 class="text-center">Teléfono 935667172</h5>
-    <h5 class="text-center">RUC 10458000888</h5>
-    <h5 class="text-center">demo@demo.com</h5>
+    <h3 class="text-center mt-4">Megabyte</h3>
+    <h5 class="text-center">General Flores 287 Esquina 25 De Agosto</h5>
+    <h5 class="text-center">Teléfono +598 099347478</h5>
+    {{-- <h5 class="text-center">RUC 10458000888</h5> --}}
+    <h5 class="text-center">soporte@megabyteuy.com</h5>
     <div class="border-bottom"></div>
     <div>
         @foreach ($ordenes as $o)

@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Sistema Ventas Laravel Vue Js- IncanatoIT">
+    <meta name="description" content="Sistema para administrar tu taller ">
     <meta name="author" content="Incanatoit.com">
-    <meta name="keyword" content="Sistema ventas Laravel Vue Js, Sistema compras Laravel Vue Js">
+    <meta name="keyword" content="Sistema para administrar tu taller ">
     <link rel="shortcut icon" href="vendors/img/favicon.png">
     <title>Sistema para administrar tu taller - SisTaller</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -17,9 +17,12 @@
     <link href="css/simple-line-icons.min.css" rel="stylesheet"> --}}
     <!-- Main styles for this application -->
     <script src="https://kit.fontawesome.com/b996cd88e0.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-     <link rel="stylesheet" href="css/app.css">
-    <link href="css/plantilla.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+     
+    
+  
+   <link href="css/plantilla.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
    
 </head>
@@ -28,7 +31,7 @@
 
     <div id="app">
         <header class="app-header navbar">
-            <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
+            <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto ml-2" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="#"></a>
@@ -63,7 +66,7 @@
                         </a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown px-4">
                     <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
                         aria-haspopup="true" aria-expanded="false">
                         <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">

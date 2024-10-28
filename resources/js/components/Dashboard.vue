@@ -14,7 +14,7 @@
                         <div class="">
                             <div class="">
                                 <div class="aling">
-                                    <i class="icon fas fa-shopping-cart"></i>
+                                    <i class="icon fas fa-mobile-alt"></i>
                                 </div>
                             </div>
                             <div class="data">
@@ -32,7 +32,7 @@
                         <div class="">
                             <div class="text-center">
                                 <div class="aling">
-                                    <i class="icon1 fas fa-shopping-basket"></i>
+                                    <i class="icon1 fas fa-mobile"></i>
                                 </div>
                             </div>
                             <div class="data">

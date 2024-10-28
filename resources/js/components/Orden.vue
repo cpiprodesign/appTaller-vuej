@@ -6,7 +6,7 @@
     </ol>-->
         <div class="container-fluid">
             <!-- Ejemplo de tabla Listado -->
-            <div class="card mt-2">
+            <div class="card mt-4">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Ordenes
                     <el-button plain type="primary" icon="el-icon-circle-plus"
@@ -22,22 +22,22 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <div class="mr-1">
+                                <div class="mr-1 mb-1">
                                     <el-select v-model="criterio" placeholder="Select">
                                         <el-option v-for="item in valores" :key="item.value" :label="item.label"
                                             :value="item.value"></el-option>
                                     </el-select>
                                 </div>
-                                <div class="mr-1">
+                                <div class="mr-1 mb-1">
                                     <el-input @keyup.native.enter="
-                            listarOrden(1, buscar, criterio)
-                            " placeholder="Texto a buscar" v-model="buscar"></el-input>
+                                        listarOrden(1, buscar, criterio)
+                                        " placeholder="Texto a buscar" v-model="buscar"></el-input>
                                 </div>
 
                                 <div>
                                     <el-button icon="el-icon-search" type="primary" @click="
-                            listarOrden(1, buscar, criterio)
-                            ">Buscar</el-button>
+                                        listarOrden(1, buscar, criterio)
+                                        ">Buscar</el-button>
                                 </div>
                             </div>
                         </div>
@@ -46,14 +46,14 @@
                         <thead>
                             <tr>
                                 <th>Opciones</th>
-                                <th>Id</th>
+                                <th>Nro Orden</th>
                                 <th>Cliente</th>
                                 <th>Tecnico</th>
                                 <th>Nombre</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
-                                <th>Serial</th>
-                                <th>Clave</th>
+                                <!-- <th>Serial</th>
+                                <th>Clave</th> -->
                                 <th>Accesorios</th>
                                 <th>Observaciones</th>
                                 <th>FallaEquipo</th>
@@ -68,15 +68,18 @@
                         <tbody>
                             <tr v-for="orden in arrayOrden" :key="orden.id">
                                 <td>
-                                    <button type="button" @click="
-                            abrirModal(
-                                'orden',
-                                'actualizar',
-                                orden
-                            )
-                            " class="btn btn-warning btn-sm">
+                                    <button type=" button" @click="
+                                        abrirModal(
+                                            'orden',
+                                            'actualizar',
+                                            orden
+                                        )
+                                        " class="btn btn-warning btn-sm">
                                         <i class="icon-pencil"></i>
                                     </button>
+                                    <!-- <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-print"></i>
+                                    </button> -->
                                     <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
                                         <i class="fas fa-print"></i>
                                     </button>
@@ -108,8 +111,8 @@
                                 <td v-text="orden.nombreEquipo"></td>
                                 <td v-text="orden.marca"></td>
                                 <td v-text="orden.modelo"></td>
-                                <td v-text="orden.serial"></td>
-                                <td v-text="orden.clave"></td>
+                                <!-- <td v-text="orden.serial"></td> -->
+                                <!-- <td v-text="orden.clave"></td> -->
                                 <td v-text="orden.accesorios"></td>
                                 <td v-text="orden.observaciones"></td>
                                 <td v-text="orden.fallaEquipo"></td>
@@ -118,7 +121,9 @@
                                 <td v-text="orden.fechaEntrega"></td>
                                 <td v-text="orden.adelanto"></td>
                                 <td v-text="orden.totalPagar"></td>
-                                <td v-text="orden.estado"></td>
+                                <td> <span class="badge " :class="estadoColor(orden.estado)">{{
+                                    orden.estado }}</span></td>
+                                <!-- <td v-text="orden.estado" :class="estadoColor(orden.estado)"></td> -->
                                 <!-- <td>
                                     <div v-if="orden.condicion">
                                         <span class="badge badge-success"
@@ -138,30 +143,30 @@
                         <ul class="pagination">
                             <li class="page-item" v-if="pagination.current_page > 1">
                                 <a class="page-link" href="#" @click.prevent="
-                            cambiarPagina(
-                                pagination.current_page - 1,
-                                buscar,
-                                criterio
-                            )
-                            ">Ant</a>
+                                    cambiarPagina(
+                                        pagination.current_page - 1,
+                                        buscar,
+                                        criterio
+                                    )
+                                    ">Ant</a>
                             </li>
                             <li class="page-item" v-for="page in pagesNumber" :key="page"
                                 :class="[page == isActived ? 'active' : '']">
                                 <a class="page-link" href="#" @click.prevent="
-                            cambiarPagina(page, buscar, criterio)
-                            " v-text="page"></a>
+                                    cambiarPagina(page, buscar, criterio)
+                                    " v-text="page"></a>
                             </li>
 
                             <li class="page-item" v-if="pagination.current_page <
-                            pagination.last_page
+                                pagination.last_page
                             ">
                                 <a class="page-link" href="#" @click.prevent="
-                            cambiarPagina(
-                                pagination.current_page + 1,
-                                buscar,
-                                criterio
-                            )
-                            ">Sig</a>
+                                    cambiarPagina(
+                                        pagination.current_page + 1,
+                                        buscar,
+                                        criterio
+                                    )
+                                    ">Sig</a>
                             </li>
                         </ul>
                     </nav>
@@ -170,9 +175,9 @@
             <!-- Fin ejemplo de tabla Listado -->
         </div>
         <!--Inicio del modal agregar/actualizar-->
-        <div class="modal fade " tabindex="-1" :class="{ mostrar: modal }" role="dialog"
+        <div class="modal fade " tabindex="-1" :class="{ mostrar: modal }" role="document"
             aria-labelledby="myLargeModalLabel" style="display: none" aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-scrollable  " role="dialog">
+            <div class="modal-dialog  modal-dialog-scrollable  " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h6 class="modal-title" v-text="tituloModal"></h6>
@@ -188,7 +193,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 col-6  d-none d-sm-blocke">
                                     <div>
                                         <label class for="text-input">Numero Orden</label>
                                         <div class>
@@ -197,7 +202,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 col-6">
                                     <div class>
                                         <label class for="text-input">Cliente</label>
                                         <!-- <el-button type="text" @click="centerDialogVisible = true"> nuevo</el-button> -->
@@ -206,7 +211,7 @@
                                                 <el-select size="mini" v-model="idcliente"
                                                     placeholder="Selecciona el cliente">
                                                     <el-option v-for="cliente in arrayCliente" :key="cliente.id"
-                                                        :label="cliente.nombre" :value="cliente.id"></el-option>
+                                                        :label="cliente.nombre" :value="(cliente.id)"></el-option>
                                                 </el-select>
                                                 <div>
                                                     <el-button v-if="tipoAccion == 1" type="text"
@@ -220,7 +225,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 col-6">
                                     <div>
                                         <label class for="text-input">Tecnico</label>
                                         <div class>
@@ -392,10 +397,13 @@
                         <!-- <button type="button" v-if="tipoAccion == 1" class="btn btn-primary" @click="registrarOrden()">
                             Guardar
                         </button> -->
-                        <el-button type="primary" v-if="tipoAccion == 1" @click="registrarOrden()">Registrar
+                        <el-button type="primary" v-if="tipoAccion == 1"
+                            @click="registrarOrden(), outerVisible = true">Registrar
                             orden</el-button>
-                        <el-button type="primary" v-if="tipoAccion == 2" @click="actualizarOrden()">Actualizar
+                        <el-button type="primary" v-if="tipoAccion == 2"
+                            @click="actualizarOrden(), outerVisible = true">Actualizar
                             orden</el-button>
+
                         <!-- <button type="button" v-if="tipoAccion == 2" class="btn btn-primary" @click="actualizarOrden()">
                             Actualizar
                         </button> -->
@@ -413,6 +421,24 @@
 
             </span>
         </el-dialog>
+        <!-- abre imprimir -->
+        <template>
+            <!-- <el-button type="text" @click="outerVisible = true">o</el-button> -->
+
+            <el-dialog title="Imprime tu documento" :visible.sync="outerVisible">
+                <el-dialog width="30%" title="Inner Dialog" :visible.sync="innerVisible" append-to-body>
+                </el-dialog>
+                <!-- //aqui el pdf -->
+                <!-- <button class="btn btn-primary" @click="fetchPdf(orden_id)">cargar pdf</button> -->
+                <embed :src="pdfUrl" type="application/pdf" width="100%" height="500px" />
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="outerVisible = false">Cancel</el-button>
+                    <!-- <el-button @click="pdfOrden(id)">innmm</el-button> -->
+                    <!-- <el-button type="primary" @click="innerVisible = true">open the inner Dialog</el-button> -->
+                </div>
+            </el-dialog>
+        </template>
+        <!-- carga modal vuejs -->
 
 
     </main>
@@ -424,6 +450,12 @@ export default {
     components: { cliente },
     data() {
         return {
+            showModal: false,
+            pdfUrl: '',
+            //
+            outerVisible: false,
+            innerVisible: false,
+            //
 
             centerDialogVisible: false,
             input: "",
@@ -532,7 +564,39 @@ export default {
         },
     },
     methods: {
-
+        estadoColor(estado) {
+            // Devuelve una clase según el valor del estado
+            switch (estado) {
+                case 'Ingresado':
+                    return 'azul';
+                case 'Reparando':
+                    return 'amarillo';
+                case 'Reparacion finalizado':
+                    return 'verde';
+                case 'Entregado':
+                    return 'celeste';
+                default:
+                    return '';
+            }
+        },
+        fetchPdf(id) {
+            // Hacer la solicitud GET a la API de Laravel
+            axios.get('/orden/pdf/' + id, { responseType: 'arraybuffer' })
+                .then(response => {
+                    // Crear un Blob con la respuesta para convertirla en una URL de objeto
+                    const blob = new Blob([response.data], { type: 'application/pdf' });
+                    this.pdfUrl = URL.createObjectURL(blob);
+                    this.showModal = true;
+                })
+                .catch(error => {
+                    console.error('Error fetching PDF:', error);
+                });
+        },
+        closeModal() {
+            this.showModal = false;
+            // Liberar la URL del objeto para liberar memoria
+            URL.revokeObjectURL(this.pdfUrl);
+        },
         guardar() {
             this.$message({
                 message: "Orden Guardado con éxito.",
@@ -561,7 +625,7 @@ export default {
                 .then(function (response) {
                     var respuesta = response.data;
                     me.arrayOrden = respuesta.ordenes.data;
-                    // console.log(arrayOrden);
+                    //console.log(me.arrayOrden);
                     me.pagination = respuesta.pagination;
                 })
                 .catch(function (error) {
@@ -582,8 +646,7 @@ export default {
                 .then(function (response) {
                     var respuesta = response.data;
                     me.arrayCliente = respuesta.clientes;
-                    //me.pagination = respuesta.pagination;
-                    // console.log(arrayCategoria);
+
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -636,8 +699,12 @@ export default {
                     me.cerrarModal();
                     me.listarOrden(1, "", "nombre");
                     me.guardar();
+
                     //abre la pagina para imprimir
-                    window.open('/orden/pdf/' + response.data.id);
+                    //window.open('/orden/pdf/' + response.data.id);
+                    // me.fetchPdf(me.orden_id);
+                    me.fetchPdf((response.data.id));
+
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -674,6 +741,8 @@ export default {
                     me.cerrarModal();
                     me.listarOrden(1, "", "nombre");
                     me.editar();
+                    //imprime al update
+                    me.fetchPdf(me.orden_id);
 
                 })
                 .catch(function (error) {
@@ -866,12 +935,12 @@ export default {
                         }
                         case "actualizar": {
                             console.log(data);
+                            //this.selectCliente();
                             this.modal = 1;
                             this.tituloModal = "Actualizar Orden";
                             this.tipoAccion = 2;
                             this.orden_id = data["id"];
                             this.idcliente = data["idcliente"];
-                            // console.log(this.idcliente);
                             this.idtecnico = data["idtecnico"];
                             this.nombreEquipo = data["nombreEquipo"];
                             this.marca = data["marca"];
@@ -890,10 +959,14 @@ export default {
                             break;
                         }
                     }
+
+
                 }
+                    this.selectCliente();
+                    this.selectTecnico();
+
             }
-            this.selectCliente();
-            this.selectTecnico();
+
         },
         pdfOrden(id) {
             window.open('/orden/pdf/' + id, '_blank');
@@ -906,7 +979,27 @@ export default {
 
 };
 </script>
-<style>
+<style scoped>
+.verde {
+    background-color: #4caf50;
+    color: white;
+}
+
+.amarillo {
+    background-color: #ffeb3b;
+    color: black;
+}
+
+.celeste {
+    background-color: #54c2ee;
+    color: white;
+}
+
+.azul {
+    background-color: #3652f4;
+    color: white;
+}
+
 .modal-content {
     width: 100%;
 
@@ -922,6 +1015,10 @@ export default {
     opacity: 1 !important;
     position: absolute !important;
     background-color: #3c29297a !important;
+    width: 100%;
+    /* Ocupa todo el ancho */
+    height: 100%;
+    /* Ocupa toda la altura */
 }
 
 .div-error {

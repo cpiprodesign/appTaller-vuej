@@ -12,7 +12,7 @@ class ClienteController extends Controller
         $buscar = $request->buscar;
         $criterio = $request->criterio;
         if($buscar==''){
-            $clientes = Cliente::orderBy('id','desc')->paginate(6);
+            $clientes = Cliente::orderBy('id','desc')->paginate(10);
           }
         else{
             $clientes = Cliente::where($criterio, 'like','%'.$buscar.'%')
@@ -45,7 +45,7 @@ class ClienteController extends Controller
         if(!$request->ajax())return redirect('/');
         
          $clientes = Cliente::where('condicion','=','1')
-            ->select('id','nombre')->orderBy('nombre','asc')->get();
+        ->select('id','nombre')->orderBy('id','desc')->get();
 
         return ['clientes'=>$clientes];
     }

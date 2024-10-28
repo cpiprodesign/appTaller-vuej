@@ -5,7 +5,9 @@
 <div class="row justify-content-center">
   
       <div class=" col-md-6 col-12 col-lg-6">
-        <div class="card-group mb-0">
+        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong "></div>
+        <div id="radius-shape-2" class="position-absolute shadow-5-strong "></div>
+        <div class="card-group bg-glass mb-0">
           <div class="card  p-4">
           <form class="form-horizontal  was-validated" method="POST" action="{{ route('login')}}">
           {{ csrf_field() }}
@@ -50,8 +52,8 @@
             </div>
           </div>
         </div>
-        <div>
-          <p class="text-center blanco ">© Copyright 2024. Todos los derechos reservados</p>
+        <div class="posicion text-center">
+          <p class=" blanco   ">© Copyright 2024. Todos los derechos reservados</p>
       </div>
       </div>
     </div>

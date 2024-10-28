@@ -25,14 +25,14 @@
                                 </div>
                                 <div class="mr-1">
                                     <el-input @keyup.native.enter="
-                            listarCliente(1, buscar, criterio)
-                            " placeholder="Texto a buscar" v-model="buscar"></el-input>
+                                        listarCliente(1, buscar, criterio)
+                                        " placeholder="Texto a buscar" v-model="buscar"></el-input>
                                 </div>
 
                                 <div>
                                     <el-button icon="el-icon-search" type="primary" @click="
-                            listarCliente(1, buscar, criterio)
-                            ">Buscar</el-button>
+                                        listarCliente(1, buscar, criterio)
+                                        ">Buscar</el-button>
                                 </div>
                             </div>
                         </div>
@@ -54,19 +54,19 @@
                             <tr v-for="cliente in arrayCliente" :key="cliente.id">
                                 <td>
                                     <button type="button" @click="
-                            abrirModal(
-                                'cliente',
-                                'actualizar',
-                                cliente
-                            )
-                            " class="btn btn-warning btn-sm">
+                                        abrirModal(
+                                            'cliente',
+                                            'actualizar',
+                                            cliente
+                                        )
+                                        " class="btn btn-warning btn-sm">
                                         <i class="icon-pencil"></i>
                                     </button>
                                     &nbsp;
                                     <template v-if="cliente.condicion">
                                         <button type="button" @click="
-                            desactivarCliente(cliente.id)
-                            " class="btn btn-danger btn-sm">
+                                            desactivarCliente(cliente.id)
+                                            " class="btn btn-danger btn-sm">
                                             <i class="icon-trash"></i>
                                         </button>
                                     </template>
@@ -98,30 +98,30 @@
                         <ul class="pagination">
                             <li class="page-item" v-if="pagination.current_page > 1">
                                 <a class="page-link" href="#" @click.prevent="
-                            cambiarPagina(
-                                pagination.current_page - 1,
-                                buscar,
-                                criterio
-                            )
-                            ">Ant</a>
+                                    cambiarPagina(
+                                        pagination.current_page - 1,
+                                        buscar,
+                                        criterio
+                                    )
+                                    ">Ant</a>
                             </li>
                             <li class="page-item" v-for="page in pagesNumber" :key="page"
                                 :class="[page == isActived ? 'active' : '']">
                                 <a class="page-link" href="#" @click.prevent="
-                            cambiarPagina(page, buscar, criterio)
-                            " v-text="page"></a>
+                                    cambiarPagina(page, buscar, criterio)
+                                    " v-text="page"></a>
                             </li>
 
                             <li class="page-item" v-if="pagination.current_page <
-                            pagination.last_page
+                                pagination.last_page
                             ">
                                 <a class="page-link" href="#" @click.prevent="
-                            cambiarPagina(
-                                pagination.current_page + 1,
-                                buscar,
-                                criterio
-                            )
-                            ">Sig</a>
+                                    cambiarPagina(
+                                        pagination.current_page + 1,
+                                        buscar,
+                                        criterio
+                                    )
+                                    ">Sig</a>
                             </li>
                         </ul>
                     </nav>
@@ -145,13 +145,13 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
                                 <div class="col-md-9">
-                                    <el-input placeholder="Nombre del cliente" v-model="nombre"></el-input>
+                                    <el-input placeholder="Nombre del cliente" size="small" v-model="nombre"></el-input>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Tipo documento</label>
                                 <div class="col-md-9">
-                                    <el-select v-model="tipo_documento" placeholder="Select">
+                                    <el-select size="small" v-model="tipo_documento" placeholder="Select">
                                         <el-option v-for="item in options" :key="item.value" :label="item.label"
                                             :value="item.value"></el-option>
                                     </el-select>
@@ -160,26 +160,27 @@
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Numero</label>
                                 <div class="col-md-9">
-                                    <el-input placeholder="Numero de documento" v-model="num_documento"></el-input>
+                                    <el-input size="small" placeholder="Numero de documento"
+                                        v-model="num_documento"></el-input>
                                     <!-- <input class="form-control" type="text" v-model="num_documento" placeholder="Numero de documento" > -->
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Direccion</label>
                                 <div class="col-md-9">
-                                    <el-input placeholder="Dirección" v-model="direccion"></el-input>
+                                    <el-input placeholder="Dirección" size="small" v-model="direccion"></el-input>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Telefono</label>
                                 <div class="col-md-9">
-                                    <el-input placeholder="Telefono" v-model="telefono"></el-input>
+                                    <el-input placeholder="Telefono" size="small" v-model="telefono"></el-input>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 form-control-label" for="text-input">Email</label>
                                 <div class="col-md-9">
-                                    <el-input placeholder="Email@gmail.com" v-model="email"></el-input>
+                                    <el-input placeholder="Email@gmail.com" size="small" v-model="email"></el-input>
                                 </div>
                             </div>
 

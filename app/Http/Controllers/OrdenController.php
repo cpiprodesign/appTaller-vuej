@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Orden;
 use App\Models\Cliente;
 use App\Models\Tecnico;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\DB;
 class OrdenController extends Controller
 {
     public function index(Request $request)
@@ -46,6 +48,8 @@ class OrdenController extends Controller
                 ->join('tecnicos', 'orden.idtecnico', '=', 'tecnicos.id')
                 ->select(
                     'orden.id',
+                    'clientes.id as idcliente', 
+                    'tecnicos.id as idtecnico',
                     'clientes.nombre as Cliente',                    
                     'tecnicos.nombre as Tecnico',
                     'orden.nombreEquipo',
@@ -161,14 +165,17 @@ class OrdenController extends Controller
        $pdf->setPaper( [0, 0, 220.732,  841.89]); 
       // $pdf->setPaper( array(0,0,612.00,1008.0)); 
 
-      return $pdf->download('orden-'.$numOrden[0]->id.'.pdf');
+      //return $pdf->download('orden-'.$numOrden[0]->id.'.pdf');
 
      // $pdf->render();
 //$pdf->stream('orden-'.$numOrden[0]->id.'.pdf');
 
-        //return $pdf->download('venta-'.$numventa[0]->num_comprobante.'.pdf');
+        
 
-       
+        $pdf->render();
+        return $pdf->stream();
+       // return response($dompdf->output(), 200)
+        //->header('Content-Type', 'application/pdf');
     }
 
     public function store(Request $request)
@@ -315,4 +322,82 @@ class OrdenController extends Controller
             'ordenes' => $ordenes
         ];
     }
+    public function generatePDF(Request $request,$id) {
+        $ordenes = Orden::join('clientes', 'orden.idcliente', '=', 'clientes.id')
+        ->join('tecnicos', 'orden.idtecnico', '=', 'tecnicos.id')
+        ->select('orden.id',
+        'clientes.id as idcliente',
+        'clientes.nombre as nombreCliente', 
+        'tecnicos.id as idtecnico',
+        'clientes.nombre as Cliente',                    
+        'tecnicos.nombre as Tecnico',
+        'orden.nombreEquipo',
+        'orden.marca',
+        'orden.modelo',
+        'orden.serial',
+        'orden.clave',
+        'orden.accesorios',
+        'orden.observaciones',
+        'orden.fallaEquipo',
+        'orden.reparacion',
+        'orden.fechaEntrada',
+        'orden.fechaEntrega',
+        'orden.adelanto',
+        'orden.totalPagar',
+        'orden.estado')
+        ->where('orden.id','=',$id)
+        ->orderBy('orden.id','desc')->take(1)->get();
+
+        $numOrden=Orden::select('id')->where('id',$id)->get();
+
+        $pdf = \PDF::loadView('pdf.ordenTicket',['ordenes'=>$ordenes]);
+       //$pdf ->setPaper('a4','portrait');
+       $pdf->setPaper( [0, 0, 220.732,  841.89]); 
+      // $pdf->setPaper( array(0,0,612.00,1008.0)); 
+
+      //return $pdf->download('orden-'.$numOrden[0]->id.'.pdf');
+
+     // $pdf->render();
+//$pdf->stream('orden-'.$numOrden[0]->id.'.pdf');
+
+        
+
+        $pdf->render();
+      //  return $pdf->stream();
+        // Devolver el PDF como respuesta al cliente
+        return response($pdf->output(), 200)
+                ->header('Content-Type', 'application/pdf');
+        
+    }
+  
+    public function consultaEstadoEquipo (Request $Request, $id){
+              
+        $ordenes = Orden::join('clientes', 'orden.idcliente', '=', 'clientes.id')
+        ->join('tecnicos', 'orden.idtecnico', '=', 'tecnicos.id')
+        ->select('orden.id',
+        'clientes.id as idcliente',
+        'clientes.nombre as nombreCliente', 
+        'tecnicos.id as idtecnico',
+        'clientes.nombre as Cliente',                    
+        'tecnicos.nombre as Tecnico',
+        'orden.nombreEquipo',
+        'orden.marca',
+        'orden.modelo',
+        'orden.serial',
+        'orden.clave',
+        'orden.accesorios',
+        'orden.observaciones',
+        'orden.fallaEquipo',
+        'orden.reparacion',
+        'orden.fechaEntrada',
+        'orden.fechaEntrega',
+        'orden.adelanto',
+        'orden.totalPagar',
+        'orden.estado')
+        ->where('orden.id','=',$id)
+        ->orderBy('orden.id','desc')->take(1)->get();
+       return ['ordenes' => $ordenes];
+
+    }
 }
+

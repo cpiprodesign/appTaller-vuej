@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware'=>['guest']],function(){
-    Route::get('/',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
+
+    Route::get('/login',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
+    //Route::get('/login',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm'])->name('login');
     //Route::post('/login', 'Auth\LoginController@login')->name('login');
     Route::post('/login', [App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
     
+    Route::get('/ordenestado/{id}', [App\Http\Controllers\OrdenController::class,'consultaEstadoEquipo']);
     
+    Route::get('/Query/', [App\Http\Controllers\ConsultaController::class,'consultaEstadoEquipo']);
 });
 
 Route::group(['middleware'=>['auth']],function(){
@@ -52,6 +56,8 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/orden/pdf/{id}', [App\Http\Controllers\OrdenController::class,'pdf'])->name('orden_pdf');//para reportes de comprobante
      //repote rango de fechas
      Route::get('/orden/reportes', [App\Http\Controllers\OrdenController::class,'ReporteOrden']);
+     //practicando 
+     Route::get('/orden1/pdf/{id}', [App\Http\Controllers\OrdenController::class,'generatePDF']);
       
     //dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class,'__invoke']);
