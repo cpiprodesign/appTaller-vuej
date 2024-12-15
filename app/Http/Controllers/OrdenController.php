@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Orden;
 use App\Models\Cliente;
 use App\Models\Tecnico;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\DB;
 class OrdenController extends Controller
@@ -39,7 +41,8 @@ class OrdenController extends Controller
                     'orden.fechaEntrega',
                     'orden.adelanto',
                     'orden.totalPagar',
-                    'orden.estado'
+                    'orden.estado',
+                    'orden.imagen'
                 )
                 ->orderBy('orden.id', 'desc')
                 ->paginate(6);
@@ -65,8 +68,87 @@ class OrdenController extends Controller
                     'orden.fechaEntrega',
                     'orden.adelanto',
                     'orden.totalPagar',
+                    'orden.estado',
+                    'orden.imagen'
+                )
+                ->where('orden.' . $criterio, 'like', '%' . $buscar . '%')
+                ->orderBy('orden.id', 'desc')->paginate(6);
+        }
+
+        return [
+            'pagination' => [
+                'total'        => $ordenes->total(),
+                'current_page' => $ordenes->currentPage(),
+                'per_page'     => $ordenes->perPage(),
+                'last_page'    => $ordenes->lastPage(),
+                'from'         => $ordenes->firstItem(),
+                'to'           => $ordenes->lastItem(),
+            ],
+            'ordenes' => $ordenes
+        ];
+    }
+     public function indextecnico(Request $request)
+    {
+       //if (!$request->ajax()) return redirect('/');
+
+        $buscar = $request->buscar;
+        $criterio = $request->criterio;
+
+        if ($buscar == '') {
+            $ordenes = Orden::join('clientes', 'orden.idcliente', '=', 'clientes.id')
+                ->join('tecnicos', 'orden.idtecnico', '=', 'tecnicos.id')
+                ->select(
+                    'orden.id',
+                    'clientes.id as idcliente', 
+                    'tecnicos.id as idtecnico',
+                    'clientes.nombre as Cliente',                    
+                    'tecnicos.nombre as Tecnico',
+                    'orden.idusuario as usuario',
+                    'orden.nombreEquipo',
+                    'orden.marca',
+                    'orden.modelo',
+                    'orden.serial',
+                    'orden.clave',
+                    'orden.accesorios',
+                    'orden.observaciones',
+                    'orden.fallaEquipo',
+                    'orden.reparacion',
+                    'orden.fechaEntrada',
+                    'orden.fechaEntrega',
+                    'orden.adelanto',
+                    'orden.totalPagar',
                     'orden.estado'
                 )
+
+                ->where('orden.idusuario','=',Auth::user()->id)
+                ->orderBy('orden.id', 'desc')
+                ->paginate(6);
+        } else {
+            $ordenes = Orden::join('clientes', 'orden.idcliente', '=', 'clientes.id')
+                ->join('tecnicos', 'orden.idtecnico', '=', 'tecnicos.id')
+                ->select(
+                    'orden.id',
+                    'clientes.id as idcliente', 
+                    'tecnicos.id as idtecnico',
+                    'clientes.nombre as Cliente',                    
+                    'tecnicos.nombre as Tecnico',
+                    'orden.idusuario as usuario',
+                    'orden.nombreEquipo',
+                    'orden.marca',
+                    'orden.modelo',
+                    'orden.serial',
+                    'orden.clave',
+                    'orden.accesorios',
+                    'orden.observaciones',
+                    'orden.fallaEquipo',
+                    'orden.reparacion',
+                    'orden.fechaEntrada',
+                    'orden.fechaEntrega',
+                    'orden.adelanto',
+                    'orden.totalPagar',
+                    'orden.estado'
+                )
+                ->where('orden.idusuario','=',Auth::user()->id)
                 ->where('orden.' . $criterio, 'like', '%' . $buscar . '%')
                 ->orderBy('orden.id', 'desc')->paginate(6);
         }
@@ -181,14 +263,46 @@ class OrdenController extends Controller
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
+        try{
+            // Validar los datos del formulario
+            $validated = $request->validate([
+                'idcliente' => 'required|integer',
+                'idtecnico' => 'required|integer',
+                'idusuario' => 'required|integer',
+                'nombreEquipo' => 'required|string|max:100',
+                'marca' => 'required|string|max:50',
+                'modelo' => 'required|string|max:50',
+                'serial' => 'required|string|max:50',
+                'clave' => 'nullable|string|max:50',
+                'accesorios' => 'nullable|string|max:150',
+                'observaciones' => 'nullable|string|max:150',
+                'fallaEquipo' => 'nullable|string|max:150',
+                'reparacion' => 'nullable|string|max:200',
+                'fechaEntrada' => 'required|date',
+                'fechaEntrega' => 'required|date',
+                'adelanto' => 'required|numeric',
+                'totalPagar' => 'required|numeric',
+                'estado' => 'required|string|max:60',
+                'imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validar la imagen
+            ]);
+             // Manejar la imagen si está presente
+            $imagenRuta = null;
+            if ($request->hasFile('imagen')) {
+                $file = $request->file('imagen');
+                $imagenRuta = $file->store('uploads/ordenes', 'public'); // Guardar en storage/app/public/uploads/ordenes
+            }
 
         
             //$fechaEntrada = Carbon::now('America/Lima');
 
             $orden = new Orden();
             $orden->idcliente = $request->idcliente;
-            //$orden->idtecnico = Auth::user()->id;
+           
             $orden->idtecnico = $request->idtecnico;
+             //$orden->idusuario = Auth::user()->id;
+             $orden->idusuario = $request->idusuario;
+             // $orden->idusuario = 1;
+
             $orden->nombreEquipo = $request->nombreEquipo;
             $orden->marca = $request->marca;
             $orden->modelo = $request->modelo;
@@ -205,12 +319,40 @@ class OrdenController extends Controller
             $orden->adelanto = $request->adelanto;
             $orden->totalPagar = $request->totalPagar;
             $orden->estado =$request->estado;
+            $orden->imagen = $imagenRuta; // Guardar la ruta de la imagen
             $orden->save();
-            //manda el id del ultimo ventas para imprimir compronate
-            return [
-                'id' => $orden->id
-            ];
 
+             return response()->json([
+            'message' => 'El orden fue registrado correctamente',
+            'persona' => $orden,
+            'id' => $orden->id
+        ], 200);
+
+             //return [
+             //   'id' => $orden->id
+           // ];
+           // return response()->json(['message' => 'Orden creada con éxito'], 201);
+            //manda el id del ultimo ventas para imprimir compronate
+           
+
+        }
+         catch (\Illuminate\Validation\ValidationException $e) {
+            // Capturar errores de validación
+            return response()->json([
+                'message' => 'Errores de validación',
+                'errors' => $e->errors()
+            ], 422);
+
+        }
+        catch (\Exception $e) {
+        // Capturar cualquier otro error
+        return response()->json([
+            'message' => 'Error en el servidor',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+
+           
           
     }
     public function update(Request $request)
@@ -220,6 +362,7 @@ class OrdenController extends Controller
         $orden->idcliente = $request->idcliente;
         //$orden->idtecnico = Auth::user()->id;
         $orden->idtecnico = $request->idtecnico;
+        $orden->idusuario = Auth::user()->id;
         $orden->nombreEquipo = $request->nombreEquipo;
         $orden->marca = $request->marca;
         $orden->modelo = $request->modelo;

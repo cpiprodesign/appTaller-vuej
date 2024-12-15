@@ -15,6 +15,8 @@ class Tecnico extends Model
     public function orden(){
         return $this->hasMany(Orden::class);
     }
-
+    public function user(){
+            return $this->hasOne('App\Models\User');
+        }
     
 }

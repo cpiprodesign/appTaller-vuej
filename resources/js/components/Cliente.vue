@@ -8,29 +8,32 @@
             <!-- Ejemplo de tabla Listado -->
             <div class="card mt-2">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Clientes
-                    <el-button plain type="primary" icon="el-icon-circle-plus"
-                        @click="abrirModal('cliente', 'registrar')">Nuevo</el-button>
-                    <el-button type="danger" icon="el-icon-document" @click="cargarPdf()">Reporte</el-button>
+                    <div class="">
+                        <i class="fa fa-align-justify"></i> Clientes
+                        <el-button size="small" plain type="primary" icon="el-icon-circle-plus"
+                            @click="abrirModal('cliente', 'registrar')">Nuevo</el-button>
+                        <el-button size="small" type="danger" icon="el-icon-document"
+                            @click="cargarPdf()">Reporte</el-button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <div class="mr-1">
-                                    <el-select v-model="criterio" placeholder="Select">
+                                <div class="mr-1 mb-2">
+                                    <el-select size="small" v-model="criterio" placeholder="Select">
                                         <el-option v-for="item in valores" :key="item.value" :label="item.label"
                                             :value="item.value"></el-option>
                                     </el-select>
                                 </div>
-                                <div class="mr-1">
-                                    <el-input @keyup.native.enter="
+                                <div class="mr-1 mb-2">
+                                    <el-input size="small" @keyup.native.enter="
                                         listarCliente(1, buscar, criterio)
                                         " placeholder="Texto a buscar" v-model="buscar"></el-input>
                                 </div>
 
                                 <div>
-                                    <el-button icon="el-icon-search" type="primary" @click="
+                                    <el-button size="small" icon="el-icon-search" type="primary" @click="
                                         listarCliente(1, buscar, criterio)
                                         ">Buscar</el-button>
                                 </div>

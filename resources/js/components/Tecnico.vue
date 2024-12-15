@@ -9,7 +9,7 @@
             <div class="card mt-2">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Tecnicos
-                    <el-button plain type="primary" icon="el-icon-circle-plus"
+                    <el-button size="small" plain type="primary" icon="el-icon-circle-plus"
                         @click="abrirModal('tecnico', 'registrar')">Nuevo</el-button>
                     <!-- <el-button
                         type="danger"
@@ -22,20 +22,20 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <div class="mr-1">
-                                    <el-select v-model="criterio" placeholder="Select">
+                                <div class="mr-1 mb-2">
+                                    <el-select size="small" v-model="criterio" placeholder="Select">
                                         <el-option v-for="item in valores" :key="item.value" :label="item.label"
                                             :value="item.value"></el-option>
                                     </el-select>
                                 </div>
                                 <div class="mr-1">
-                                    <el-input @keyup.native.enter="
+                                    <el-input size="small" @keyup.native.enter="
                                         listarTecnico(1, buscar, criterio)
                                         " placeholder="Texto a buscar" v-model="buscar"></el-input>
                                 </div>
 
                                 <div>
-                                    <el-button icon="el-icon-search" type="primary" @click="
+                                    <el-button size="small" icon="el-icon-search" type="primary" @click="
                                         listarTecnico(1, buscar, criterio)
                                         ">Buscar</el-button>
                                 </div>

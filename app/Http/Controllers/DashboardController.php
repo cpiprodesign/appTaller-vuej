@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Orden;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 class DashboardController extends Controller
 {
@@ -23,11 +24,13 @@ class DashboardController extends Controller
              $totalDispositosNoEntregados = DB::table('orden')
             ->select('id')
             ->where('estado', '=','Reparacion finalizado')
+           // ->where('orden.idusuario','=',Auth::user()->id)//solo muestra por usuario
             ->get();
             //dispostivos  en reparacion
             $totalDispositosEnReparacion = DB::table('orden')
             ->select('id')
             ->where('estado', '=','Reparando')
+            //->where('orden.idusuario','=',Auth::user()->id)
             ->get();
             //total servicio
             //ventas todo

@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('usuario')->unique();
-            $table->string('password');
-            $table->boolean('condicion')->default(1);
+        Schema::table('orden', function (Blueprint $table) {
+            
+            $table->string('imagen', 255)->nullable()->after('estado'); // Para guardar rutas de imágenes
         });
     }
 
@@ -28,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('orden', function (Blueprint $table) {
+             $table->dropColumn('imagen');
+        });
     }
 };

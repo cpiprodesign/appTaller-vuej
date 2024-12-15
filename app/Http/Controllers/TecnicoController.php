@@ -44,7 +44,7 @@ class TecnicoController extends Controller
         if(!$request->ajax())return redirect('/');
         
          $tecnicos = Tecnico::where('condicion','=','1')
-            ->select('id','nombre')->orderBy('nombre','asc')->get();
+            ->select('id','nombre')->orderBy('nombre','desc')->get();
 
         return ['tecnicos'=>$tecnicos];
     }

@@ -5,8 +5,8 @@
             <li class="breadcrumb-item"><a href="/">Escritorio</a></li>
         </ol> -->
         <div class="container-fluid mt-4 ">
-            <el-row gutter="20">
-                <el-col :sm="6" :xs="12" :span="6">
+            <el-row :gutter="20">
+                <el-col class="" :sm="6" :xs="12" :span="6">
                     <el-card shadow="always">
                         <div class="text-center">
                             <p>Dispositivos no entregados</p>
@@ -80,7 +80,7 @@
             </el-row>
             <div class="mt-4">
                 <div class=" ">
-                    <el-row gutter="20">
+                    <el-row :gutter="20">
                         <el-col :sm="12" :xs="24" :span="12">
                             <el-card shadow="always">
                                 <div class="text-center">
@@ -156,7 +156,7 @@ export default {
                 .then(function (response) {
                     var respuesta = response.data;
                     me.arrayDispositivosNoEntregados = respuesta.dispositivosNoEntregados;
-                    console.log(me.arrayDispositivosNoEntregados);
+                    //console.log(me.arrayDispositivosNoEntregados);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -184,7 +184,7 @@ export default {
                 .then(function (response) {
                     var respuesta = response.data;
                     me.arrayTotalServicio = respuesta.totalServicio;
-                    console.log(me.arrayTotalServicio);
+                    //console.log(me.arrayTotalServicio);
                 })
                 .catch(function (error) {
                     console.log(error);

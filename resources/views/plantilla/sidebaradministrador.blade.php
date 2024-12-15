@@ -16,9 +16,9 @@
                     <li @click="menu=2" class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-user-friends"></i>Clientes</a>
                     </li>
-                    <li @click="menu=3" class="nav-item">
+                    {{-- <li @click="menu=3" class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-user-cog"></i>Tecnicos</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             <li class="nav-item nav-dropdown">
@@ -32,15 +32,29 @@
                     </li> --}}
                 </ul>
             </li>
+             <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-users"></i> Acceso</a>
+                <ul class="nav-dropdown-items">
+                    <li @click="menu=5" class="nav-item ">
+                        <a class="nav-link" href="#"><i class="icon-user"></i> Usuarios</a>
+                    </li>
+                    <li @click="menu=6" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-user"></i> ROLES</a>
+                    </li>
+                    {{-- <li @click="menu=11" class="nav-item">
+                        <a class="nav-link" href="#"><i class="icon-user-following"></i> Roles</a>
+                    </li> --}}
+                </ul>
+            </li>
             
             
            
             
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-book"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
+                <a class="nav-link" href="https://wa.link/8ykkof"><i class="fas fa-book"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-info"></i> Acerca de...<span class="badge badge-info">IT</span></a>
+                <a class="nav-link" href="https://wa.link/8ykkof"><i class="fas fa-info"></i> Acerca de...<span class="badge badge-info">IT</span></a>
             </li>
         </ul>
     </nav>

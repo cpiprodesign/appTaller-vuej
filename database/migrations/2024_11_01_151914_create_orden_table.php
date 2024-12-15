@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('idcliente')->references('id')->on('clientes');
             $table->integer('idtecnico')->unsigned();
             $table->foreign('idtecnico')->references('id')->on('tecnicos');
+             $table->integer('idusuario')->unsigned();
+            $table->foreign('idusuario')->references('id')->on('users');
             $table->string('nombreEquipo', 100);
             $table->string('marca', 50);
             $table->string('modelo', 50);

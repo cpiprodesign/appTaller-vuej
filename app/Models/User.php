@@ -17,10 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'usuario',        
-        'password',
+     protected $fillable = [
+        'id', 'usuario', 'password','condicion','idrol'
     ];
+    public $timestamps = false;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -40,4 +40,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+     public function rol(){
+        return $this->belongsTo('App\Models\Rol');
+    }
+    public function tecnico(){
+        return $this->belongsTo('App\Models\Tecnico');
+    }
+   
 }
