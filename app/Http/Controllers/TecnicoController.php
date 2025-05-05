@@ -18,7 +18,7 @@ class TecnicoController extends Controller
             $tecnicos = Tecnico::where($criterio, 'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(6);//elocuen
         }
         //$personas =DB::table('categorias')->paginate(6);//generador de paginacio
-        
+
         return [
             'pagination' =>[
                 'total'   =>$tecnicos->total(),
@@ -42,7 +42,7 @@ class TecnicoController extends Controller
     }
     public function selectTecnico(Request $request){
         if(!$request->ajax())return redirect('/');
-        
+
          $tecnicos = Tecnico::where('condicion','=','1')
             ->select('id','nombre')->orderBy('nombre','desc')->get();
 
@@ -59,10 +59,10 @@ class TecnicoController extends Controller
         $tecnico->direccion=$request->direccion;
         $tecnico->telefono=$request->telefono;
         $tecnico->email=$request->email;
-        $tecnico->condicion='1';        
+        $tecnico->condicion='1';
         $tecnico->save();
-        
-       
+
+
 
     }
     public function update(Request $request)
@@ -78,20 +78,20 @@ class TecnicoController extends Controller
         $tecnico->condicion='1';
         $tecnico->save();
 
-        
+
     }
     public function desactivar(Request $request)
     {
         if(!$request->ajax())return redirect('/');
-        $tecnico = Tecnico::findOrFail($request->id);        
+        $tecnico = Tecnico::findOrFail($request->id);
         $tecnico->condicion='0';
         $tecnico->save();
-        
+
     }
     public function activar(Request $request)
     {
         if(!$request->ajax())return redirect('/');
-        $tecnico = Tecnico::findOrFail($request->id);        
+        $tecnico = Tecnico::findOrFail($request->id);
         $tecnico->condicion='1';
         $tecnico->save();
     }

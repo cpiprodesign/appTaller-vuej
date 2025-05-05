@@ -7673,6 +7673,73 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // import Chart from "chart.min.js";
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -7690,10 +7757,73 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       charVenta: null,
       ventas: [],
       varTotalVenta: [],
-      varMesVenta: []
+      varMesVenta: [],
+      //listado 
+      arrayOrden: [],
+      criterio: "id",
+      buscar: "",
+      pagination: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      },
+      offset: 3,
+      //para estados
+      estados: [{
+        value: "Ingresado",
+        label: "Ingresado"
+      }, {
+        value: "Reparando",
+        label: "Reparando"
+      }, {
+        value: "Reparacion finalizado",
+        label: "Reparacion finalizado"
+      }, {
+        value: "Entregado",
+        label: "Entregado"
+      }]
     };
   },
   methods: {
+    cambiarPagina: function cambiarPagina(page, buscar, criterio) {
+      var me = this;
+      me.pagination.current_page = page;
+      me.listarOrden(page, buscar, criterio);
+    },
+    estadoColor: function estadoColor(estado) {
+      // Devuelve una clase según el valor del estado
+      switch (estado) {
+        case 'Ingresado':
+          return 'azul';
+
+        case 'Reparando':
+          return 'amarillo';
+
+        case 'Reparacion finalizado':
+          return 'verde';
+
+        case 'Entregado':
+          return 'celeste';
+
+        default:
+          return '';
+      }
+    },
+    listarOrden: function listarOrden(page, buscar, criterio) {
+      var me = this;
+      var url = "/orden?page=" + page + "&buscar=" + buscar + "&criterio=" + criterio;
+      axios.get(url).then(function (response) {
+        var respuesta = response.data;
+        me.arrayOrden = respuesta.ordenes.data; //console.log(me.arrayOrden);
+
+        me.pagination = respuesta.pagination;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     getDispositivosNoEntregados: function getDispositivosNoEntregados() {
       var me = this;
       var url = "/dashboard";
@@ -7773,6 +7903,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.getTotalServicio(); //this.totalizarVentadia();
 
     this.getVentas();
+    this.listarOrden(1, this.buscar, this.criterio);
   },
   computed: {
     totalDispositivosNoEntregado: function totalDispositivosNoEntregado() {
@@ -7825,6 +7956,35 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
 
       return this.totalCuentaCobrar.toFixed(2);
+    },
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
     }
   }
 });
@@ -8479,6 +8639,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       valores: [{
         value: "id",
         label: "Numero Orden"
+      }, {
+        value: "fechaEntrega",
+        label: "Fecha Entrega"
       }],
       //para estados
       estados: [{
@@ -19108,7 +19271,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.margintop {\r\n    margin-top: 80px;\n}\n.aling {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.verde {\r\n    background-color: #4caf50;\r\n    color: white;\n}\n.amarillo {\r\n    background-color: #ffeb3b;\r\n    color: black;\n}\n.celeste {\r\n    background-color: #54c2ee;\r\n    color: white;\n}\n.azul {\r\n    background-color: #3652f4;\r\n    color: white;\n}\n.margintop {\r\n    margin-top: 80px;\n}\n.aling {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -100168,44 +100331,194 @@ var render = function () {
                     [
                       _c("el-card", { attrs: { shadow: "always" } }, [
                         _c("div", { staticClass: "text-center" }, [
-                          _c("p", [_vm._v("Nueva función quizas le interesa")]),
+                          _c("h3", [_vm._v("Listado de ordenes ")]),
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "img col-md-6" }, [
-                            _c("img", {
-                              staticClass: "img-fluid rounded-circle",
-                              attrs: { src: "img/5326050.jpg", alt: "" },
-                            }),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: " col-md-6" }, [
-                            _c("h4", { staticClass: "mt-4 p-2" }, [
-                              _vm._v(
-                                "Sistema de gestión para administrar tu taller"
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "ml-2" }, [
-                              _c("p", {}, [
-                                _vm._v(
-                                  " sistema para administrar tu taller de celulares\n                                            desarrollado con tecnologias del momento. Genera tu orden y imprime\n                                            el ticket con codigo Qr. Sistema robusto y amigable accesible para\n                                            todos."
-                                ),
-                              ]),
-                            ]),
-                            _vm._v(" "),
+                          _c("div", [
                             _c(
-                              "a",
+                              "table",
                               {
-                                staticClass: " ml-2 btn btn-primary ",
-                                attrs: { href: "https://wa.link/hkx244" },
+                                staticClass:
+                                  "table table-sm table-hover table-responsive ",
                               },
                               [
-                                _vm._v(
-                                  "Mas\n                                        información targe"
+                                _c("thead", [
+                                  _c("tr", [
+                                    _c("th", [_vm._v("Nro Orden")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Cliente")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Tecnico")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Marca")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("FechaEntrega")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Adelanto")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("TotalPagar")]),
+                                    _vm._v(" "),
+                                    _c("th", [_vm._v("Estado")]),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(_vm.arrayOrden, function (orden) {
+                                    return _c("tr", { key: orden.id }, [
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(orden.id),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(orden.Cliente),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(orden.Tecnico),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(orden.marca),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            orden.fechaEntrega
+                                          ),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(orden.adelanto),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(orden.totalPagar),
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "badge ",
+                                            class: _vm.estadoColor(
+                                              orden.estado
+                                            ),
+                                          },
+                                          [_vm._v(_vm._s(orden.estado))]
+                                        ),
+                                      ]),
+                                    ])
+                                  }),
+                                  0
                                 ),
                               ]
                             ),
+                            _vm._v(" "),
+                            _c("nav", [
+                              _c(
+                                "ul",
+                                { staticClass: "pagination" },
+                                [
+                                  _vm.pagination.current_page > 1
+                                    ? _c("li", { staticClass: "page-item" }, [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "page-link",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function ($event) {
+                                                $event.preventDefault()
+                                                return _vm.cambiarPagina(
+                                                  _vm.pagination.current_page -
+                                                    1,
+                                                  _vm.buscar,
+                                                  _vm.criterio
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [_vm._v("Ant")]
+                                        ),
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.pagesNumber, function (page) {
+                                    return _c(
+                                      "li",
+                                      {
+                                        key: page,
+                                        staticClass: "page-item",
+                                        class: [
+                                          page == _vm.isActived ? "active" : "",
+                                        ],
+                                      },
+                                      [
+                                        _c("a", {
+                                          staticClass: "page-link",
+                                          attrs: { href: "#" },
+                                          domProps: {
+                                            textContent: _vm._s(page),
+                                          },
+                                          on: {
+                                            click: function ($event) {
+                                              $event.preventDefault()
+                                              return _vm.cambiarPagina(
+                                                page,
+                                                _vm.buscar,
+                                                _vm.criterio
+                                              )
+                                            },
+                                          },
+                                        }),
+                                      ]
+                                    )
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.pagination.current_page <
+                                  _vm.pagination.last_page
+                                    ? _c("li", { staticClass: "page-item" }, [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "page-link",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function ($event) {
+                                                $event.preventDefault()
+                                                return _vm.cambiarPagina(
+                                                  _vm.pagination.current_page +
+                                                    1,
+                                                  _vm.buscar,
+                                                  _vm.criterio
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [_vm._v("Sig")]
+                                        ),
+                                      ])
+                                    : _vm._e(),
+                                ],
+                                2
+                              ),
+                            ]),
                           ]),
                         ]),
                       ]),

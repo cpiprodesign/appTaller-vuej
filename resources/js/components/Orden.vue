@@ -622,6 +622,10 @@ export default {
                     value: "id",
                     label: "Numero Orden",
                 },
+                {
+                    value: "fechaEntrega",
+                    label: "Fecha Entrega",
+                },
 
 
             ],

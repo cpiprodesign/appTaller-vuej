@@ -4682,7 +4682,7 @@ button.close {
     transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
     -webkit-transform: translate(0, -25%);
     transform: translate(0, -25%);
-    margin-top: 180px;
+    margin-top: 80px;
 }
 .modal.show .modal-dialog {
     -webkit-transform: translate(0, 0);

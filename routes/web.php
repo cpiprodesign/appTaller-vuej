@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/api/upload-image', [App\Http\Controllers\ImageController::class, 'store']);
     //genera codigo qr
     Route::get('api/barcode/{text}', [App\Http\Controllers\BarcodeController::class, 'generate']);
+    //envio de mensaje a whatsapp
+    Route::get('msg', [App\Http\Controllers\MensajeController::class, 'msg']);
 
 });
 

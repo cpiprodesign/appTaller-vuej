@@ -92,24 +92,91 @@
                         <el-col :sm="12" :xs="24" :span="12">
                             <el-card shadow="always">
                                 <div class="text-center">
-                                    <p>Nueva función quizas le interesa</p>
+                                    <h3>Listado de ordenes </h3>
                                 </div>
                                 <div class="row">
-                                    <div class="img col-md-6">
-                                        <img class="img-fluid rounded-circle" src="img/5326050.jpg" alt="">
+                                    <div>
+                                        <table class="table table-sm table-hover table-responsive ">
+                                            <thead>
+                                                <tr>
 
+                                                    <th>Nro Orden</th>
+                                                    <th>Cliente</th>
+                                                    <th>Tecnico</th>
+                                                    <th>Marca</th>
+
+                                                    <!-- <th>Serial</th>
+                                <th>Clave</th> -->
+
+                                                    <th>FechaEntrega</th>
+                                                    <th>Adelanto</th>
+                                                    <th>TotalPagar</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="orden in arrayOrden" :key="orden.id">
+
+                                                    <td v-text="orden.id"></td>
+                                                    <td v-text="orden.Cliente"></td>
+                                                    <td v-text="orden.Tecnico"></td>
+                                                    <td v-text="orden.marca"></td>
+                                                    <!-- <td v-text="orden.serial"></td> -->
+                                                    <!-- <td v-text="orden.clave"></td> -->
+
+
+                                                    <td v-text="orden.fechaEntrega"></td>
+                                                    <td v-text="orden.adelanto"></td>
+                                                    <td v-text="orden.totalPagar"></td>
+                                                    <td> <span class="badge " :class="estadoColor(orden.estado)">{{
+                                                        orden.estado }}</span></td>
+                                                    <!-- <td v-text="orden.estado" :class="estadoColor(orden.estado)"></td> -->
+                                                    <!-- <td>
+                                    <div v-if="orden.condicion">
+                                        <span class="badge badge-success"
+                                            >Activo</span
+                                        >
                                     </div>
-                                    <div class=" col-md-6">
-                                        <h4 class="mt-4 p-2">Sistema de gestión para administrar tu taller</h4>
+                                    <div v-else>
+                                        <span class="badge badge-danger"
+                                            >Desactivado</span
+                                        >
+                                    </div>
+                                </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <nav>
+                                            <ul class="pagination">
+                                                <li class="page-item" v-if="pagination.current_page > 1">
+                                                    <a class="page-link" href="#" @click.prevent="
+                                                        cambiarPagina(
+                                                            pagination.current_page - 1,
+                                                            buscar,
+                                                            criterio
+                                                        )
+                                                        ">Ant</a>
+                                                </li>
+                                                <li class="page-item" v-for="page in pagesNumber" :key="page"
+                                                    :class="[page == isActived ? 'active' : '']">
+                                                    <a class="page-link" href="#" @click.prevent="
+                                                        cambiarPagina(page, buscar, criterio)
+                                                        " v-text="page"></a>
+                                                </li>
 
-                                        <div class="ml-2">
-                                            <p class=""> sistema para administrar tu taller de celulares
-                                                desarrollado con tecnologias del momento. Genera tu orden y imprime
-                                                el ticket con codigo Qr. Sistema robusto y amigable accesible para
-                                                todos.</p>
-                                        </div>
-                                        <a class=" ml-2 btn btn-primary " href="https://wa.link/hkx244">Mas
-                                            información targe</a>
+                                                <li class="page-item" v-if="pagination.current_page <
+                                                    pagination.last_page
+                                                ">
+                                                    <a class="page-link" href="#" @click.prevent="
+                                                        cambiarPagina(
+                                                            pagination.current_page + 1,
+                                                            buscar,
+                                                            criterio
+                                                        )
+                                                        ">Sig</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
 
@@ -143,11 +210,87 @@ export default {
             charVenta: null,
             ventas: [],
             varTotalVenta: [],
-            varMesVenta: []
+            varMesVenta: [],
+            //listado 
+            arrayOrden: [],
+            criterio: "id",
+            buscar: "",
+            pagination: {
+                total: 0,
+                current_page: 0,
+                per_page: 0,
+                last_page: 0,
+                from: 0,
+                to: 0,
+            },
+            offset: 3,
+            //para estados
+            estados: [
+                {
+                    value: "Ingresado",
+                    label: "Ingresado",
+                },
+                {
+                    value: "Reparando",
+                    label: "Reparando",
+                },
+                {
+                    value: "Reparacion finalizado",
+                    label: "Reparacion finalizado",
+                },
+                {
+                    value: "Entregado",
+                    label: "Entregado",
+                },
+
+            ],
 
         };
     },
     methods: {
+        cambiarPagina(page, buscar, criterio) {
+            let me = this;
+            me.pagination.current_page = page;
+            me.listarOrden(page, buscar, criterio);
+        },
+        estadoColor(estado) {
+            // Devuelve una clase según el valor del estado
+            switch (estado) {
+                case 'Ingresado':
+                    return 'azul';
+                case 'Reparando':
+                    return 'amarillo';
+                case 'Reparacion finalizado':
+                    return 'verde';
+                case 'Entregado':
+                    return 'celeste';
+                default:
+                    return '';
+            }
+        },
+        listarOrden(page, buscar, criterio) {
+            let me = this;
+            var url =
+                "/orden?page=" +
+                page +
+                "&buscar=" +
+                buscar +
+                "&criterio=" +
+                criterio;
+            axios
+                .get(url)
+                .then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayOrden = respuesta.ordenes.data;
+                    //console.log(me.arrayOrden);
+                    me.pagination = respuesta.pagination;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
+
         getDispositivosNoEntregados() {
             let me = this;
             var url = "/dashboard";
@@ -248,6 +391,7 @@ export default {
         this.getTotalServicio();
         //this.totalizarVentadia();
         this.getVentas();
+        this.listarOrden(1, this.buscar, this.criterio);
 
 
     },
@@ -283,13 +427,55 @@ export default {
                 this.totalCuentaCobrar = (this.TotalService) - (this.sumarTotalAdelanto);
             }
             return (this.totalCuentaCobrar.toFixed(2));
-        }
+        },
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function () {
+            if (!this.pagination.to) {
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+            var to = from + this.offset * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        },
     }
 
 }
 </script>
 
 <style>
+.verde {
+    background-color: #4caf50;
+    color: white;
+}
+
+.amarillo {
+    background-color: #ffeb3b;
+    color: black;
+}
+
+.celeste {
+    background-color: #54c2ee;
+    color: white;
+}
+
+.azul {
+    background-color: #3652f4;
+    color: white;
+}
+
 .margintop {
     margin-top: 80px;
 }
