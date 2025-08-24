@@ -230,14 +230,14 @@
                         <button type="button" class="btn btn-secondary" @click="cerrarModal()">
                             Cerrar
                         </button>
-                        <!-- <button type="button" v-if="tipoAccion == 1" class="btn btn-primary "
+                        <button type="button" v-if="tipoAccion == 1" class="btn btn-primary "
                             @click="registrarPersona()">
                             Guardar
                         </button>
                         <button type="button" v-if="tipoAccion == 2" class="btn btn-primary "
                             @click="actualizarPersona()">
                             Actualizar
-                        </button> -->
+                        </button>
                     </div>
                 </div>
                 <!-- /.modal-content -->

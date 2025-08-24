@@ -693,8 +693,8 @@
         <tr>
             <td class="text-center"><h5>{{ 'RUC '.'123444' }}</h5></td>
         </tr>
-        
-       
+
+
     </table> --}}
     <h3 class="text-center mt-4">Tu Empresa S.A</h3>
     <h5 class="text-center">General Flores 287 Esquina 25 De Agosto</h5>
@@ -842,7 +842,7 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <p id="cliente">Estado de repacion de su movil. <br>
+                                    <p id="cliente">Estado de reparación de su equipo. <br>
 
                                     </p>
                                     <h5><strong>https://devtaller.cpiprodesign.net/Query</strong></h5>

@@ -13,6 +13,11 @@ Vue.component("ordentecnico", require("./components/OrdenTecnico.vue").default);
 Vue.component("reporteorden", require("./components/ReporteOrden.vue").default);
 Vue.component("dashboard", require("./components/Dashboard.vue").default);
 Vue.component("user", require("./components/User.vue").default);
+Vue.component("categoria", require("./components/Categoria.vue").default);
+Vue.component("marca", require("./components/Marca.vue").default);
+Vue.component("proveedor", require("./components/Proveedor.vue").default);
+Vue.component("articulo", require("./components/Articulos.vue").default);
+Vue.component("posventa", require("./components/PosVenta.vue").default);
 
 //IMPORTAMOS ELEMENT UI
 import ElementUI from "element-ui";

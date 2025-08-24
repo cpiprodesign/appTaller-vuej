@@ -22,6 +22,21 @@
 <template v-if="menu==5">
      <user></user>
 </template>
+<template v-if="menu==6">
+     <categoria></categoria>
+</template>
+<template v-if="menu==7">
+     <marca></marca>
+</template>
+<template v-if="menu==8">
+     <articulo></articulo>
+</template>
+<template v-if="menu==9">
+     <proveedor></proveedor>
+</template>
+<template v-if="menu==10">
+     <posventa></posventa>
+</template>
      @elseif (Auth::user()->idrol == 2)
          <template v-if="menu==0">
      <ordentecnico></ordentecnico>
@@ -39,12 +54,12 @@
      <reporteOrden></reporteOrden>
 </template>
 
-   
+
 
  @endif
 
 @endif
- 
+
 
         <!-- /Fin del contenido principal -->
 @endsection

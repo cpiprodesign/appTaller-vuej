@@ -53,7 +53,7 @@ path {
     text-align: center;
     width: 220px;
     height: 150px;
-    
+
  /* border:1px solid #abdd12; */
     /* background: #fff;
     border-radius: 5px ;
@@ -201,6 +201,18 @@ path {
     justify-content: center;
     align-items: center;
 }
+.el-card__header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
+    background: #0d6efd;
+    color: #fff;
+    font-size: 1rem;
+}
+/*.nav-item .ul .li {
+    background-color: #00ff88;
+    background: #0700b8;
+}*/
 /* @media (max-width: 576px) {
     .main {
       flex-direction: column;
