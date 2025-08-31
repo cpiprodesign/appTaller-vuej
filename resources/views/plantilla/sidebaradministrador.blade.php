@@ -14,18 +14,18 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-address-card"></i>Registro</a>
                 <ul class="nav-dropdown-items">
                     <li @click="menu=2" class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user-friends"></i>Clientes</a>
+                        <a class="nav-link" href="#">Clientes</a>
                     </li>
-                    {{-- <li @click="menu=3" class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user-cog"></i>Tecnicos</a>
-                    </li> --}}
+                    <li @click="menu=3" class="nav-item">
+                        <a class="nav-link" href="#">Tecnicos</a>
+                    </li> 
                 </ul>
             </li>
             <li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-address-card"></i>Ventas</a>
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="far fa-credit-card"></i>Ventas</a>
     <ul class="nav-dropdown-items">
         <li @click="menu=10" class="nav-item">
-            <a class="nav-link" href="#">Pos Venta</a>
+            <a class="nav-link" href="#">Pos Venta <span class="badge badge-primary">new</span></a>
         </li>
         {{-- <li @click="menu=3" class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-user-cog"></i>Tecnicos</a>
@@ -33,7 +33,7 @@
     </ul>
 </li>
             <li class="nav-item nav-dropdown">
-    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-warehouse"></i>Inventario</a>
+    <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-warehouse"></i>Inventario </a>
     <ul class="nav-dropdown-items">
         <li @click="menu=6" class="nav-item">
             <a class="nav-link" href="#">Categoria</a>
@@ -56,7 +56,7 @@
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="fas fa-chart-area"></i> Reportes</a>
                 <ul class="nav-dropdown-items">
                     <li @click="menu=4" class="nav-item">
-                        <a class="nav-link" href="#"><i class="icon-chart"></i> Reporte Ordenes</a>
+                        <a class="nav-link" href="#">Reporte Ordenes</a>
                     </li>
                     {{-- <li @click="menu=5" class="nav-item">
                         <a class="nav-link" href="#"><i class="icon-chart"></i> Reporte Ventas</a>
@@ -81,12 +81,12 @@
 
 
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="https://wa.link/8ykkof"><i class="fas fa-book"></i> Ayuda <span class="badge badge-danger">PDF</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://wa.link/8ykkof"><i class="fas fa-info"></i> Acerca de...<span class="badge badge-info">IT</span></a>
-            </li>
+            </li> -->
         </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>

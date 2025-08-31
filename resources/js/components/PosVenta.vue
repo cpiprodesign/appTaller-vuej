@@ -1,265 +1,437 @@
 <template>
     <div class="main">
-        <div class="container-fluid margintop">
-            <el-row :gutter="20">
-                <el-col :sm="14" :xs="24" :md="14" :span="14">
-                    <div class="">
-                        <el-card class="box-card">
-                            <div>
-                                <!-- Switch -->
+        <div class="container-fluid mt-4">
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>Post venta de articulos</span>
+                </div>
+                <el-tabs type="border-card">
+                    <el-tab-pane label="Venta">
+                        <el-row :gutter="20">
+                            <el-col :sm="14" :xs="24" :md="14" :span="14">
+                                <div class="">
+                                    <el-card class="box-card">
+                                        <div>
+                                            <!-- Switch -->
 
-                                <div class="busqueda-toolbar">
-                                    <span>Busqueda por:</span>
+                                            <div class="busqueda-toolbar">
+                                                <span>Busqueda por:</span>
 
-                                    <el-switch v-model="showCode" @change="handleSwitchChange" active-text="Código"
-                                        inactive-text="Nombre" />
+                                                <el-switch v-model="showCode" @change="handleSwitchChange"
+                                                    active-text="Código" inactive-text="Nombre" />
 
-                                    <el-radio-group v-model="isCollapse">
-                                        <el-radio-button :label="false">
-                                            <i class="el-icon-s-fold"></i>
-                                            Tablas
-                                        </el-radio-button>
-                                        <el-radio-button :label="true">
-                                            <i class="el-icon-menu"></i> Card
-                                        </el-radio-button>
-                                    </el-radio-group>
-                                </div>
-
-                                <!-- Input -->
-                                <el-input ref="myInput" @keyup.native.enter="
-                                    listarArticulo(buscar, criterio);
-                                activobusqueda = true;
-                                " placeholder="Ingrese un valor a buscar" v-model="buscar" clearable>
-                                    <template slot="prepend">
-                                        <i class="el-icon-search"></i>
-                                        {{ labelbusqueda }}
-                                    </template>
-                                </el-input>
-                            </div>
-
-                            <!-- Tabla responsiva -->
-                            <el-table v-if="activobusqueda && !isCollapse" v-loading="loadingArticulos"
-                                :data="arrayArticulo" border size="small" style="width: 100%; margin-top: 20px"
-                                :loading="loadingArticulos" element-loading-text="Cargando artículos...">
-                                <!-- Opciones -->
-                                <el-table-column label="Opciones" width="90">
-                                    <template v-slot="scope">
-                                        <el-button type="primary" icon="el-icon-check" size="mini" @click="
-                                            agregarDetalleModal(scope.row)
-                                            " />
-                                    </template>
-                                </el-table-column>
-
-                                <!-- Código (oculto en móviles) -->
-                                <el-table-column prop="codigo" label="Código" width="120"
-                                    :class-name="'d-none d-sm-table-cell'" />
-
-                                <!-- Unidad (oculto en móviles) -->
-                                <el-table-column prop="Unidad" label="Unidad" width="100"
-                                    :class-name="'d-none d-sm-table-cell'" />
-
-                                <!-- Nombre -->
-                                <el-table-column prop="nombre" label="Nombre" />
-
-                                <!-- Categoría (oculto en móviles) -->
-                                <el-table-column prop="nombre_categoria" label="Categoría"
-                                    :class-name="'d-none d-sm-table-cell'" />
-
-                                <!-- Precio Venta -->
-                                <el-table-column prop="precio_venta" label="Precio" width="100" />
-
-                                <!-- Stock (oculto en móviles) -->
-                                <el-table-column prop="stock" label="Stock" width="80"
-                                    :class-name="'d-none d-sm-table-cell'" />
-
-                                <!-- Estado -->
-                                <el-table-column label="Estado" width="120">
-                                    <template v-slot="scope">
-                                        <el-tag :type="scope.row.condicion
-                                            ? 'success'
-                                            : 'danger'
-                                            " disable-transitions>
-                                            {{
-                                                scope.row.condicion
-                                                    ? "Activo"
-                                                    : "Desactivado"
-                                            }}
-                                        </el-tag>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                            <!-- Mostrar mensaje si no hay datos (y no está cargando) -->
-                            <div v-if="
-                                !loadingArticulos &&
-                                arrayArticulo.length === 0
-                            " style="
-                                    text-align: center;
-                                    padding: 10px;
-                                    color: #888;
-                                ">
-                                No se encontraron resultados
-                            </div>
-                            <div>
-                                <!-- muestra de datos en card -->
-                                <div v-if="activobusqueda && isCollapse" style="margin-top: 20px">
-                                    <div class="card-grid">
-                                        <el-card v-for="item in arrayArticulo" :key="item.id" class="card-item"
-                                            shadow="hover">
-                                            <div class="card-content">
-                                                <div class="card-title">
-                                                    {{ item.nombre }}
-                                                </div>
-                                                <div>
-                                                    Código: {{ item.codigo }}
-                                                </div>
-                                                <div>
-                                                    Unidad: {{ item.Unidad }}
-                                                </div>
-                                                <div>
-                                                    Categoría:
-                                                    {{ item.nombre_categoria }}
-                                                </div>
-                                                <div>
-                                                    Precio: S/
-                                                    {{ item.precio_venta }}
-                                                </div>
-                                                <div>
-                                                    Stock: {{ item.stock }}
-                                                </div>
-                                                <el-tag :type="item.condicion
-                                                    ? 'success'
-                                                    : 'danger'
-                                                    " size="small">
-                                                    {{
-                                                        item.condicion
-                                                            ? "Activo"
-                                                            : "Desactivado"
-                                                    }}
-                                                </el-tag>
+                                                <el-radio-group v-model="isCollapse">
+                                                    <el-radio-button :label="false">
+                                                        <i class="el-icon-s-fold"></i>
+                                                        Tablas
+                                                    </el-radio-button>
+                                                    <el-radio-button :label="true">
+                                                        <i class="el-icon-menu"></i>
+                                                        Card
+                                                    </el-radio-button>
+                                                </el-radio-group>
                                             </div>
-                                            <div class="card-footer">
-                                                <el-button type="primary" icon="el-icon-check" size="mini" @click="
-                                                    agregarDetalleModal(
-                                                        item
-                                                    )
-                                                    ">
-                                                    Seleccionar
+
+                                            <!-- Input -->
+                                            <el-input ref="myInput" @keyup.native.enter="
+                                                listarArticulo(
+                                                    buscar,
+                                                    criterio
+                                                );
+                                            activobusqueda = true;
+                                            " placeholder="Ingrese un valor a buscar" v-model="buscar" clearable>
+                                                <template slot="prepend">
+                                                    <i class="el-icon-search"></i>
+                                                    {{ labelbusqueda }}
+                                                </template>
+                                            </el-input>
+                                        </div>
+
+                                        <!-- Tabla responsiva -->
+                                        <el-table v-if="activobusqueda && !isCollapse" v-loading="loadingArticulos"
+                                            :data="arrayArticulo" border size="mini"
+                                            style="width: 100%; margin-top: 20px" :loading="loadingArticulos"
+                                            element-loading-text="Cargando artículos...">
+                                            <!-- Opciones -->
+                                            <el-table-column label="Opciones" width="90">
+                                                <template v-slot="scope">
+                                                    <el-button type="primary" icon="el-icon-check" size="mini" @click="
+                                                        agregarDetalleModal(
+                                                            scope.row
+                                                        )
+                                                        " />
+                                                </template>
+                                            </el-table-column>
+
+                                            <!-- Código (oculto en móviles) -->
+                                            <el-table-column prop="codigo" label="Código" width="120"
+                                                :class-name="'d-none d-sm-table-cell'" />
+
+                                            <!-- Unidad (oculto en móviles) -->
+                                            <!-- <el-table-column prop="Unidad" label="Unidad" width="100"
+                                            :class-name="'d-none d-sm-table-cell'" /> -->
+
+                                            <!-- Nombre -->
+                                            <el-table-column prop="nombre" label="Nombre" />
+
+                                            <!-- Categoría (oculto en móviles) -->
+                                            <el-table-column prop="nombre_categoria" label="Categoría"
+                                                :class-name="'d-none d-sm-table-cell'" />
+
+                                            <!-- Precio Venta -->
+                                            <el-table-column prop="precio_venta" label="Precio" width="100" />
+
+                                            <!-- Stock (oculto en móviles) -->
+                                            <el-table-column prop="stock" label="Stock" width="80"
+                                                :class-name="'d-none d-sm-table-cell'" />
+
+                                            <!-- Estado -->
+                                            <el-table-column label="Estado" width="120">
+                                                <template v-slot="scope">
+                                                    <el-tag :type="scope.row.condicion
+                                                        ? 'success'
+                                                        : 'danger'
+                                                        " disable-transitions>
+                                                        {{
+                                                            scope.row.condicion
+                                                                ? "Activo"
+                                                                : "Desactivado"
+                                                        }}
+                                                    </el-tag>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                        <!-- Mostrar mensaje si no hay datos (y no está cargando) -->
+                                        <div v-if="
+                                            !loadingArticulos &&
+                                            arrayArticulo.length === 0
+                                        " style="
+                                            text-align: center;
+                                            padding: 10px;
+                                            color: #888;
+                                        ">
+                                            No se encontraron resultados
+                                        </div>
+                                        <div>
+                                            <!-- muestra de datos en card -->
+                                            <div v-if="activobusqueda && isCollapse" style="margin-top: 20px">
+                                                <div class="card-grid">
+                                                    <el-card v-for="item in arrayArticulo" :key="item.id"
+                                                        class="card-item" shadow="hover">
+                                                        <div class="card-content">
+                                                            <div class="card-title">
+                                                                {{ item.nombre }}
+                                                            </div>
+                                                            <div>
+                                                                Código:
+                                                                {{ item.codigo }}
+                                                            </div>
+                                                            <div>
+                                                                Unidad:
+                                                                {{ item.Unidad }}
+                                                            </div>
+                                                            <div>
+                                                                Categoría:
+                                                                {{
+                                                                    item.nombre_categoria
+                                                                }}
+                                                            </div>
+                                                            <div>
+                                                                Precio: S/
+                                                                {{
+                                                                    item.precio_venta
+                                                                }}
+                                                            </div>
+                                                            <div>
+                                                                Stock:
+                                                                {{ item.stock }}
+                                                            </div>
+                                                            <el-tag :type="item.condicion
+                                                                ? 'success'
+                                                                : 'danger'
+                                                                " size="small">
+                                                                {{
+                                                                    item.condicion
+                                                                        ? "Activo"
+                                                                        : "Desactivado"
+                                                                }}
+                                                            </el-tag>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <el-button type="primary" icon="el-icon-check" size="mini"
+                                                                @click="
+                                                                    agregarDetalleModal(
+                                                                        item
+                                                                    )
+                                                                    ">
+                                                                Seleccionar
+                                                            </el-button>
+                                                        </div>
+                                                    </el-card>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </el-card>
+                                </div>
+                            </el-col>
+                            <el-col :sm="10" :xs="24" :md="10" :span="10">
+                                <div class="">
+                                    <el-card class="box-card">
+                                        <div>
+                                            <!-- Tabla de detalles -->
+                                            <el-table v-if="arrayDetalle.length" :data="arrayDetalle" stripe size="mini"
+                                                style="
+                                                width: 100%;
+                                                margin-bottom: 20px;
+                                            ">
+                                                <el-table-column label="Opciones" width="100">
+                                                    <template v-slot="scope">
+                                                        <el-button type="danger" icon="el-icon-close" size="mini"
+                                                            @click="
+                                                                eliminarDetalle(
+                                                                    scope.$index
+                                                                )
+                                                                " />
+                                                    </template>
+                                                </el-table-column>
+
+                                                <!-- <el-table-column prop="Unidad" label="Unidad" width="100" /> -->
+                                                <el-table-column prop="articulo" label="Artículo" />
+
+                                                <el-table-column label="Precio" width="120">
+                                                    <template v-slot="scope">
+                                                        <el-input v-model.number="scope.row.precio
+                                                            " size="mini" type="number" />
+                                                    </template>
+                                                </el-table-column>
+
+                                                <el-table-column label="Cantidad" width="120">
+                                                    <template v-slot="scope">
+                                                        <el-input v-model.number="scope.row.cantidad
+                                                            " size="mini" type="number" />
+                                                    </template>
+                                                </el-table-column>
+
+                                                <el-table-column label="Subtotal" width="140">
+                                                    <template v-slot="scope">
+                                                        {{
+                                                            (
+                                                                scope.row.precio *
+                                                                scope.row.cantidad
+                                                            ).toFixed(2)
+                                                        }}
+                                                    </template>
+                                                </el-table-column>
+                                            </el-table>
+
+                                            <!-- Mensaje cuando no hay artículos -->
+                                            <div v-else style="
+                                                padding: 15px;
+                                                text-align: center;
+                                                color: #999;
+                                            ">
+                                                No hay artículos agregados
+                                            </div>
+
+                                            <!-- Totales -->
+                                            <div v-if="arrayDetalle.length" style="
+                                                margin-top: 10px;
+                                                background: #ceecf5;
+                                                padding: 16px;
+                                                border-radius: 4px;
+                                            ">
+                                                <div style="
+                                                    display: flex;
+                                                    justify-content: flex-end;
+                                                    flex-direction: column;
+                                                    align-items: flex-end;
+                                                    gap: 4px;
+                                                ">
+                                                    <div>
+                                                        <strong>Total Parcial:</strong>
+                                                        s/
+                                                        {{
+                                                            (totalParcial = (
+                                                                total -
+                                                                totalImpuesto
+                                                            ).toFixed(2))
+                                                        }}
+                                                    </div>
+                                                    <div>
+                                                        <strong>Total Impuesto:</strong>
+                                                        s/
+                                                        {{
+                                                            (totalImpuesto = (
+                                                                (total * impuesto) /
+                                                                (1 + impuesto)
+                                                            ).toFixed(2))
+                                                        }}
+                                                    </div>
+                                                    <div>
+                                                        <strong>Total Neto:</strong>
+                                                        s/
+                                                        {{
+                                                            (total =
+                                                                calcularTotal).toFixed(
+                                                                    2
+                                                                )
+                                                        }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Botón de pago -->
+                                            <el-button type="primary" style="margin-top: 15px"
+                                                v-if="arrayDetalle.length" @click="abrirprocesarpago()">
+                                                Procesar pago
+                                            </el-button>
+                                        </div>
+                                    </el-card>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </el-tab-pane>
+                    <el-tab-pane label="Ventas registradas" @click="listarVenta(buscar, criterio)">
+                        <template>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="col-md-12 col-12">
+                                        <div
+                                            style="display: flex; align-items: center; justify-content: space-between;">
+
+                                            <!-- Bloque izquierdo (filtros) -->
+                                            <div style="display: flex; gap: 8px; align-items: center;">
+                                                <el-select v-model="criterio" placeholder="Select"
+                                                    style="width: 150px;">
+                                                    <el-option v-for="item in options" :key="item.value"
+                                                        :label="item.label" :value="item.value">
+                                                    </el-option>
+                                                </el-select>
+
+                                                <el-input v-model="buscar" placeholder="Texto a buscar"
+                                                    @keyup.native.enter="listarVenta(1, buscar, criterio)"
+                                                    style="width: 200px;">
+                                                </el-input>
+
+                                                <el-button icon="el-icon-search" type="primary"
+                                                    @click="listarVenta(1, buscar, criterio)">
+                                                    Buscar
                                                 </el-button>
                                             </div>
-                                        </el-card>
+
+                                            <!-- Bloque derecho (Total General) -->
+                                            <div>
+                                                <!-- <el-tag type="success" effect="dark">Total General: {{
+                                                totalGeneral
+                                                }}</el-tag> -->
+                                                <el-button type="warning">Total General s/. {{ totalGeneral
+                                                }}</el-button>
+                                                <!-- <el-card class="box-card" shadow="always">
+                                                
+                                            </el-card> -->
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
-                        </el-card>
-                    </div>
-                </el-col>
-                <el-col :sm="10" :xs="24" :md="10" :span="10">
-                    <div class="">
-                        <el-card class="box-card">
-                            <div>
-                                <!-- Tabla de detalles -->
-                                <el-table v-if="arrayDetalle.length" :data="arrayDetalle" stripe size="small"
-                                    style="width: 100%; margin-bottom: 20px">
-                                    <el-table-column label="Opciones" width="100">
-                                        <template v-slot="scope">
-                                            <el-button type="danger" icon="el-icon-close" size="mini" @click="
-                                                eliminarDetalle(
-                                                    scope.$index
+                                <div class="">
+                                    <el-table :data="arrayVenta" size="mini" border stripe style="width: 100%">
+                                        <!-- Opciones -->
+                                        <el-table-column label="Opciones" width="120">
+                                            <template slot-scope="scope">
+                                                <el-row>
+                                                    <el-button size="mini" type="success"
+                                                        @click="pdfVenta(scope.row.id)">
+                                                        <i class="icon-doc"></i>
+                                                    </el-button>
+                                                    <template v-if="scope.row.estado === 'Registrado'">
+
+                                                    </template>
+                                                </el-row>
+                                            </template>
+                                        </el-table-column>
+
+                                        <!-- Usuario -->
+                                        <el-table-column prop="usuario.usuario" label="Usuario" />
+
+                                        <!-- Cliente -->
+                                        <el-table-column prop="cliente.nombre" label="Cliente" />
+
+                                        <!-- Tipo comprobante -->
+                                        <el-table-column prop="tipo_comprobante" label="Tipo Comprobante" />
+
+                                        <!-- Serie comprobante -->
+                                        <el-table-column prop="serie_comprobante" label="Serie Comprobante" />
+
+                                        <!-- Número comprobante -->
+                                        <el-table-column prop="num_comprobante" label="Número Comprobante" />
+
+                                        <!-- Fecha -->
+                                        <el-table-column prop="fecha_hora" label="Fecha Hora" />
+
+                                        <!-- Total -->
+                                        <el-table-column prop="total" label="Total" />
+
+                                        <!-- Impuesto -->
+                                        <el-table-column prop="impuesto" label="Impuesto" />
+
+                                        <!-- Estado -->
+                                        <el-table-column label="Estado" width="150">
+                                            <template slot-scope="scope">
+                                                <el-tag :type="colorEstado(scope.row.estado)" effect="plain">
+                                                    <i :class="iconoEstado(scope.row.estado)"
+                                                        style="margin-right: 4px;"></i>
+                                                    {{ scope.row.estado }}
+                                                </el-tag>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+
+
+                                </div>
+                                <nav class="mt-2 ">
+                                    <ul class="pagination">
+                                        <li class="page-item" v-if="pagination.current_page > 1">
+                                            <a class="page-link" href="#" @click.prevent="
+                                                cambiarPagina(
+                                                    pagination.current_page - 1,
+                                                    buscar,
+                                                    criterio
                                                 )
-                                                " />
-                                        </template>
-                                    </el-table-column>
+                                                ">Ant</a>
+                                        </li>
+                                        <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[
+                                            page == isActived ? 'active' : '',
+                                        ]">
+                                            <a class="page-link" href="#" @click.prevent="
+                                                cambiarPagina(
+                                                    page,
+                                                    buscar,
+                                                    criterio
+                                                )
+                                                " v-text="page"></a>
+                                        </li>
 
-                                    <el-table-column prop="Unidad" label="Unidad" width="100" />
-                                    <el-table-column prop="articulo" label="Artículo" />
-
-                                    <el-table-column label="Precio" width="120">
-                                        <template v-slot="scope">
-                                            <el-input v-model.number="scope.row.precio
-                                                " size="mini" type="number" />
-                                        </template>
-                                    </el-table-column>
-
-                                    <el-table-column label="Cantidad" width="120">
-                                        <template v-slot="scope">
-                                            <el-input v-model.number="scope.row.cantidad
-                                                " size="mini" type="number" />
-                                        </template>
-                                    </el-table-column>
-
-                                    <el-table-column label="Subtotal" width="140">
-                                        <template v-slot="scope">
-                                            {{
-                                                (
-                                                    scope.row.precio *
-                                                    scope.row.cantidad
-                                                ).toFixed(2)
-                                            }}
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
-
-                                <!-- Mensaje cuando no hay artículos -->
-                                <div v-else style="
-                                        padding: 15px;
-                                        text-align: center;
-                                        color: #999;
-                                    ">
-                                    No hay artículos agregados
-                                </div>
-
-                                <!-- Totales -->
-                                <div v-if="arrayDetalle.length" style="
-                                        margin-top: 10px;
-                                        background: #ceecf5;
-                                        padding: 16px;
-                                        border-radius: 4px;
-                                    ">
-                                    <div style="
-                                            display: flex;
-                                            justify-content: flex-end;
-                                            flex-direction: column;
-                                            align-items: flex-end;
-                                            gap: 4px;
+                                        <li class="page-item" v-if="
+                                            pagination.current_page <
+                                            pagination.last_page
                                         ">
-                                        <div>
-                                            <strong>Total Parcial:</strong> s/
-                                            {{
-                                                (totalParcial = (
-                                                    total - totalImpuesto
-                                                ).toFixed(2))
-                                            }}
-                                        </div>
-                                        <div>
-                                            <strong>Total Impuesto:</strong> s/
-                                            {{
-                                                (totalImpuesto = (
-                                                    (total * impuesto) /
-                                                    (1 + impuesto)
-                                                ).toFixed(2))
-                                            }}
-                                        </div>
-                                        <div>
-                                            <strong>Total Neto:</strong> s/
-                                            {{
-                                                (total = calcularTotal).toFixed(
-                                                    2
+                                            <a class="page-link" href="#" @click.prevent="
+                                                cambiarPagina(
+                                                    pagination.current_page + 1,
+                                                    buscar,
+                                                    criterio
                                                 )
-                                            }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Botón de pago -->
-                                <el-button type="primary" style="margin-top: 15px" v-if="arrayDetalle.length"
-                                    @click="abrirprocesarpago()">
-                                    Procesar pago
-                                </el-button>
+                                                ">Sig</a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
-                        </el-card>
-                    </div>
-                </el-col>
-            </el-row>
+                        </template>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-card>
+
         </div>
         <!-- modal -->
         <!-- <el-button type="text" @click="centerDialogVisible = true">Click to open the Dialog</el-button> -->
@@ -500,6 +672,13 @@ export default {
     components: { cliente, vSelect },
     data() {
         return {
+            options: [
+                { value: "fecha_hora", label: "Fecha de Venta" },
+                { value: "tipo_comprobante", label: "Tipo Comprobante" },
+                { value: "num_comprobante", label: "Número Comprobante" },
+                { value: "cliente", label: "Cliente" },
+                { value: "usuario", label: "Usuario" },
+            ],
             isCollapse: false, // false = tabla, true = card
             //select ckiente
             clienteSeleccionado: null,
@@ -526,75 +705,7 @@ export default {
                     // Agrega más campos si es necesario
                 },
             ],
-            venta: {
-                serie: "FF03",
-                numero: "60",
-                fecha_emision: new Date().toISOString().split("T")[0], // Fecha actual
-                hora_emision: new Date().toLocaleTimeString(),
-                moneda_id: "2",
-                forma_pago_id: "1",
-                total_gravada: 0,
-                total_igv: 0,
-                tipo_documento_codigo: "01",
-                nota: "notas o comentarios",
-            },
-            jsonData: {
-                empresa: {
-                    ruc: "20604051984",
-                    razon_social: "CPIPRODESIGN.COM",
-                    nombre_comercial: "FACTURACION INTEGRAL",
-                    domicilio_fiscal: "AV. LA MOLINA NRO. 570",
-                    ubigeo: "150114",
-                    urbanizacion: "RESIDENCIAL MONTERRICO",
-                    distrito: "LA MOLINA",
-                    provincia: "LIMA",
-                    departamento: "LIMA",
-                    modo: "0",
-                    usu_secundario_produccion_user: "MODDATOS",
-                    usu_secundario_produccion_password: "MODDATOS",
-                },
-                cliente: {
-                    razon_social_nombres: "CRISTIAN PATRICIO",
-                    numero_documento: "10407086274",
-                    codigo_tipo_entidad: "6",
-                    cliente_direccion: "Av. Morales Duarez 168",
-                },
-                venta: {
-                    serie: "FF03",
-                    numero: "100",
-                    fecha_emision: "2023-01-26",
-                    hora_emision: "10:02:49",
-                    fecha_vencimiento: "",
-                    moneda_id: "2",
-                    forma_pago_id: "1",
-                    total_gravada: "500",
-                    total_igv: "90",
-                    total_exonerada: "",
-                    total_inafecta: "",
-                    tipo_documento_codigo: "01",
-                    nota: "notas o comentarios",
-                },
-                items: [
-                    {
-                        producto: "LECHE GLORIA dev",
-                        cantidad: "1",
-                        precio_base: "100",
-                        codigo_sunat: "-",
-                        codigo_producto: "cc1",
-                        codigo_unidad: "ZZ",
-                        tipo_igv_codigo: "10",
-                    },
-                    {
-                        producto: "ATUN DEL FINO dev)",
-                        cantidad: "2",
-                        precio_base: "200",
-                        codigo_sunat: "46171606",
-                        codigo_producto: "H-003001981 22-10",
-                        codigo_unidad: "NIU",
-                        tipo_igv_codigo: "10",
-                    },
-                ],
-            },
+
             response: null,
 
             //switch
@@ -622,7 +733,7 @@ export default {
             venta_id: 0,
             idcliente: null,
             cliente: "",
-            tipo_comprobante: "Ticket",
+            tipo_comprobante: "Boleta",
             serie_comprobante: "",
             num_comprobante: "",
             impuesto: 0.18,
@@ -644,7 +755,7 @@ export default {
                 to: 0,
             },
             offset: 3,
-            criterio: "nombre",
+            criterio: "cliente",
             buscar: "",
             criterioA: "nombre",
             buscarA: "",
@@ -685,6 +796,62 @@ export default {
     },
 
     methods: {
+        colorEstado(estado) {
+            switch (estado) {
+                case "Registrado":
+                    return "primary"; // naranja
+                case "Aceptado":
+                    return "success"; // verde
+                case "Anulado":
+                    return "danger"; // rojo
+                default:
+                    return "info";
+            }
+        },
+        tooltipEstado(estado) {
+            switch (estado) {
+                case "Registrado":
+                    return "Registrado localmente, pendiente de enviar a SUNAT";
+                case "Aceptado":
+                    return "Enviado correctamente a SUNAT";
+                case "Anulado":
+                    return "Venta anulada";
+                default:
+                    return "Estado desconocido";
+            }
+        },
+        iconoEstado(estado) {
+            switch (estado) {
+                case "Registrado":
+                    return "el-icon-time";
+                case "Aceptado":
+                    return "el-icon-check";
+                case "Anulado":
+                    return "el-icon-close";
+                default:
+                    return "el-icon-info";
+            }
+        },
+        listarVenta(page, buscar, criterio) {
+            let me = this;
+            var url =
+                "/venta?page=" +
+                page +
+                "&buscar=" +
+                buscar +
+                "&criterio=" +
+                criterio;
+            axios
+                .get(url)
+                .then(function (response) {
+                    var respuesta = response.data;
+                    me.arrayVenta = respuesta.ventas.data;
+                    me.pagination = respuesta.pagination;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
         abrirprocesarpago() {
             // this.tipo_comprobante = 'Tiket';
             this.dialogFormVisible = true;
@@ -701,6 +868,7 @@ export default {
                 .then((response) => {
                     this.arrayCliente = response.data.clientes;
                     this.loadingClientes = false;
+                    //console.log(this.arrayCliente)
                 })
                 .catch((error) => {
                     console.error(error);
@@ -966,8 +1134,8 @@ export default {
                 const url = `/articulo/listarArticuloVenta?buscar=${buscar}&criterio=${criterio}`;
                 const response = await axios.get(url);
                 // await new Promise(resolve => setTimeout(resolve, 1000));
-                this.arrayArticulo = response.data.articulos.data;
-                //console.log(this.arrayArticulo);
+                this.arrayArticulo = response.data.articulo.data;
+                console.log(this.arrayArticulo);
             } catch (error) {
                 console.error(error);
                 this.$message.error("Error al cargar los artículos");
@@ -985,6 +1153,10 @@ export default {
             }
             return sw;
         },
+        pdfVenta(id) {
+            window.open("/venta/pdf/" + id, "_blank");
+        },
+
         agregarDetalle() {
             let me = this;
             if (me.idarticulo == 0 || me.cantidad == 0 || me.precio == 0) {
@@ -1050,7 +1222,7 @@ export default {
             me.arrayDetalle.splice(index, 1);
         },
         buscarComprobante() {
-            console.log("Tipo comprobante:", this.tipo_comprobante);
+            //console.log("Tipo comprobante:", this.tipo_comprobante);
             let me = this;
             var url =
                 "/venta/buscarComprobanteVenta?filtro=" + this.tipo_comprobante;
@@ -1061,7 +1233,7 @@ export default {
                     var respuesta = response.data;
                     //console.log(respuesta);
                     me.arraydocumento = respuesta.ventas;
-                    //  console.log(me.arraydocumento);
+                    console.log(me.arraydocumento);
 
                     if (me.arraydocumento.length > 0) {
                         me.num_comprobante = me.arraydocumento[0]["numero"];
@@ -1076,72 +1248,9 @@ export default {
                 });
         },
         //mi api
-        enviarDatos() {
-            axios
-                .post("https://apinew.cpiprodesign.net/post.php", this.jsonData)
-                .then((response) => {
-                    this.response = response.data;
-                    console.log("Datos enviados:", this.response);
 
-                    // Asegúrate de que estás capturando correctamente la respuesta
-                    console.log("Respuesta del servidor:", response.data);
-                    // console.log('dtatat' + response.data.data)
-                    // Aquí puedes manejar la respuesta, por ejemplo:
-                    if (response.data && response.data.data) {
-                        const respuesta = response.data.data;
-                        console.log(
-                            "Código Sunat:",
-                            respuesta.respuesta_sunat_codigo
-                        );
-                        console.log(
-                            "Descripción Sunat:",
-                            respuesta.respuesta_sunat_descripcion
-                        );
-                        console.log("Ruta XML:", respuesta.ruta_xml);
-                        console.log("Ruta CDR:", respuesta.ruta_cdr);
-                        console.log("Ruta PDF:", respuesta.ruta_pdf);
-                        console.log("Código Hash:", respuesta.codigo_hash[0]);
-                        // Maneja la respuesta como sea necesario, por ejemplo, guardarla en data o mostrarla en la UI
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error al enviar los datos:", error);
-                });
-        },
-        submitForm() {
-            // Aquí debes reemplazar 'tu-token-de-autenticacion' con tu token real
-            const config = {
-                headers: {
-                    Authorization:
-                        "e50ec7c026164aa7b343099924b94e21b1f83963c20d4b3ca1e3dcca26173b3a",
-                    "Content-Type": "application/json",
-                },
-            };
-
-            axios
-                .post(
-                    "https://api.nubefact.com/api/v1/cd90e4e3-ee31-4255-9cbc-d10f9ea78d9e",
-                    this.form,
-                    config
-                )
-                .then((response) => {
-                    //console.log(response.data);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        },
         //aqui metodo de add
-        agregarProducto() {
-            this.items.push({
-                producto: "",
-                cantidad: "",
-                precio_base: "",
-            });
-        },
-        eliminarProducto(index) {
-            this.items.splice(index, 1);
-        },
+
         calcularTotales() {
             // Calcula el total de la venta y el IGV basado en los productos
             let totalGravada = 0;
@@ -1151,65 +1260,44 @@ export default {
             this.venta.total_gravada = totalGravada;
             this.venta.total_igv = totalGravada * 0.18; // Ejemplo de cálculo de IGV (18%)
         },
-        enviarDatosNuevo() {
-            this.calcularTotales(); // Asegúrate de calcular los totales antes de enviar
-
-            const jsonDatas = {
-                empresa: {
-                    ruc: "20604051984",
-                    razon_social: "FACTURACION ELECTRONICA MONSTRUO E.I.R.L.",
-                    nombre_comercial: "FACTURACION INTEGRAL",
-                    domicilio_fiscal: "AV. LA MOLINA NRO. 570",
-                    ubigeo: "150114",
-                    urbanizacion: "RESIDENCIAL MONTERRICO",
-                    distrito: "LA MOLINA",
-                    provincia: "LIMA",
-                    departamento: "LIMA",
-                    modo: "0",
-                    usu_secundario_produccion_user: "MODDATOS",
-                    usu_secundario_produccion_password: "MODDATOS",
-                },
-                cliente: this.cliente,
-                venta: this.venta,
-                items: this.items,
-            };
-
-            axios
-                .post("https://apinew.cpiprodesign.net/post.php", jsonDatas)
-                .then((response) => {
-                    // Asegúrate de que estás capturando correctamente la respuesta
-                    console.log("Respuesta del servidor:", response.data);
-
-                    // Aquí puedes manejar la respuesta, por ejemplo:
-                    if (response.data && response.data.data) {
-                        const respuesta = response.data.data;
-                        console.log(
-                            "Código Sunat:",
-                            respuesta.respuesta_sunat_codigo
-                        );
-                        console.log(
-                            "Descripción Sunat:",
-                            respuesta.respuesta_sunat_descripcion
-                        );
-                        console.log("Ruta XML:", respuesta.ruta_xml);
-                        console.log("Ruta CDR:", respuesta.ruta_cdr);
-                        console.log("Ruta PDF:", respuesta.ruta_pdf);
-                        console.log("Código Hash:", respuesta.codigo_hash[0]);
-                        // Maneja la respuesta como sea necesario, por ejemplo, guardarla en data o mostrarla en la UI
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error al enviar los datos:", error);
-                });
-        },
     },
     mounted() {
         this.focusInput();
         this.actualizarSerie();
+        this.listarVenta(1, this.buscar, this.criterio);
         //this.buscarComprobante(this.tipo_comprobante);
         // this.listarArticulo(this.buscar, this.criterio);
     },
     computed: {
+        totalGeneral() {
+            return this.arrayVenta.reduce((sum, venta) => sum + Number(venta.total), 0)
+        },
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        //Calcula los elementos de la paginación
+        pagesNumber: function () {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+
+            var to = from + this.offset * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        },
         calcularTotal: function () {
             var resultado = 0.0;
             for (var i = 0; i < this.arrayDetalle.length; i++) {

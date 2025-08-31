@@ -48,7 +48,7 @@ class ClienteController extends Controller
             return redirect('/');
 
         $clientes = Cliente::where('condicion', '=', '1')
-            ->select('id', 'nombre')->orderBy('id', 'desc')->get();
+            ->select('id', 'nombre','num_documento')->orderBy('id', 'desc')->get();
 
         return ['clientes' => $clientes];
     }

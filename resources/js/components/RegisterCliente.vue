@@ -2,7 +2,7 @@
     <el-row :gutter="20">
         <el-col :xs="24" :md="24" :span="24">
             <div class="">
-                <label class="form-control-label" for="text-input">Nombre</label>
+                <label class="form-control-lasbel" for="text-input">Nombre</label>
 
                 <div class="">
                     <el-input size="mini" placeholder="Nombre del cliente" v-model="nombre"></el-input>
@@ -13,9 +13,9 @@
             <div class="">
                 <label class=" form-control-label" for="text-input">Tipo documento</label>
                 <div class="">
-                    <el-select size="mini" v-model="iddocumentoidentidad" placeholder="Selecciona el documento">
-                        <el-option v-for="documento in arrayDocumentos" :key="documento.id" :label="documento.descripcion
-                            " :value="documento.id"></el-option>
+                    <el-select size="small" v-model="tipo_documento" placeholder="Select">
+                        <el-option v-for="item in optionsCli" :key="item.value" :label="item.label"
+                            :value="item.value"></el-option>
                     </el-select>
 
                 </div>
@@ -31,11 +31,11 @@
                     <!-- <button @click="consultaDni()" :disabled="loading">Consultar</button> -->
                     <!-- <el-button size="mini" @click="consultaDni()" :disabled="loading" type="primary"
                         icon="el-icon-search">Search</el-button> -->
-                    <el-button size="mini" plain @click="consultaDni()" type="primary"
+                    <!-- <el-button size="mini" plain @click="consultaDni()" type="primary"
                         icon="el-icon-search">Reniec.</el-button>
                     <div v-if="loading">Cargando...</div>
                     <div v-if="error" style="color: red;">{{ error }}</div>
-                    <div v-if="successMessage" style="color: green;">{{ successMessage }}</div>
+                    <div v-if="successMessage" style="color: green;">{{ successMessage }}</div> -->
 
 
                 </div>
@@ -201,7 +201,7 @@ export default {
             axios
                 .post("/cliente/registrar", {
                     nombre: this.nombre,
-                    tipo_documento: this.iddocumentoidentidad,
+                    tipo_documento: this.tipo_documento,
                     num_documento: this.num_documento,
                     direccion: this.direccion,
                     telefono: this.telefono,

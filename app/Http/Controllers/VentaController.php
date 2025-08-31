@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\EliminarPdfTemporal;
-use App\Models\Articulos;
+use App\Models\Articulo;
 use App\Models\ConfiguracionEmpresa;
 use App\Models\DetalleVenta;
 use App\Models\Documento;
@@ -129,25 +129,24 @@ class VentaController extends Controller
             ->join('users', 'ventas.idusuario', '=', 'users.id')
             ->select('ventas.id', 'ventas.fecha_hora', 'ventas.tipo_comprobante', 'ventas.serie_comprobante',
                 'ventas.num_comprobante', 'ventas.created_at', 'ventas.impuesto', 'ventas.total',
-                'ventas.estado', 'clientes.nombre', 'clientes.documento_id', 'clientes.num_documento',
-                'clientes.direccion', 'clientes.email',
-                'clientes.telefono', 'users.usuario')
+                'ventas.estado', 'clientes.nombre', 'clientes.num_documento',
+                'clientes.direccion', 'clientes.email', 'clientes.telefono', 'users.usuario')
             ->where('ventas.id', '=', $id)
             ->whereIn('estado', ['Registrado', 'Aceptado'])
             ->orderBy('ventas.id', 'desc')
             ->take(1)
             ->get();
 
-        $detalles = DetalleVenta::join('articulos', 'detalle_ventas.idarticulo', '=', 'articulos.id')
+        $detalles = DetalleVenta::join('articulo', 'detalle_ventas.idarticulo', '=', 'articulo.id')
             ->select('detalle_ventas.cantidad', 'detalle_ventas.precio', 'detalle_ventas.descuento',
-                'articulos.nombre as articulo')
+                'articulo.nombre as articulo')
             ->where('detalle_ventas.idventa', '=', $id)
             ->orderBy('detalle_ventas.id', 'desc')
             ->get();
 
         $numventa = Venta::select('num_comprobante')->where('id', $id)->get();
         // configuracion
-        $config = ConfiguracionEmpresa::first();  // Solo hay uno
+      //  $config = ConfiguracionEmpresa::first();  // Solo hay uno
 
         // Tu lógica de obtener venta y detalles aquí...
         // $qrContent = "hola mundo";
@@ -163,7 +162,7 @@ class VentaController extends Controller
             ->build();
         $qrBase64 = $result->getDataUri();  // Devuelve "data:image/png;base64,..."
 
-        $pdf = \PDF::loadView('pdf.ventaTicket', ['venta' => $venta, 'detalles' => $detalles, 'qr' => $qrBase64, 'config' => $config]);
+        $pdf = \PDF::loadView('pdf.ventaTicket', ['venta' => $venta, 'detalles' => $detalles, 'qr' => $qrBase64 ]);
         // $pdf ->setPaper('a4','portrait');
         $pdf->setPaper([0, 0, 220.732, 841.89]);
         // $pdf->setPaper( array(0,0,612.00,1008.0));
@@ -198,7 +197,8 @@ class VentaController extends Controller
             foreach ($detalles as $det) {
                 $detalle = new DetalleVenta();
                 $detalle->idventa = $venta->id;
-                $detalle->unidad = $det['Unidad'];
+                //$detalle->unidad = $det['Unidad'];
+                $detalle->unidad="NIU";
                 $detalle->idarticulo = $det['idarticulo'];
                 $detalle->cantidad = $det['cantidad'];
                 $detalle->precio = $det['precio'];
@@ -206,14 +206,14 @@ class VentaController extends Controller
                 $detalle->save();
 
                 // Descontar stock del artículo
-                /* $articulo = Articulos::find($det['idarticulo']);
+                $articulo = Articulo::find($det['idarticulo']);
                  if ($articulo) {
                      $articulo->stock -= $det['cantidad'];
                      $articulo->save();
-                 }*/
+                 }
 
                 // Registrar en el Kardex
-                Kardex::create([
+                /*Kardex::create([
                     'id_articulo' => $det['idarticulo'],
                     'tipo_movimiento' => 'venta',
                     'documento' => $venta->tipo_comprobante . ' ' . $venta->serie_comprobante . '-' . $venta->num_comprobante,
@@ -221,32 +221,16 @@ class VentaController extends Controller
                     'precio_unitario' => $det['precio'],
                     'fecha' => now(),
                     'usuario_id' => Auth::id(),
-                ]);
+                ]);*/
             }
 
-            $estadoSunat = 'Registrado';
-            $mensajeSunat = 'No se envió a SUNAT. Comprobante tipo TICKET.';
-
-            if (in_array(strtoupper($venta->tipo_comprobante), ['FACTURA', 'BOLETA'])) {
-                $sunatService = new FacturaElectronicaService();
-                $resultado = $sunatService->emitirFactura($venta->id);
-
-                if (isset($resultado['estado']) && $resultado['estado'] === 'ACEPTADO') {
-                    $venta->estado = 'Aceptado';
-                    $venta->save();
-                    $estadoSunat = 'Aceptado';
-                    $mensajeSunat = $resultado['mensaje'] ?? 'Aceptado por SUNAT';
-                } else {
-                    $mensajeSunat = $resultado['mensaje'] ?? 'SUNAT no aceptó el comprobante';
-                }
-            }
+            
 
             DB::commit();
 
             return response()->json([
                 'success' => true,
-                'message' => $mensajeSunat,
-                'estado_sunat' => $venta->estado,
+                
                 'id' => $venta->id,
             ]);
         } catch (\Exception $e) {
@@ -313,9 +297,9 @@ class VentaController extends Controller
 
     public function buscarComprobante(Request $request)
     {
-        if (!$request->ajax()) {
+       /* if (!$request->ajax()) {
             return redirect('/');
-        }
+        }*/
 
         $filtro = $request->filtro;
 
@@ -339,7 +323,7 @@ class VentaController extends Controller
             ->join('users', 'ventas.idusuario', '=', 'users.id')
             ->select('ventas.id', 'ventas.fecha_hora', 'ventas.tipo_comprobante', 'ventas.serie_comprobante',
                 'ventas.num_comprobante', 'ventas.created_at', 'ventas.impuesto', 'ventas.total',
-                'ventas.estado', 'clientes.nombre', 'clientes.documento_id', 'clientes.num_documento',
+                'ventas.estado', 'clientes.nombre', 'clientes.num_documento',
                 'clientes.direccion', 'clientes.email', 'clientes.telefono', 'users.usuario')
             ->where('ventas.id', '=', $id)
             ->whereIn('estado', ['Registrado', 'Aceptado'])
@@ -347,14 +331,14 @@ class VentaController extends Controller
             ->take(1)
             ->get();
 
-        $detalles = DetalleVenta::join('articulos', 'detalle_ventas.idarticulo', '=', 'articulos.id')
+        $detalles = DetalleVenta::join('articulo', 'detalle_ventas.idarticulo', '=', 'articulo.id')
             ->select('detalle_ventas.cantidad', 'detalle_ventas.precio', 'detalle_ventas.descuento',
-                'articulos.nombre as articulo')
+                'articulo.nombre as articulo')
             ->where('detalle_ventas.idventa', '=', $id)
             ->orderBy('detalle_ventas.id', 'desc')
             ->get();
 
-        $config = ConfiguracionEmpresa::first();
+        //$config = ConfiguracionEmpresa::first();
         $ventaData = $venta[0];
         $igv = $ventaData->total * $ventaData->impuesto;
 
@@ -372,8 +356,8 @@ class VentaController extends Controller
         $pdf = \PDF::loadView('pdf.ventaTicket', [
             'venta' => $venta,
             'detalles' => $detalles,
-            'qr' => $qrBase64,
-            'config' => $config
+            'qr' => $qrBase64
+            //'config' => $config
         ]);
         $pdf->setPaper([0, 0, 220.732, 841.89]);
 

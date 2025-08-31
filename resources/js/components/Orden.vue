@@ -6,118 +6,119 @@
     </ol>-->
         <div class="container-fluid">
             <!-- Ejemplo de tabla Listado -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Ordenes
-                    <el-button plain type="primary" icon="el-icon-circle-plus"
-                        @click="abrirModal('orden', 'registrar')">Nuevo</el-button>
-                    <!-- <el-button
-                        type="danger"
-                        icon="el-icon-document"
-                        @click="cargarPdf()"
-                        >Reporte</el-button
-                    > -->
-                </div>
-                <div class="card-body">
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <div class="mr-1 mb-1">
-                                    <el-select v-model="criterio" placeholder="Select">
-                                        <el-option v-for="item in valores" :key="item.value" :label="item.label"
-                                            :value="item.value"></el-option>
-                                    </el-select>
-                                </div>
-                                <div class="mr-1 mb-1">
-                                    <el-input @keyup.native.enter="
-                                        listarOrden(1, buscar, criterio)
-                                        " placeholder="Texto a buscar" v-model="buscar"></el-input>
-                                </div>
+            <div class=" mt-4">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Listado de Ordenes ..</span>
+                    </div>
+                    <div class="mb-2 d-flex flex-row-reverse">
 
-                                <div>
-                                    <el-button icon="el-icon-search" type="primary" @click="
-                                        listarOrden(1, buscar, criterio)
-                                        ">Buscar</el-button>
+                        <div>
+                            <el-button plain type="primary" icon="el-icon-circle-plus"
+                                @click="abrirModal('orden', 'registrar')">Nuevo</el-button>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <div class="mr-1 mb-1">
+                                        <el-select v-model="criterio" placeholder="Select">
+                                            <el-option v-for="item in valores" :key="item.value" :label="item.label"
+                                                :value="item.value"></el-option>
+                                        </el-select>
+                                    </div>
+                                    <div class="mr-1 mb-1">
+                                        <el-input @keyup.native.enter="
+                                            listarOrden(1, buscar, criterio)
+                                            " placeholder="Texto a buscar" v-model="buscar"></el-input>
+                                    </div>
+
+                                    <div>
+                                        <el-button icon="el-icon-search" type="primary" @click="
+                                            listarOrden(1, buscar, criterio)
+                                            ">Buscar</el-button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <table class="table table-sm table-hover table-responsive ">
-                        <thead>
-                            <tr>
-                                <th>Acciones</th>
-                                <th>Nro Orden</th>
-                                <th>Cliente</th>
-                                <th>Tecnico</th>
-                                <th>Nombre</th>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <!-- <th>Serial</th>
+                        <table class="table table-sm table-hover table-responsive ">
+                            <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th>Nro Orden</th>
+                                    <th>Cliente</th>
+                                    <th>Tecnico</th>
+                                    <th>Nombre</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <!-- <th>Serial</th>
                                 <th>Clave</th> -->
-                                <th>Accesorios</th>
-                                <th>Observaciones</th>
-                                <th>FallaEquipo</th>
-                                <th>Reparacion</th>
-                                <th>FechaEntrada</th>
-                                <th>FechaEntrega</th>
-                                <th>Adelanto</th>
-                                <th>TotalPagar</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="orden in arrayOrden" :key="orden.id">
-                                <td>
-                                    <button type=" button" @click="
-                                        abrirModal(
-                                            'orden',
-                                            'actualizar',
-                                            orden
-                                        )
-                                        " class="btn btn-warning btn-sm">
-                                        <i class="icon-pencil"></i>
-                                    </button>
-                                    <!-- <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
+                                    <th>Accesorios</th>
+                                    <th>Observaciones</th>
+                                    <th>FallaEquipo</th>
+                                    <th>Reparacion</th>
+                                    <th>FechaEntrada</th>
+                                    <th>FechaEntrega</th>
+                                    <th>Adelanto</th>
+                                    <th>TotalPagar</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="orden in arrayOrden" :key="orden.id">
+                                    <td>
+                                        <button type=" button" @click="
+                                            abrirModal(
+                                                'orden',
+                                                'actualizar',
+                                                orden
+                                            )
+                                            " class="btn btn-warning btn-sm">
+                                            <i class="icon-pencil"></i>
+                                        </button>
+                                        <!-- <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
                                         <i class="fas fa-print"></i>
                                     </button> -->
-                                    <!-- <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
+                                        <!-- <button type="button" @click="pdfOrden(orden.id)" class="btn btn-primary btn-sm">
                                         <i class="fas fa-print"></i>
 
 
                                     </button> -->
-                                    <el-button @click="pdfOrden(orden.id)" size="mini" type="primary"><i
-                                            class="fas fa-print"></i></el-button>
-                                    <el-button @click="modalentregar(orden)" class="mt-1" type="success" size="mini"
-                                        :disabled="orden.estado === 'Entregado'">
-                                        Entregar
-                                    </el-button>
-                                    <el-button class="mt-1" @click="generateBarcode(orden.id)" size="mini"><i
-                                            class="fas fa-barcode"></i> Etiquetas</el-button>
-                                    <!-- <el-button @click="printBarcode()">Default</el-button> -->
-                                    &nbsp;
+                                        <el-button @click="pdfOrden(orden.id)" size="mini" type="primary"><i
+                                                class="fas fa-print"></i></el-button>
+                                        <el-button @click="modalentregar(orden)" class="mt-1" type="success" size="mini"
+                                            :disabled="orden.estado === 'Entregado'">
+                                            Entregar
+                                        </el-button>
+                                        <el-button class="mt-1" @click="generateBarcode(orden.id)" size="mini"><i
+                                                class="fas fa-barcode"></i> Etiquetas</el-button>
+                                        <!-- <el-button @click="printBarcode()">Default</el-button> -->
+                                        &nbsp;
 
 
-                                </td>
-                                <td v-text="orden.id"></td>
-                                <td v-text="orden.Cliente"></td>
-                                <td v-text="orden.Tecnico"></td>
-                                <td v-text="orden.nombreEquipo"></td>
-                                <td v-text="orden.marca"></td>
-                                <td v-text="orden.modelo"></td>
-                                <!-- <td v-text="orden.serial"></td> -->
-                                <!-- <td v-text="orden.clave"></td> -->
-                                <td v-text="orden.accesorios"></td>
-                                <td v-text="orden.observaciones"></td>
-                                <td v-text="orden.fallaEquipo"></td>
-                                <td v-text="orden.reparacion"></td>
-                                <td v-text="orden.fechaEntrada"></td>
-                                <td v-text="orden.fechaEntrega"></td>
-                                <td v-text="orden.adelanto"></td>
-                                <td v-text="orden.totalPagar"></td>
-                                <td> <span class="badge " :class="estadoColor(orden.estado)">{{
-                                    orden.estado }}</span></td>
-                                <!-- <td v-text="orden.estado" :class="estadoColor(orden.estado)"></td> -->
-                                <!-- <td>
+                                    </td>
+                                    <td v-text="orden.id"></td>
+                                    <td v-text="orden.Cliente"></td>
+                                    <td v-text="orden.Tecnico"></td>
+                                    <td v-text="orden.nombreEquipo"></td>
+                                    <td v-text="orden.marca"></td>
+                                    <td v-text="orden.modelo"></td>
+                                    <!-- <td v-text="orden.serial"></td> -->
+                                    <!-- <td v-text="orden.clave"></td> -->
+                                    <td v-text="orden.accesorios"></td>
+                                    <td v-text="orden.observaciones"></td>
+                                    <td v-text="orden.fallaEquipo"></td>
+                                    <td v-text="orden.reparacion"></td>
+                                    <td v-text="orden.fechaEntrada"></td>
+                                    <td v-text="orden.fechaEntrega"></td>
+                                    <td v-text="orden.adelanto"></td>
+                                    <td v-text="orden.totalPagar"></td>
+                                    <td> <span class="badge " :class="estadoColor(orden.estado)">{{
+                                        orden.estado }}</span></td>
+                                    <!-- <td v-text="orden.estado" :class="estadoColor(orden.estado)"></td> -->
+                                    <!-- <td>
                                     <div v-if="orden.condicion">
                                         <span class="badge badge-success"
                                             >Activo</span
@@ -129,41 +130,44 @@
                                         >
                                     </div>
                                 </td> -->
-                            </tr>
-                        </tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item" v-if="pagination.current_page > 1">
-                                <a class="page-link" href="#" @click.prevent="
-                                    cambiarPagina(
-                                        pagination.current_page - 1,
-                                        buscar,
-                                        criterio
-                                    )
-                                    ">Ant</a>
-                            </li>
-                            <li class="page-item" v-for="page in pagesNumber" :key="page"
-                                :class="[page == isActived ? 'active' : '']">
-                                <a class="page-link" href="#" @click.prevent="
-                                    cambiarPagina(page, buscar, criterio)
-                                    " v-text="page"></a>
-                            </li>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="
+                                        cambiarPagina(
+                                            pagination.current_page - 1,
+                                            buscar,
+                                            criterio
+                                        )
+                                        ">Ant</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page"
+                                    :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="
+                                        cambiarPagina(page, buscar, criterio)
+                                        " v-text="page"></a>
+                                </li>
 
-                            <li class="page-item" v-if="pagination.current_page <
-                                pagination.last_page
-                            ">
-                                <a class="page-link" href="#" @click.prevent="
-                                    cambiarPagina(
-                                        pagination.current_page + 1,
-                                        buscar,
-                                        criterio
-                                    )
-                                    ">Sig</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                                <li class="page-item" v-if="pagination.current_page <
+                                    pagination.last_page
+                                ">
+                                    <a class="page-link" href="#" @click.prevent="
+                                        cambiarPagina(
+                                            pagination.current_page + 1,
+                                            buscar,
+                                            criterio
+                                        )
+                                        ">Sig</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </el-card>
+
+
             </div>
             <!-- Fin ejemplo de tabla Listado -->
         </div>

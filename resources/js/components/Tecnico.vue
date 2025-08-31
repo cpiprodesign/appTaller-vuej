@@ -6,19 +6,15 @@
     </ol>-->
         <div class="container-fluid">
             <!-- Ejemplo de tabla Listado -->
-            <div class="card mt-2">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Tecnicos
-                    <el-button size="small" plain type="primary" icon="el-icon-circle-plus"
-                        @click="abrirModal('tecnico', 'registrar')">Nuevo</el-button>
-                    <!-- <el-button
-                        type="danger"
-                        icon="el-icon-document"
-                        @click="cargarPdf()"
-                        >Reporte</el-button
-                    > -->
-                </div>
-                <div class="card-body">
+            <div class=" mt-4">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Listado de Tecnicos</span>
+                    </div>
+                    <div class="mb-2 d-flex flex-row-reverse">
+                        <el-button size="small" plain type="primary" icon="el-icon-circle-plus"
+                            @click="abrirModal('tecnico', 'registrar')">Nuevo</el-button>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
@@ -42,64 +38,41 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-sm table-hover table-responsive-sm">
-                        <thead>
-                            <tr>
-                                <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Tipo Documento</th>
-                                <th>Número</th>
-                                <th>Dirección</th>
-                                <th>Teléfono</th>
-                                <th>Email</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="tecnico in arrayTecnico" :key="tecnico.id">
-                                <td>
-                                    <button type="button" @click="
-                                        abrirModal(
-                                            'tecnico',
-                                            'actualizar',
-                                            tecnico
-                                        )
-                                        " class="btn btn-warning btn-sm">
-                                        <i class="icon-pencil"></i>
-                                    </button>
-                                    &nbsp;
-                                    <template v-if="tecnico.condicion">
-                                        <button type="button" @click="
-                                            desactivarTecnico(tecnico.id)
-                                            " class="btn btn-danger btn-sm">
-                                            <i class="icon-trash"></i>
-                                        </button>
-                                    </template>
-                                    <template v-else>
-                                        <button type="button" @click="activarTecnico(tecnico.id)"
-                                            class="btn btn-info btn-sm">
-                                            <i class="icon-check"></i>
-                                        </button>
-                                    </template>
-                                </td>
-                                <td v-text="tecnico.nombre"></td>
-                                <td v-text="tecnico.tipo_documento"></td>
-                                <td v-text="tecnico.num_documento"></td>
-                                <td v-text="tecnico.direccion"></td>
-                                <td v-text="tecnico.telefono"></td>
-                                <td v-text="tecnico.email"></td>
-                                <td>
-                                    <div v-if="tecnico.condicion">
-                                        <span class="badge badge-success">Activo</span>
-                                    </div>
-                                    <div v-else>
-                                        <span class="badge badge-danger">Desactivado</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <nav>
+                    <el-table :data="arrayTecnico" border stripe style="width: 100%" size="small">
+                        <!-- Opciones -->
+                        <el-table-column label="Opciones" width="160">
+                            <template slot-scope="scope">
+                                <el-button type="warning" size="mini" icon="el-icon-edit"
+                                    @click="abrirModal('tecnico', 'actualizar', scope.row)"></el-button>
+
+                                <template v-if="scope.row.condicion">
+                                    <el-button type="danger" size="mini" icon="el-icon-delete"
+                                        @click="desactivarTecnico(scope.row.id)"></el-button>
+                                </template>
+                                <template v-else>
+                                    <el-button type="success" size="mini" icon="el-icon-check"
+                                        @click="activarTecnico(scope.row.id)"></el-button>
+                                </template>
+                            </template>
+                        </el-table-column>
+
+                        <!-- Campos -->
+                        <el-table-column prop="nombre" label="Nombre"></el-table-column>
+                        <el-table-column prop="tipo_documento" label="Tipo Documento"></el-table-column>
+                        <el-table-column prop="num_documento" label="Número"></el-table-column>
+                        <el-table-column prop="direccion" label="Dirección"></el-table-column>
+                        <el-table-column prop="telefono" label="Teléfono"></el-table-column>
+                        <el-table-column prop="email" label="Email"></el-table-column>
+
+                        <!-- Estado -->
+                        <el-table-column label="Estado" width="120">
+                            <template slot-scope="scope">
+                                <el-tag type="success" v-if="scope.row.condicion">Activo</el-tag>
+                                <el-tag type="danger" v-else>Desactivado</el-tag>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <nav class="mt-2">
                         <ul class="pagination">
                             <li class="page-item" v-if="pagination.current_page > 1">
                                 <a class="page-link" href="#" @click.prevent="
@@ -130,7 +103,9 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
+                </el-card>
+
+
             </div>
             <!-- Fin ejemplo de tabla Listado -->
         </div>

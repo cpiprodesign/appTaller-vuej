@@ -96,57 +96,31 @@
                                 </div>
                                 <div class="row">
                                     <div>
-                                        <table class="table table-sm table-hover table-responsive ">
-                                            <thead>
-                                                <tr>
+                                        <el-table :data="arrayOrden" border stripe style="width: 100%" size="mini">
+                                            <el-table-column prop="id" label="Nro Orden" width="100"></el-table-column>
+                                            <el-table-column prop="Cliente" label="Cliente"></el-table-column>
+                                            <el-table-column prop="Tecnico" label="Técnico"></el-table-column>
+                                            <el-table-column prop="marca" label="Marca"></el-table-column>
+                                            <!-- Si luego quieres mostrar serial o clave, puedes descomentar y añadir columnas aquí -->
 
-                                                    <th>Nro Orden</th>
-                                                    <th>Cliente</th>
-                                                    <th>Tecnico</th>
-                                                    <th>Marca</th>
+                                            <el-table-column prop="fechaEntrega"
+                                                label="Fecha Entrega"></el-table-column>
+                                            <el-table-column prop="adelanto" label="Adelanto"
+                                                width="100"></el-table-column>
+                                            <el-table-column prop="totalPagar" label="Total a Pagar"
+                                                width="120"></el-table-column>
 
-                                                    <!-- <th>Serial</th>
-                                <th>Clave</th> -->
+                                            <!-- Estado -->
+                                            <el-table-column label="Estado" width="140">
+                                                <template slot-scope="scope">
+                                                    <el-tag :class="estadoColor(scope.row.estado)" effect="dark">
+                                                        {{ scope.row.estado }}
+                                                    </el-tag>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
 
-                                                    <th>FechaEntrega</th>
-                                                    <th>Adelanto</th>
-                                                    <th>TotalPagar</th>
-                                                    <th>Estado</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="orden in arrayOrden" :key="orden.id">
-
-                                                    <td v-text="orden.id"></td>
-                                                    <td v-text="orden.Cliente"></td>
-                                                    <td v-text="orden.Tecnico"></td>
-                                                    <td v-text="orden.marca"></td>
-                                                    <!-- <td v-text="orden.serial"></td> -->
-                                                    <!-- <td v-text="orden.clave"></td> -->
-
-
-                                                    <td v-text="orden.fechaEntrega"></td>
-                                                    <td v-text="orden.adelanto"></td>
-                                                    <td v-text="orden.totalPagar"></td>
-                                                    <td> <span class="badge " :class="estadoColor(orden.estado)">{{
-                                                        orden.estado }}</span></td>
-                                                    <!-- <td v-text="orden.estado" :class="estadoColor(orden.estado)"></td> -->
-                                                    <!-- <td>
-                                    <div v-if="orden.condicion">
-                                        <span class="badge badge-success"
-                                            >Activo</span
-                                        >
-                                    </div>
-                                    <div v-else>
-                                        <span class="badge badge-danger"
-                                            >Desactivado</span
-                                        >
-                                    </div>
-                                </td> -->
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <nav>
+                                        <nav class="mt-2">
                                             <ul class="pagination">
                                                 <li class="page-item" v-if="pagination.current_page > 1">
                                                     <a class="page-link" href="#" @click.prevent="
@@ -456,25 +430,26 @@ export default {
 </script>
 
 <style>
-.verde {
-    background-color: #4caf50;
-    color: white;
+.el-tag.azul {
+    background-color: #0b64d9;
+    color: #fff;
 }
 
-.amarillo {
-    background-color: #ffeb3b;
-    color: black;
+.el-tag.amarillo {
+    background-color: #f1c40f;
+    color: #fff;
 }
 
-.celeste {
-    background-color: #54c2ee;
-    color: white;
+.el-tag.verde {
+    background-color: #2ecc3b;
+    color: #fff;
 }
 
-.azul {
-    background-color: #3652f4;
-    color: white;
+.el-tag.celeste {
+    background-color: #409EFF;
+    color: #fff;
 }
+
 
 .margintop {
     margin-top: 80px;

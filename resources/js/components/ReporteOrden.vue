@@ -8,7 +8,7 @@
             <!-- Ejemplo de tabla Listado -->
             <div class="card mt-2">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Consulta de Ordenes
+                    <h5 class="text-light">Consulta de Ordenes</h5>
                     <!-- <el-button
                         plain
                         type="primary"
@@ -159,15 +159,15 @@
                             <th></th>
                             <th>Total adelanto</th>
                             <th>
-                                <h3 class="badge bg-success ">s/.{{ sumarTotalAdelanto }}</h3>
+                                <h3 class="badge bg-success text-light">s/.{{ sumarTotalAdelanto }}</h3>
                             </th>
                             <th>Cuenta Cobrar</th>
                             <th>
-                                <h3 class="badge bg-danger">s/.{{ sumarTotalCuentaCobrar }}</h3>
+                                <h3 class="badge bg-danger text-light">s/.{{ sumarTotalCuentaCobrar }}</h3>
                             </th>
                             <th class="">Total pagar</th>
                             <th>
-                                <h3 class="badge bg-primary">S/.{{ sumarTotal }}</h3>
+                                <h3 class="badge bg-primary text-light">S/.{{ sumarTotal }}</h3>
                             </th>
                             <th></th>
 

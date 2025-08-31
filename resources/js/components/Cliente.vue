@@ -6,17 +6,20 @@
     </ol>-->
         <div class="container-fluid">
             <!-- Ejemplo de tabla Listado -->
-            <div class="card mt-2">
-                <div class="card-header">
-                    <div class="">
-                        <i class="fa fa-align-justify"></i> Clientes
-                        <el-button size="small" plain type="primary" icon="el-icon-circle-plus"
-                            @click="abrirModal('cliente', 'registrar')">Nuevo</el-button>
-                        <el-button size="small" type="danger" icon="el-icon-document"
-                            @click="cargarPdf()">Reporte</el-button>
+            <div class="mt-4">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span>Listado de clientes </span>
                     </div>
-                </div>
-                <div class="card-body">
+                    <div class="mb-2 d-flex flex-row-reverse">
+                        <div class="">
+
+                            <el-button size="small" plain type="primary" icon="el-icon-circle-plus"
+                                @click="abrirModal('cliente', 'registrar')">Nuevo</el-button>
+                            <el-button size="small" type="danger" icon="el-icon-document"
+                                @click="cargarPdf()">Reporte</el-button>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="input-group">
@@ -40,63 +43,60 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-sm table-hover table-responsive-sm">
-                        <thead>
-                            <tr>
-                                <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Tipo Documento</th>
-                                <th>Número</th>
-                                <th>Dirección</th>
-                                <th>Teléfono</th>
-                                <th>Email</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="cliente in arrayCliente" :key="cliente.id">
-                                <td>
-                                    <button type="button" @click="
-                                        abrirModal(
-                                            'cliente',
-                                            'actualizar',
-                                            cliente
-                                        )
-                                        " class="btn btn-warning btn-sm">
-                                        <i class="icon-pencil"></i>
-                                    </button>
-                                    &nbsp;
-                                    <template v-if="cliente.condicion">
-                                        <button type="button" @click="
-                                            desactivarCliente(cliente.id)
-                                            " class="btn btn-danger btn-sm">
-                                            <i class="icon-trash"></i>
-                                        </button>
-                                    </template>
-                                    <template v-else>
-                                        <button type="button" @click="activarCliente(cliente.id)"
-                                            class="btn btn-info btn-sm">
-                                            <i class="icon-check"></i>
-                                        </button>
-                                    </template>
-                                </td>
-                                <td v-text="cliente.nombre"></td>
-                                <td v-text="cliente.tipo_documento"></td>
-                                <td v-text="cliente.num_documento"></td>
-                                <td v-text="cliente.direccion"></td>
-                                <td v-text="cliente.telefono"></td>
-                                <td v-text="cliente.email"></td>
-                                <td>
-                                    <div v-if="cliente.condicion">
-                                        <span class="badge badge-success">Activo</span>
-                                    </div>
-                                    <div v-else>
-                                        <span class="badge badge-danger">Desactivado</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <el-table :data="arrayCliente" border stripe style="width: 100%">
+                        <!-- Opciones -->
+                        <el-table-column label="Opciones" width="160">
+                            <template slot-scope="scope">
+                                <!-- Botón editar -->
+                                <el-button size="mini" type="warning"
+                                    @click="abrirModal('cliente', 'actualizar', scope.row)">
+                                    <i class="icon-pencil"></i>
+                                </el-button>
+
+                                <!-- Botón activar/desactivar -->
+                                <template v-if="scope.row.condicion">
+                                    <el-button size="mini" type="danger" @click="desactivarCliente(scope.row.id)">
+                                        <i class="icon-trash"></i>
+                                    </el-button>
+                                </template>
+                                <template v-else>
+                                    <el-button size="mini" type="info" @click="activarCliente(scope.row.id)">
+                                        <i class="icon-check"></i>
+                                    </el-button>
+                                </template>
+                            </template>
+                        </el-table-column>
+
+                        <!-- Nombre -->
+                        <el-table-column prop="nombre" label="Nombre" />
+
+                        <!-- Tipo Documento -->
+                        <el-table-column prop="tipo_documento" label="Tipo Documento" />
+
+                        <!-- Número -->
+                        <el-table-column prop="num_documento" label="Número" />
+
+                        <!-- Dirección -->
+                        <el-table-column prop="direccion" label="Dirección" />
+
+                        <!-- Teléfono -->
+                        <el-table-column prop="telefono" label="Teléfono" />
+
+                        <!-- Email -->
+                        <el-table-column prop="email" label="Email" />
+
+                        <!-- Estado -->
+                        <el-table-column label="Estado" width="130">
+                            <template slot-scope="scope">
+                                <el-tag v-if="scope.row.condicion" type="success">
+                                    Activo
+                                </el-tag>
+                                <el-tag v-else type="danger">
+                                    Desactivado
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                    </el-table>
                     <nav>
                         <ul class="pagination">
                             <li class="page-item" v-if="pagination.current_page > 1">
@@ -128,6 +128,11 @@
                             </li>
                         </ul>
                     </nav>
+                </el-card>
+
+                <div class="card-body">
+
+
                 </div>
             </div>
             <!-- Fin ejemplo de tabla Listado -->
